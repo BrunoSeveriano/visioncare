@@ -12,7 +12,8 @@ const nextConfig = {
     // unoptimized: true,
   },
   env: {
-    API_URL: "http://10.96.10.61:8035",
+    API_URL:
+      "https://homologacao.suporteaopaciente.com.br/visioncareapiexterno",
   },
 };
 
