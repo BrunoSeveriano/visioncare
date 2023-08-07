@@ -24,8 +24,8 @@ const CardAdmin = () => {
           title="Cadastrar parceiros"
           subtitle="Canal exclusivo para cadastros de parceiros J&J.​"
           buttonText="Ver mais"
-          textColor="text-careLightGreen"
-          bgColor="bg-careLightGreen"
+          textColor="text-careDarkBlue"
+          bgColor="bg-careDarkBlue"
           hasIcon
         />
         <ContentCard
@@ -34,8 +34,8 @@ const CardAdmin = () => {
           title="Dashboard"
           subtitle="Canal exclusivo para cadastros de parceiros J&J.​"
           buttonText="Ver mais"
-          textColor="text-careDarkPurple"
-          bgColor="bg-careDarkPurple"
+          textColor="text-careDarkBlue"
+          bgColor="bg-careDarkBlue"
           hasIcon
         />
         <ContentCard
@@ -44,8 +44,8 @@ const CardAdmin = () => {
           title="Pedidos de compra"
           subtitle="Canal exclusivo para cadastros de parceiros J&J.​"
           buttonText="Ver mais"
-          textColor="text-careLightBlue"
-          bgColor="bg-careLightBlue"
+          textColor="text-careDarkBlue"
+          bgColor="bg-careDarkBlue"
           hasIcon
         />
       </div>

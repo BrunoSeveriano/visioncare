@@ -63,7 +63,7 @@ const RegisterVoucher = () => {
           <span className="text-2xl text-careLightBlue">Cadastrar Voucher</span>
           <div className="sm:grid grid-cols-1 md:grid md:grid-cols-3 gap-6 mt-5">
             <div>
-              <span className="text-carePurple">
+              <span className="text-careDarkBlue">
                 Nome do Voucher / Campanha
               </span>
               <Input
@@ -74,7 +74,7 @@ const RegisterVoucher = () => {
               />
             </div>
             <div>
-              <span className="text-carePurple">
+              <span className="text-careDarkBlue">
                 Informe o tipo de desconto
               </span>
               <Input
@@ -85,7 +85,7 @@ const RegisterVoucher = () => {
               />
             </div>
             <div>
-              <span className="text-carePurple">
+              <span className="text-careDarkBlue">
                 Informe o valor do desconto
               </span>
               <Input
@@ -102,7 +102,7 @@ const RegisterVoucher = () => {
         <div>
           <div className="sm:grid grid-caols-1 mb-8 md:mb-0 md:grid grid-cols-3 gap-6">
             <div>
-              <span className="text-carePurple">
+              <span className="text-careDarkBlue">
                 Informe a data de validade do Voucher
               </span>
               <CustomSelect
@@ -124,7 +124,7 @@ const RegisterVoucher = () => {
               />
             </div>
             <div className="col-span-2">
-              <span className="text-carePurple">Observações</span>
+              <span className="text-careDarkBlue">Observações</span>
               <Input
                 name="Note"
                 value={voucher.Note}
@@ -143,7 +143,7 @@ const RegisterVoucher = () => {
         />
         <Button
           onClick={openModal}
-          customClass=" bg-carePurple border-carePurple p-4 py-3 px-10"
+          customClass=" bg-careDarkBlue border-careDarkBlue p-4 py-3 px-10"
           label="Adicionar"
         />
       </div>

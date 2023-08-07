@@ -618,7 +618,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                       onClick={handleEditClick}
                     />
                     <Button
-                      customClass="bg-carePurple border-carePurple py-2 w-40 ml-2"
+                      customClass="bg-careDarkBlue border-careDarkBlue py-2 w-40 ml-2"
                       label="Salvar"
                       disabled={!isEditing}
                       onClick={handleEditData}

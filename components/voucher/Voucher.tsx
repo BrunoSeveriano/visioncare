@@ -143,7 +143,7 @@ const Voucher = () => {
               />
             </div>
           </div>
-          <div className="md:grid md:grid-cols-1 gap-8 my-2 fill-careOrange mt-10">
+          <div className="md:grid md:grid-cols-1 gap-8 my-2 fill-careDarkBlue mt-10">
             <div>
               <span className="text-2xl text-careLightBlue">
                 Localizar Vouchers cadastrados
@@ -188,7 +188,7 @@ const Voucher = () => {
               </div>
             </div>
           </div>
-          <div className="md:grid md:grid-cols-1 gap-8 my-2 fill-careOrange mt-10">
+          <div className="md:grid md:grid-cols-1 gap-8 my-2 fill-careDarkBlue mt-10">
             <div>
               <span className="text-2xl text-careLightBlue">
                 Localizar Voucher por Cliente

@@ -73,7 +73,7 @@ const EditVoucher = () => {
           <span className="text-2xl text-careLightBlue">Editar Voucher</span>
           <div className="sm:grid sm:grid-cols-1  md:grid md:grid-cols-3 gap-6 mt-5">
             <div>
-              <span className="text-carePurple">
+              <span className="text-careDarkBlue">
                 Nome do Voucher / Campanha
               </span>
               <Input
@@ -84,7 +84,7 @@ const EditVoucher = () => {
               />
             </div>
             <div>
-              <span className="text-carePurple">
+              <span className="text-careDarkBlue">
                 Informe o tipo de desconto
               </span>
               <Input
@@ -95,7 +95,7 @@ const EditVoucher = () => {
               />
             </div>
             <div>
-              <span className="text-carePurple">
+              <span className="text-careDarkBlue">
                 Informe o valor do desconto
               </span>
               <Input
@@ -112,7 +112,7 @@ const EditVoucher = () => {
         <div>
           <div className="sm:grid grid-cols-1  mb-8 md:mb-0 md:grid md:grid-cols-3 gap-6">
             <div>
-              <span className="text-carePurple">
+              <span className="text-careDarkBlue">
                 Informe a data de validade do Voucher
               </span>
               <CustomSelect
@@ -134,7 +134,7 @@ const EditVoucher = () => {
               />
             </div>
             <div className="col-span-2">
-              <span className="text-carePurple">Observações</span>
+              <span className="text-careDarkBlue">Observações</span>
               <Input
                 name="Note"
                 value={voucher.Note}
@@ -174,7 +174,7 @@ const EditVoucher = () => {
           <div className=" mb-3 md:mt-1">
             <Button
               onClick={handleUpdateVoucher}
-              customClass=" w-full bg-carePurple border-carePurple p-4 py-3 px-10"
+              customClass=" w-full bg-careDarkBlue border-careDarkBlue p-4 py-3 px-10"
               label="Salvar"
               disabled={isEditing}
             />

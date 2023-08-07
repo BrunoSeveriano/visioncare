@@ -68,7 +68,7 @@ export default function Home() {
         </div>
         <div className="w-full flex flex-col gap-2 xl:gap-4 justify-end">
           <Button
-            customClass="bg-carePurple border-carePurple py-2 xl:py-5"
+            customClass="bg-careLightBlue border-careLightBlue py-2 xl:py-5"
             label="Login"
             onClick={handleLogin}
           />

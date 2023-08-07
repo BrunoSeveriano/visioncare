@@ -8,6 +8,7 @@ import { MdOutlineMail } from "react-icons/md";
 import Card from "@/components/card/Card";
 import { resetPassword } from "@/services/login";
 import { ToastContainer, toast } from "react-toastify";
+import { BsChatSquareDots } from "react-icons/bs";
 
 const Confirmation = () => {
   const router = useRouter();
@@ -103,9 +104,9 @@ const Confirmation = () => {
         <div className="w-full flex flex-col gap-2 xl:gap-2 justify-end md:my-7 md:mb-0">
           <Input
             name="email"
-            className="fill-careOrange h-12 md:h-16"
+            className="fill-careBlue h-12 md:h-16"
             startIcon
-            iconStart={MdOutlineMail}
+            iconStart={BsChatSquareDots}
             fullWidth
             placeholder="Seu e-mail"
             type="email"
@@ -116,7 +117,7 @@ const Confirmation = () => {
         </div>
         <div className="w-full flex flex-col mt-8 gap-2 xl:gap-4 justify-end">
           <Button
-            customClass="bg-carePurple border-carePurple py-2 xl:py-5"
+            customClass="bg-careLightBlue border-careLightBlue py-2 xl:py-5"
             label="Enviar"
             onClick={resetUserPassword}
             isLoading={loading}

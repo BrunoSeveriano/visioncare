@@ -22,7 +22,7 @@ const CardPacient = () => {
           subtitle="Fale com um Especialista"
           buttonText="Ver mais"
           textColor="text-careDarkBlue"
-          bgColor="bg-careLightBlue "
+          bgColor="bg-careDarkBlue "
           hasIcon
         />
         <ContentCard
@@ -30,8 +30,8 @@ const CardPacient = () => {
           title="Agende sua adaptação"
           subtitle="Encontre a clínica adaptadora mais próxima de você e agende sua adaptação."
           buttonText="Ver mais"
-          textColor="text-careLightGreen"
-          bgColor="bg-careLightGreen"
+          textColor="text-careDarkBlue"
+          bgColor="bg-careDarkBlue"
           hasIcon
         />
       </div>
@@ -41,8 +41,8 @@ const CardPacient = () => {
           title="Fale com um Especialista​"
           subtitle="Tire suas dúvidas com um contatólogo."
           buttonText="Ver mais"
-          textColor="text-careDarkPurple"
-          bgColor="bg-careDarkPurple"
+          textColor="text-careDarkBlue"
+          bgColor="bg-careDarkBlue"
           hasIcon
         />
         <ContentCard
@@ -50,8 +50,8 @@ const CardPacient = () => {
           title="Onde encontrar?"
           subtitle="Encontre um ponto de venda mais próximo e aproveite seu desconto.​"
           buttonText="Ver mais"
-          textColor="text-careOrange"
-          bgColor="bg-careOrange"
+          textColor="text-careDarkBlue"
+          bgColor="bg-careDarkBlue"
           hasIcon
         />
       </div>

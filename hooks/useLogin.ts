@@ -18,7 +18,7 @@ const useLogin = create(
   persist<LoginStore>(
     (set) => ({
       token: "",
-      isLogged: true,
+      isLogged: false,
       email: "",
       role: "",
       name: "",

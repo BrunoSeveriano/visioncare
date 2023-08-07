@@ -21,6 +21,7 @@ import { registerUser } from "@/services/login";
 import { registerAdm } from "@/services/login";
 import dayjs from "dayjs";
 import Modal from "@/components/modals/Modal";
+import { Value } from "sass";
 
 export default function Signup() {
   const router = useRouter();
@@ -115,10 +116,9 @@ export default function Signup() {
         ...prevState,
         birthdate: value,
       }));
-      const formattedDate = dayjs(value, "DD/MM/YYYY").format("YYYY-MM-DD");
       setRegisterAccountAdmin((prevState) => ({
         ...prevState,
-        birthDate: formattedDate,
+        birthDate: value,
       }));
     } else if (name === "name") {
       const validatedValue = validateName(value);
@@ -144,14 +144,39 @@ export default function Signup() {
   };
 
   const checkIsUnderage = (birthdateString: string) => {
-    if (birthdateString.length < 10) return false;
-    const currentDate = new Date().toISOString().split("T")[0];
-    if (birthdateString > currentDate)
-      return toast.error("Data de nascimento inválida");
-    const birthdate = dayjs(birthdateString, "DD/MM/YYYY");
+    const birthdate = dayjs(birthdateString);
     const today = dayjs();
     const age = today.diff(birthdate, "year");
     return age >= 18;
+  };
+
+  const formatDate = () => {
+    const birthdate = registerAccount.birthdate;
+    const birthdateArray = birthdate.split("/");
+    const birthdateDay = birthdateArray[0];
+    const birthdateMonth = birthdateArray[1];
+    const birthdateYear = birthdateArray[2];
+
+    if (parseInt(birthdateMonth, 10) > 12) {
+      return toast.error("Data de nascimento inválida");
+    }
+
+    const birthdateFormatted = `${birthdateYear}-${birthdateMonth}-${birthdateDay}`;
+    console.log(birthdateFormatted);
+    setRegisterAccount((prevState) => ({
+      ...prevState,
+      birthdate: birthdateFormatted,
+    }));
+    setRegisterAccountAdmin((prevState) => ({
+      ...prevState,
+      birthDate: birthdateFormatted,
+    }));
+
+    if (!checkIsUnderage(birthdateFormatted)) {
+      return toast.error(
+        "Você precisa ter mais de 18 anos para prosseguir com o cadastro."
+      );
+    }
   };
 
   const CompletedIsCpf = (cpf: string) => {
@@ -211,19 +236,6 @@ export default function Signup() {
       setShowValidationMessage(!isValidEmail);
     }
   }, [email, isValidEmail]);
-
-  const formatDate = () => {
-    const formatedDate = dayjs(registerAccount.birthdate).format("YYYY-MM-DD");
-    setRegisterAccount({
-      ...registerAccount,
-      birthdate: formatedDate,
-    });
-    if (!checkIsUnderage(formatedDate)) {
-      return toast.error(
-        "Você precisa ter mais de 18 anos para prosseguir com o cadastro."
-      );
-    }
-  };
 
   const maskedPhoneNumber = () => {
     return (
@@ -391,7 +403,7 @@ export default function Signup() {
             Preencha os campos abaixo:
           </span>
         </div>
-        <div className="fill-careOrange w-full">
+        <div className="fill-careBlue w-full">
           <Input
             name="name"
             fullWidth
@@ -430,7 +442,7 @@ export default function Signup() {
             {maskedPhoneNumber()}
             {maskedCpf()}
           </div>
-          <div className="md:grid md:grid-cols-2 gap-8 my-2 fill-carePurple">
+          <div className="md:grid md:grid-cols-2 gap-8 my-2 fill-careBlue">
             <Input
               name="Password"
               placeholder="Senha"
@@ -507,7 +519,7 @@ export default function Signup() {
             </div>
           </div>
           <Button
-            customClass="bg-carePurple border-carePurple py-2 w-full"
+            customClass="bg-careLightBlue border-careLightBlue py-2 w-full"
             label="Finalizar cadastro"
             onClick={handleSignup}
             isLoading={loading}
@@ -542,7 +554,7 @@ export default function Signup() {
               </button>
               <button
                 onClick={handleAcceptTerm}
-                className="bg-carePurple hover:opacity-70 text-white font-bold py-2 px-4 rounded w-48 "
+                className="bg-careLightBlue hover:opacity-70 text-white font-bold py-2 px-4 rounded w-48 "
               >
                 Aceitar
               </button>
