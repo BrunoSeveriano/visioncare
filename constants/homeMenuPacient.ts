@@ -18,30 +18,32 @@ export const homeMenuPacient = [
     active: false,
   },
   {
-    route: "/",
+    route: "scheduling",
     icon: RxCalendar,
     text: "Agendamento",
     active: false,
   },
   {
+    route: "chat",
     icon: FaRegCommentDots,
     text: "Falar com Especialista",
     active: false,
   },
   {
-    route: "/",
+    route: "home", //temporário
     icon: TbMapSearch,
     text: "Guia do Usuário",
     active: false,
   },
   {
-    route: "/",
+    route:
+      "https://www.acuvue.com.br/guia-de-compra/onde-comprar-lentes-de-contato",
     icon: MdOutlineLocationOn,
     text: "Onde Encontrar",
     active: false,
   },
   {
-    route: "/",
+    route: "home", //temporário
     icon: MdOutlineInfo,
     text: "Sobre o Programa",
     active: false,

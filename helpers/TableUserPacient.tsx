@@ -1,14 +1,25 @@
 import Button from "@/components/button/Button";
 
 export interface Rows {
+  number: string;
   discountType: string;
   deadlineInDays: number;
   discountValue: number;
   status: string;
 }
 
-export const TableMockupPacient: TableData = {
+export const TableUserPacient: TableData = {
   columns: [
+    {
+      field: "number",
+      headerName: "ID",
+      minWidth: 95,
+      headerAlign: "center",
+      align: "center",
+      headerClassName: "columnTitle",
+      sortable: false,
+      flex: 1,
+    },
     {
       field: "discountType",
       headerName: "Serviço",
@@ -87,6 +98,7 @@ export const TableMockupPacient: TableData = {
 
   rows: [
     {
+      number: "0001",
       status: "20f3c61b-128c-4f11-9e5b-0fc47677f489",
       deadlineInDays: "30 dias",
       discountValue: "R$ 100,00",

@@ -11,6 +11,7 @@ interface ContentCardProps {
   buttonText: string;
   svgIcon: string;
   hasIcon?: boolean;
+  hideButton?: boolean;
   onButtonClick?: () => void;
 }
 
@@ -23,6 +24,7 @@ const ContentCard = ({
   buttonText,
   hasIcon,
   svgIcon,
+  hideButton,
   onButtonClick,
 }: ContentCardProps) => {
   return (
@@ -41,12 +43,14 @@ const ContentCard = ({
           </span>
         </div>
         <div className="ml-3 2xl:ml-5 my-5 flex justify-between items-end h-full">
-          <Button
-            customClass="px-14 py-2 bg-careGrey font-bold"
-            label={buttonText}
-            customColor={textColor}
-            onClick={onButtonClick}
-          />
+          {!hideButton && (
+            <Button
+              customClass="px-14 py-2 bg-careGrey font-bold"
+              label={buttonText}
+              customColor={textColor}
+              onClick={onButtonClick}
+            />
+          )}
           {hasIcon && (
             <Image
               src={svgIcon}

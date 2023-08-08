@@ -63,6 +63,7 @@ export const voucherListTable: TableData = {
       headerClassName: "columnTitle",
       sortable: false,
       flex: 1,
+      renderCell: (params: { value: any }) => `${params.value} dias`,
     },
     {
       field: "status",
