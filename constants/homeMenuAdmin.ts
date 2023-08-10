@@ -33,7 +33,7 @@ export const homeMenuAdmin = [
     active: false,
   },
   {
-    route: "home", //temporário
+    route: "order-purchase",
     icon: AiOutlineInbox,
     text: "Pedidos de compra",
     active: false,
