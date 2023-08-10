@@ -8,6 +8,8 @@ interface DataStore {
   DiscountValue: number;
   DeadlineInDays: number;
   Note: string;
+  VoucherUserHistory: any;
+  setVoucherUserHistory: (VoucherUserHistory: any) => void;
   setVoucherData: (voucherData: any) => void;
   surveyData: any;
   setSurveyData: (surveyData: any) => void;
@@ -16,6 +18,9 @@ interface DataStore {
 const useDataStorage = create(
   persist<DataStore>(
     (set) => ({
+      VoucherUserHistory: [],
+      setVoucherUserHistory: (VoucherUserHistory) =>
+        set({ VoucherUserHistory }),
       id: "",
       Name: "",
       DiscountType: "",

@@ -72,6 +72,16 @@ interface IEditClientData {
   programCode: string;
 }
 
+interface IEditAdminData {
+  userName: string;
+  userEmail: string;
+  userBirthdate: string;
+  userMobilephone: string;
+  userCPF: string;
+  userPassword: string;
+  programCode: string;
+}
+
 interface TableData {
   columns: any[];
   rows: any[];

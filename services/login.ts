@@ -46,6 +46,11 @@ export const editClientData = async (data: IEditClientData) => {
   return response.data;
 };
 
+export const editAdminData = async (data: IEditAdminData) => {
+  const response = await api.post("/user/update", data);
+  return response.data;
+};
+
 export const getAdmData = async () => {
   const response = await api.get<IDateAdm>("/user/getuserbyidaslistmodel", {
     params: {

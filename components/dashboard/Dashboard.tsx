@@ -9,7 +9,7 @@ import {
   IoExitOutline,
   IoPersonOutline,
 } from "react-icons/io5";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import useOnboardModal from "@/hooks/useOnboardModal";
 import useLogin from "@/hooks/useLogin";
 import {
@@ -26,13 +26,21 @@ import { FaRegAddressCard } from "react-icons/fa";
 import Switch from "@mui/material/Switch";
 import { alpha, styled } from "@mui/material/styles";
 import Button from "@/components/button/Button";
-import { editClientData, getAdmData, getClientData } from "@/services/login";
+import {
+  editAdminData,
+  editClientData,
+  getAdmData,
+  getClientData,
+} from "@/services/login";
 import Loading from "@/components/loading/Loading";
 import dayjs from "dayjs";
 import { ToastContainer, toast } from "react-toastify";
 import { homeMenuPacient } from "@/constants/homeMenuPacient";
 import { homeMenuAdmin } from "@/constants/homeMenuAdmin";
 import { useRouter } from "next/router";
+import { set } from "date-fns";
+import useDataStorage from "@/hooks/useDataStorage";
+import { is } from "date-fns/locale";
 
 interface DashboardProps {
   children?: React.ReactNode;
@@ -44,22 +52,7 @@ const Dashboard = ({ children }: DashboardProps) => {
   const auth = useLogin();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!auth.isLogged) {
-      router.push("/login");
-    }
-
-    const userEmail = localStorage.getItem("email") || "";
-    setIsAdminUser(userEmail.endsWith("@its.jnj.com"));
-
-    // if (localStorage.getItem("finalized") !== "true") {
-    //   onBoardModal.onOpen();
-    // }
-    setNavbarSpanText("Início");
-    handleGetUserData();
-    handleGetAdmData();
-  }, []);
-
+  const dataStorage = useDataStorage();
   const [sideBarOpen, setSidebarOpen] = useState(true);
   const [textHidden, setTextHidden] = useState(false);
   const [showRightSidebar, setShowRightSidebar] = useState(false);
@@ -78,18 +71,70 @@ const Dashboard = ({ children }: DashboardProps) => {
   const [navbarSpanText, setNavbarSpanText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isAdminUser, setIsAdminUser] = useState(false);
+  const [userData, setUserData] = useState({
+    namePatient: "",
+    patientBirthDate: "",
+    cpf: "",
+    patientMobilephone: "",
+    patientEmail: "",
+    patientUserPassword: "",
+  });
+
+  const [userDataAdm, setUserDataAdm] = useState({
+    userName: "",
+    userEmail: "",
+    userBirthdate: "",
+    userCPF: "",
+    userMobilephone: "",
+    userPassword: "",
+  });
+
   const [editData, setEditData] = useState({
     User: {
-      Email: "",
-      Password: "",
+      Email: userData.patientEmail,
+      Password: userData.patientUserPassword,
     },
-    name: "",
-    confirmedPassword: "",
-    birthdate: "",
-    mobilephone: "",
-    cpf: "",
+    name: userData.namePatient,
+    confirmedPassword: userData.patientUserPassword,
+    birthdate: userData.patientBirthDate,
+    mobilephone: userData.patientMobilephone,
+    cpf: userData.cpf,
     programCode: "073",
   });
+
+  const [editDataAdm, setEditDataAdm] = useState({
+    userName: userDataAdm.userName,
+    userEmail: userDataAdm.userEmail,
+    userBirthdate: userDataAdm.userBirthdate,
+    userMobilephone: userDataAdm.userMobilephone,
+    userCPF: userDataAdm.userCPF,
+    userPassword: userDataAdm.userPassword,
+    programCode: "073",
+  });
+
+  useEffect(() => {
+    if (!auth.isLogged) {
+      router.push("/login");
+    }
+
+    const userEmail = localStorage.getItem("email") || "";
+    userEmail.includes("its.jnj.com") ? setIsAdminUser(true) : null;
+
+    // if (localStorage.getItem("finalized") !== "true") {
+    //   onBoardModal.onOpen();
+    // }
+
+    setNavbarSpanText("Início");
+  }, []);
+
+  useEffect(() => {
+    if (isAdminUser) {
+      handleGetAdmData();
+    }
+    if (!isAdminUser) {
+      handleGetUserData();
+    }
+  }, [isAdminUser]);
 
   const menuOptions = homeMenuPacient.map((option) => {
     return {
@@ -111,53 +156,60 @@ const Dashboard = ({ children }: DashboardProps) => {
 
   const handleEditData = () => {
     setIsLoading(true);
-    editClientData(editData)
-      .then(() => {
-        handleGetUserData();
-        toast.success("Dados alterados com sucesso");
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        toast.error("Erro ao alterar dados");
-        setIsLoading(false);
-      });
+    if (isAdminUser) {
+      return editAdminData(editDataAdm)
+        .then(() => {
+          console.log("editDataAdm", editDataAdm);
+          handleGetAdmData();
+          toast.success("Dados Adiministrador alterados com sucesso");
+        })
+        .catch(() => {
+          toast.error("Erro ao alterar dados");
+        })
+        .finally(() => {
+          handleGetAdmData();
+          setIsLoading(false);
+        });
+    }
+    if (!isAdminUser) {
+      return editClientData(editData)
+        .then(() => {
+          handleGetUserData();
+          toast.success("Dados alterados com sucesso");
+        })
+        .catch(() => {
+          toast.error("Erro ao alterar dados");
+        })
+        .finally(() => {
+          handleGetUserData();
+          setIsLoading(false);
+        });
+    }
   };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    if (e.target.name === "Email") {
-      return setEditData({
-        ...editData,
-        User: { ...editData.User, Email: e.target.value },
-      });
+    if (isAdminUser) {
+      setEditDataAdm((prevData) => ({ ...prevData, [name]: value }));
+      setUserDataAdm((prevData) => ({ ...prevData, [name]: value }));
     }
-    if (e.target.name === "Password") {
-      return setEditData({
-        ...editData,
-        User: { ...editData.User, Password: e.target.value },
-      });
+    if (!isAdminUser) {
+      e.target.name === "patientEmail"
+        ? setEditData({
+            ...editData,
+            User: { ...editData.User, Email: e.target.value },
+          })
+        : null;
+      e.target.name === "patientUserPassword"
+        ? setEditData({
+            ...editData,
+            User: { ...editData.User, Password: e.target.value },
+          })
+        : null;
+      setEditData((prevData) => ({ ...prevData, [name]: value }));
+      setUserData((prevData) => ({ ...prevData, [name]: value }));
     }
-
-    setEditData((prevData) => ({ ...prevData, [name]: value }));
   };
-
-  const [userData, setUserData] = useState({
-    namePatient: "",
-    patientBirthDate: "",
-    cpf: "",
-    patientMobilephone: "",
-    patientEmail: "",
-    patientUserPassword: "",
-  });
-
-  const [userDataAdm, setUserDataAdm] = useState({
-    userName: "",
-    userEmail: "",
-    userBirthdate: "",
-    userCPF: "",
-    userMobilephone: "",
-    userPassword: "",
-  });
 
   const handleGetUserData = () => {
     setIsLoading(true);
@@ -168,7 +220,7 @@ const Dashboard = ({ children }: DashboardProps) => {
           setUserData((prevData) => ({
             ...prevData,
             namePatient: data.namePatient,
-            patientBirthDate: dayjs(data.patientBirthDate).format("YYYY-MM-DD"),
+            patientBirthDate: dayjs(data.patientBirthDate).format("DD/MM/YYYY"),
             cpf: data.cpf,
             patientMobilephone: data.patientMobilephone,
             patientEmail: data.patientEmail,
@@ -190,7 +242,7 @@ const Dashboard = ({ children }: DashboardProps) => {
           ...prevData,
           userName: res.userName,
           userEmail: res.userEmail,
-          userBirthdate: dayjs(res.userBirthdate).format("YYYY-MM-DD"),
+          userBirthdate: dayjs(res.userBirthdate).format("DD/MM/YYYY"),
           userCPF: res.userCPF,
           userMobilephone: res.userMobilephone,
           userPassword: res.userPassword,
@@ -203,18 +255,18 @@ const Dashboard = ({ children }: DashboardProps) => {
 
   const handleEditClick = () => {
     setIsEditing(true);
-    setEditData({
-      ...editData,
-      User: {
-        Email: userData.patientEmail,
-        Password: userData.patientUserPassword,
-      },
-      name: userData.namePatient,
-      confirmedPassword: userData.patientUserPassword,
-      birthdate: userData.patientBirthDate,
-      mobilephone: userData.patientMobilephone,
-      cpf: userData.cpf,
-    });
+    // setEditData({
+    //   ...editData,
+    //   User: {
+    //     Email: userData.patientEmail,
+    //     Password: userData.patientUserPassword,
+    //   },
+    //   name: userData.namePatient,
+    //   confirmedPassword: userData.patientUserPassword,
+    //   birthdate: userData.patientBirthDate,
+    //   mobilephone: userData.patientMobilephone,
+    //   cpf: userData.cpf,
+    // });
   };
 
   const handleOpenMyData = () => {
@@ -242,17 +294,23 @@ const Dashboard = ({ children }: DashboardProps) => {
     paddingTop: sideBarOpen ? "" : "0.8rem",
   };
 
+  function formatDate(date: string) {
+    const dateArray = date.split("-");
+    const year = dateArray[0];
+    const month = dateArray[1];
+    const day = dateArray[2].split("T")[0];
+    return `${day}/${month}/${year}`;
+  }
+
   const maskedPhoneNumber = () => {
     return (
       <InputMask
         onChange={handleChange}
-        name="mobilephone"
+        name={isAdminUser ? "userMobilephone" : "patientMobilephone"}
         value={
-          !isEditing
-            ? isAdminUser
-              ? userDataAdm.userMobilephone
-              : userData.patientMobilephone
-            : editData.mobilephone
+          isAdminUser
+            ? userDataAdm.userMobilephone
+            : userData.patientMobilephone
         }
         mask="(99) 99999-9999"
         alwaysShowMask={false}
@@ -273,14 +331,8 @@ const Dashboard = ({ children }: DashboardProps) => {
     return (
       <InputMask
         onChange={handleChange}
-        name="cpf"
-        value={
-          !isEditing
-            ? isAdminUser
-              ? userDataAdm.userCPF
-              : userData.cpf
-            : editData.cpf
-        }
+        name={isAdminUser ? "userCPF" : "cpf"}
+        value={isAdminUser ? userDataAdm.userCPF : userData.cpf}
         disabled={!isEditing}
         mask="999.999.999-99"
         alwaysShowMask
@@ -488,13 +540,11 @@ const Dashboard = ({ children }: DashboardProps) => {
                     <span className="text-neutral-400">Nome</span>
                     <Input
                       onChange={handleChange}
-                      name="name"
+                      name={isAdminUser ? "userName" : "namePatient"}
                       value={
-                        !isEditing
-                          ? isAdminUser
-                            ? userDataAdm.userName
-                            : userData.namePatient
-                          : editData.name
+                        isAdminUser
+                          ? userDataAdm.userName
+                          : userData.namePatient
                       }
                       placeholder="Seu nome"
                       fullWidth
@@ -508,13 +558,11 @@ const Dashboard = ({ children }: DashboardProps) => {
                       <span className="text-neutral-400">Email</span>
                       <Input
                         onChange={handleChange}
-                        name="Email"
+                        name={isAdminUser ? "userEmail" : "patientEmail"}
                         value={
-                          !isEditing
-                            ? isAdminUser
-                              ? userDataAdm.userEmail
-                              : userData.patientEmail
-                            : editData.User.Email
+                          isAdminUser
+                            ? userDataAdm.userEmail
+                            : userData.patientEmail
                         }
                         placeholder="Email"
                         required
@@ -528,13 +576,13 @@ const Dashboard = ({ children }: DashboardProps) => {
                         Data de nascimento
                       </span>
                       <Input
-                        name="birthdate"
+                        name={
+                          isAdminUser ? "userBirthdate" : "patientBirthDate"
+                        }
                         value={
-                          !isEditing
-                            ? isAdminUser
-                              ? userDataAdm.userBirthdate
-                              : userData.patientBirthDate
-                            : editData.birthdate
+                          isAdminUser
+                            ? userDataAdm.userBirthdate
+                            : userData.patientBirthDate
                         }
                         disabled={!isEditing}
                         onBlur={onBlur}
@@ -565,13 +613,13 @@ const Dashboard = ({ children }: DashboardProps) => {
                     <div>
                       <span className="text-neutral-400">Senha</span>
                       <Input
-                        name="Password"
+                        name={
+                          isAdminUser ? "userPassword" : "patientUserPassword"
+                        }
                         value={
-                          !isEditing
-                            ? isAdminUser
-                              ? userDataAdm.userPassword
-                              : userData.patientUserPassword
-                            : editData.User.Password
+                          isAdminUser
+                            ? userDataAdm.userPassword
+                            : userData.patientUserPassword
                         }
                         disabled={!isEditing}
                         placeholder="Senha"
@@ -587,13 +635,6 @@ const Dashboard = ({ children }: DashboardProps) => {
                       <span className="text-neutral-400">Confirmar senha</span>
                       <Input
                         name="confirmedPassword"
-                        value={
-                          !isEditing
-                            ? isAdminUser
-                              ? userDataAdm.userPassword
-                              : userData.patientUserPassword
-                            : editData.confirmedPassword
-                        }
                         disabled={!isEditing}
                         placeholder="Confirmar senha"
                         startIcon
@@ -652,32 +693,76 @@ const Dashboard = ({ children }: DashboardProps) => {
         )}
       </div>
       {showRightSidebar && (
-        <div
-          className={`w-1/3 hidden md:flex border-r-[0.5px] h-screen flex-col border-careGrey ${sidebarRightClasses}`}
-        >
-          <div className="w-full mt-5">
+        <>
+          {router.pathname !== "/dashboard/patient-voucher" ? (
             <div
-              onClick={handleOpenMyData}
-              className=" pl-5 pr-5 border-b-[1px] pb-2 lg:pb-[27px] cursor-pointer"
+              className={`w-1/3 hidden md:flex border-r-[0.5px] h-screen flex-col border-careGrey ${sidebarRightClasses}`}
             >
-              <div className="border-purple-500 border-[1px] rounded-lg p-3 flex items-center">
-                <div className="bg-carePurple rounded-full mr-4 p-2">
-                  <IoPersonOutline size="1.5em" className=" text-white" />
+              <div className="w-full mt-5">
+                <div
+                  onClick={handleOpenMyData}
+                  className=" pl-5 pr-5 border-b-[1px] pb-2 lg:pb-[27px] cursor-pointer"
+                >
+                  <div className="border-purple-500 border-[1px] rounded-lg p-3 flex items-center">
+                    <div className="bg-carePurple rounded-full mr-4 p-2">
+                      <IoPersonOutline size="1.5em" className=" text-white" />
+                    </div>
+                    <span className="text-lg mt-1">Meus Dados</span>
+                  </div>
                 </div>
-                <span className="text-lg mt-1">Meus Dados</span>
+              </div>
+              <div className="md:mt-5 ml-5 mr-5 2xl:mt-10 text-careDarkBlue cursor-pointer bg-careBackgroundInput py-6 rounded-lg ">
+                <MenuOptions
+                  logout
+                  icon={IoExitOutline}
+                  text="Sair da Conta"
+                  route="/"
+                  iconClassname="text-careLightBlue"
+                />
               </div>
             </div>
-          </div>
-          <div className="md:mt-5 ml-5 mr-5 2xl:mt-10 text-careDarkBlue cursor-pointer bg-careBackgroundInput py-6 rounded-lg ">
-            <MenuOptions
-              logout
-              icon={IoExitOutline}
-              text="Sair da Conta"
-              route="/"
-              iconClassname="text-careLightBlue"
-            />
-          </div>
-        </div>
+          ) : (
+            <div className="mt-5 md:w-1/3  md:right-0 bg-white">
+              <div className="py-[30px] px-5 border-b-2 border-gray-200 flex flex-col">
+                <span className="text-2xl text-careLightBlue">
+                  Histórico de utilização
+                </span>
+              </div>
+              <div className="mb-5 py-5 px-5 border-b-2 border-gray-200 flex flex-col">
+                <span className="text-lg- text-careBlue">DATA / LOCAL</span>
+              </div>
+              <div className="grid grid-cols-2">
+                <div className="md:ml-4 mb-5">
+                  {dataStorage.VoucherUserHistory &&
+                    dataStorage.VoucherUserHistory.length > 0 &&
+                    dataStorage.VoucherUserHistory.map(
+                      (historyItem: any, index: any) => (
+                        <>
+                          <div
+                            key={index}
+                            className="border border-careGrey bg-careGrey p-5 rounded-t-xl"
+                          >
+                            <div className="text-careLightBlue">
+                              {formatDate(historyItem.useDate)}
+                            </div>
+                            <div className="text-careBlue mt-1">
+                              <span className="font-bold text-lg">
+                                {historyItem.discountType} -
+                              </span>
+                              <span> {historyItem.locality}</span>
+                            </div>
+                          </div>
+                          <div className="flex justify-end rounded-b-xl text-careLightBlue bg-careBlue text-lg p-3 ">
+                            {historyItem.discountType}
+                          </div>
+                        </>
+                      )
+                    )}
+                </div>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
