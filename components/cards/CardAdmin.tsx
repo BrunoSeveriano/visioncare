@@ -14,7 +14,7 @@ const CardAdmin = () => {
           title="Vouchers"
           subtitle="Ative vouchers e cadastre campanhas.​"
           buttonText="Ver mais"
-          textColor="text-careDarkBlue"
+          textColor="text-white"
           bgColor="bg-careDarkBlue"
           hasIcon
         />
@@ -24,7 +24,7 @@ const CardAdmin = () => {
           title="Cadastrar parceiros"
           subtitle="Canal exclusivo para cadastros de parceiros J&J.​"
           buttonText="Ver mais"
-          textColor="text-careDarkBlue"
+          textColor="text-white"
           bgColor="bg-careDarkBlue"
           hasIcon
         />
@@ -34,7 +34,7 @@ const CardAdmin = () => {
           title="Dashboard"
           subtitle="Canal exclusivo para cadastros de parceiros J&J.​"
           buttonText="Ver mais"
-          textColor="text-careDarkBlue"
+          textColor="text-white"
           bgColor="bg-careDarkBlue"
           hasIcon
         />
@@ -44,7 +44,7 @@ const CardAdmin = () => {
           title="Pedidos de compra"
           subtitle="Canal exclusivo para cadastros de parceiros J&J.​"
           buttonText="Ver mais"
-          textColor="text-careDarkBlue"
+          textColor="text-white"
           bgColor="bg-careDarkBlue"
           hasIcon
         />

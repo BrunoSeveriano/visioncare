@@ -58,7 +58,7 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen bg-careLightBlue">
+    <div className="h-screen bg-careDarkBlue">
       <ToastContainer
         position="top-right"
         autoClose={10000}
@@ -74,13 +74,13 @@ const Login = () => {
       />
 
       <div className="hidden xl:block">
-        <div className="fixed z-20 w-60 h-[7%] right-0 bottom-[40%] bg-[#FFB81C]"></div>
-        <div className="fixed z-20 w-60 h-[7%] right-0 bottom-[30%] bg-[#A51890]"></div>
-        <div className="fixed z-20 w-60 h-[7%] right-0 bottom-[20%] bg-[#FF6A39]"></div>
+        <div className="fixed z-20 w-60 h-[7%] right-0 bottom-[40%] bg-[#007cc4]"></div>
+        <div className="fixed z-20 w-60 h-[7%] right-0 bottom-[30%] bg-[#007cc4]"></div>
+        <div className="fixed z-20 w-60 h-[7%] right-0 bottom-[20%] bg-[#007cc4]"></div>
       </div>
       <Image
         src="/acuvue-letter.png"
-        className="block md:hidden absolute top-10 left-12"
+        className="z-40 block absolute top-10 left-12"
         alt="acuvue letter"
         width={120}
         height={50}
@@ -90,8 +90,8 @@ const Login = () => {
           width={1000}
           height={1000}
           alt="background-mobile"
-          src="/bg-acess-mobile.png"
-          className="z-40 absolute top-[100px]"
+          src="/bg-login-mobile.png"
+          className="absolute"
           quality={100}
         />
       </div>
@@ -99,8 +99,8 @@ const Login = () => {
         <Image
           fill
           alt="background"
-          src="/bg-acess-orange.png"
-          style={{ objectFit: "cover", objectPosition: "100% 0%" }}
+          src="/acuvue-new-background.png"
+          className="object-left-bottom object-cover"
           quality={100}
         />
       </div>
@@ -115,8 +115,8 @@ const Login = () => {
           />
         </div>
         <div className="my-5 z-30 ">
-          <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
-            Entre com seu e-mail e senha abaixo:
+          <span className="flex justify-center text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+            Acesse com seu e-mail e senha abaixo:
           </span>
         </div>
         <div className="w-full flex flex-col gap-2 xl:gap-2 justify-end md:my-7 md:mb-0">

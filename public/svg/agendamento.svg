@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30.688" height="29.265" viewBox="0 0 30.688 29.265">
+  <g id="Componente_86_1" data-name="Componente 86 – 1" transform="translate(0.3 0.3)">
+    <path id="Caminho_247" data-name="Caminho 247" d="M35.184,7.309H24.475a.386.386,0,1,1,0-.772H35.184a.386.386,0,1,1,0,.772" transform="translate(-14.785 -4.012)" fill="#051f4a" stroke="#051f4a" stroke-width="0.6"/>
+    <path id="Caminho_248" data-name="Caminho 248" d="M30.277,39.283H9.485a1.607,1.607,0,0,1-1.6-1.6V21.813h.386V37.678A1.22,1.22,0,0,0,9.485,38.9H30.277A1.22,1.22,0,0,0,31.5,37.678V21.813h.386V37.678a1.607,1.607,0,0,1-1.6,1.6" transform="translate(-4.836 -13.388)" fill="#051f4a" stroke="#051f4a" stroke-width="0.6"/>
+    <rect id="Retângulo_277" data-name="Retângulo 277" width="28.771" height="0.386" transform="translate(0.656 8.231)" fill="#051f4a" stroke="#051f4a" stroke-width="0.6"/>
+    <rect id="Retângulo_278" data-name="Retângulo 278" width="0.386" height="17.277" transform="translate(14.848 8.424)" fill="#051f4a" stroke="#051f4a" stroke-width="0.6"/>
+    <rect id="Retângulo_279" data-name="Retângulo 279" width="0.386" height="17.277" transform="translate(8.961 8.424)" fill="#051f4a" stroke="#051f4a" stroke-width="0.6"/>
+    <rect id="Retângulo_280" data-name="Retângulo 280" width="0.386" height="17.277" transform="translate(20.961 8.424)" fill="#051f4a" stroke="#051f4a" stroke-width="0.6"/>
+    <rect id="Retângulo_281" data-name="Retângulo 281" width="23.42" height="0.386" transform="translate(3.234 13.946)" fill="#051f4a" stroke="#051f4a" stroke-width="0.6"/>
+    <rect id="Retângulo_282" data-name="Retângulo 282" width="23.616" height="0.386" transform="translate(3.234 19.793)" fill="#051f4a" stroke="#051f4a" stroke-width="0.6"/>
+    <path id="Caminho_249" data-name="Caminho 249" d="M27.239,32.677H2.849A2.852,2.852,0,0,1,0,29.828V9.386a2.853,2.853,0,0,1,2.849-2.85h3.4a.386.386,0,0,1,0,.772h-3.4A2.079,2.079,0,0,0,.772,9.386V29.828A2.079,2.079,0,0,0,2.849,31.9h24.39a2.079,2.079,0,0,0,2.077-2.077V9.386a2.08,2.08,0,0,0-2.077-2.077H23.925a.386.386,0,0,1,0-.772h3.314a2.853,2.853,0,0,1,2.85,2.85V29.828a2.853,2.853,0,0,1-2.85,2.849" transform="translate(0 -4.012)" fill="#051f4a" stroke="#051f4a" stroke-width="0.6"/>
+    <path id="Caminho_250" data-name="Caminho 250" d="M17.963,5.57a1.611,1.611,0,0,1-1.609-1.609V1.609a1.609,1.609,0,1,1,3.219,0V3.961A1.611,1.611,0,0,1,17.963,5.57m0-5.184A1.225,1.225,0,0,0,16.74,1.609V3.961a1.223,1.223,0,0,0,2.446,0V1.609A1.225,1.225,0,0,0,17.963.386" transform="translate(-10.037)" fill="#051f4a" stroke="#051f4a" stroke-width="0.6"/>
+    <path id="Caminho_251" data-name="Caminho 251" d="M54.825,5.57a1.611,1.611,0,0,1-1.609-1.609V1.609a1.609,1.609,0,1,1,3.219,0V3.961A1.611,1.611,0,0,1,54.825,5.57m0-5.184A1.225,1.225,0,0,0,53.6,1.609V3.961a1.223,1.223,0,1,0,2.446,0V1.609A1.225,1.225,0,0,0,54.825.386" transform="translate(-32.662)" fill="#051f4a" stroke="#051f4a" stroke-width="0.6"/>
+  </g>
+</svg>

@@ -433,7 +433,7 @@ const DashboardAdmin = () => {
             </div>
           )}
           {showCustomTablePatient && (
-            <div className="fade-in">
+            <div className="fade-in mt-5">
               <CustomTable
                 rowId="id"
                 rows={patientList}

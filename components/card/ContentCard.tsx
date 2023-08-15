@@ -7,7 +7,9 @@ interface ContentCardProps {
   bgColor?: string;
   textColor?: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
+  textemail?: string;
+  textphone?: string;
   buttonText: string;
   svgIcon: string;
   hasIcon?: boolean;
@@ -21,6 +23,8 @@ const ContentCard = ({
   textColor,
   title,
   subtitle,
+  textemail,
+  textphone,
   buttonText,
   hasIcon,
   svgIcon,
@@ -38,14 +42,20 @@ const ContentCard = ({
       <div className={`${isCustomBg && "scale-x-[-1]"} flex flex-col h-full`}>
         <div className="text-white md:w-full ml-3 2xl:ml-5 mt-5 md:mt-8 xl:mt-5 text-3xl flex flex-col">
           <span>{title}</span>
-          <span className="text-sm mt-5 ml-1 opacity-95 w-64 lg:w-11/12 xl:w-96 2xl:w-11/12">
-            {subtitle}
+          <span className="text-sm mt-5 ml-1 opacity-95">{subtitle}</span>
+          <span className="text-sm font-bold ml-1 opacity-95">{textemail}</span>
+          <span className="absolute mt-40 md:mt-36 text-3xl font-bold ml-1 opacity-95">
+            {textphone}
           </span>
         </div>
-        <div className="ml-3 2xl:ml-5 my-5 flex justify-between items-end h-full">
+        <div
+          className={`ml-3 2xl:ml-5 my-5 flex ${
+            hideButton ? "justify-end" : "justify-between"
+          } items-end h-full`}
+        >
           {!hideButton && (
             <Button
-              customClass="px-14 py-2 bg-careGrey font-bold"
+              customClass="px-14 py-2 bg-careLightBlue border-1 border-careLightBlue font-bold"
               label={buttonText}
               customColor={textColor}
               onClick={onButtonClick}

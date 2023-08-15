@@ -65,15 +65,17 @@ const RegisterPartiner = () => {
       {partiner.isOpen && <CreatePartiner />}
       {!partiner.isOpen && !editPartiner.isOpen && (
         <div className="w-3/5 md:w-full fade-in">
-          <div className="flex flex-col-reverse md:flex md:flex-row md:justify-between">
-            <span className="text-3xl text-careLightBlue my-3 md:my-0">
-              Localizar
-            </span>
+          <div className="mt-5">
             <Button
               onClick={partiner.onOpen}
               label="Cadastrar Parceiro"
               customClass=" w-80 md:w-1/5 bg-careBlue border-careBlue text-white h-14 md:h-10 rounded-md text-sm "
             />
+          </div>
+          <div className="flex flex-col-reverse mt-10 md:flex md:flex-row md:justify-between">
+            <span className="text-3xl text-careLightBlue my-3 md:my-0">
+              Localizar Por:
+            </span>
           </div>
 
           <div className="fill-careBlue mb-5 sm:grid-cols-1 md:grid md:grid-cols-3 gap-6">

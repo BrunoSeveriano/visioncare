@@ -59,7 +59,7 @@ const EditVoucher = () => {
 
       <div className="md:grid md:grid-cols-1 rounded-lg">
         <div className="bg-careGrey  rounded-md p-2 flex items-center">
-          <div className="border-careDarkPurple border-r-[2px] text-careDarkPurple">
+          <div className="border-careDarkBlue border-r-[2px] text-careDarkBlue">
             <AiOutlineInfoCircle className="mr-3" size="2rem" />
           </div>
           <span className="pl-5 text-careDarkBlue">

@@ -81,7 +81,7 @@ const Input = ({
         fullWidth
         onKeyDown={handleKeyPress}
         className={`${className} disabled:cursor-not-allowed disabled:opacity-70 disabled:bg-gray-200 rounded-lg md:py-1`}
-        placeholder={placeholder ? placeholder : "escreva aqui..."}
+        placeholder={placeholder ? placeholder : ""}
         style={style}
         sx={{
           "& fieldset": { border: "none" },

@@ -76,6 +76,7 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
           bgColor="bg-careDarkBlue"
           hasIcon
           onButtonClick={handleShowHistory}
+          hideButton
         />
       </div>
 

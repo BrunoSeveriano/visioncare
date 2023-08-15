@@ -59,39 +59,44 @@ const NewPassword = () => {
   };
 
   return (
-    <div className="h-screen bg-careLightBlue">
+    <div className="h-screen bg-careDarkBlue">
       <div className="xl:block md:hidden">
-        <div className="fixed z-40 w-60 h-[6%] right-0 bottom-[23%] xl:bottom-[41%] bg-[#FFB81C]"></div>
-        <div className="fixed z-40 w-60 h-[6%] right-0 bottom-[15%] xl:bottom-[33%] bg-[#A51890]"></div>
-        <div className="fixed z-40 w-60 h-[6%] right-0 bottom-[7%]  xl:bottom-[25%] bg-[#FF6A39]"></div>
+        <div className="fixed z-40 w-60 h-[6%] right-0 bottom-[23%] xl:bottom-[41%] bg-[#007cc4]"></div>
+        <div className="fixed z-40 w-60 h-[6%] right-0 bottom-[15%] xl:bottom-[33%] bg-[#007cc4]"></div>
+        <div className="fixed z-40 w-60 h-[6%] right-0 bottom-[7%]  xl:bottom-[25%] bg-[#007cc4]"></div>
       </div>
+      <Image
+        src="/acuvue-letter.png"
+        className="z-40 block absolute top-10 left-12"
+        alt="acuvue letter"
+        width={120}
+        height={50}
+      />
       <div className="block md:hidden">
         <Image
-          width={337}
-          height={212}
+          width={1000}
+          height={1000}
           alt="background-mobile"
-          src="/bg-confirmation.png"
-          className="z-40 absolute top-[23px] left-8"
+          src="/bg-login-mobile.png"
+          className="absolute"
           quality={100}
         />
       </div>
       <div className="hidden xl:block 2xl:hidden">
         <Image
-          width={630}
-          height={520}
-          className="absolute top-1/4 left-20"
-          alt="background-tablet"
-          src="/bg-confirmation.png"
+          fill
+          alt="background"
+          src="/acuvue-new-background.png"
+          className="object-left-bottom object-cover"
           quality={100}
         />
       </div>
       <div className="hidden 2xl:block">
         <Image
-          width={844}
-          height={529}
-          className="absolute top-1/4 left-48"
+          fill
           alt="background"
-          src="/bg-confirmation.png"
+          src="/acuvue-new-background.png"
+          className="object-left-bottom object-cover"
           quality={100}
         />
       </div>

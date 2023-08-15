@@ -24,13 +24,13 @@ export const homeMenuPacient = [
     active: false,
   },
   {
-    route: "chat",
+    route: "talk-to-specialist",
     icon: FaRegCommentDots,
     text: "Falar com Especialista",
     active: false,
   },
   {
-    route: "home", //temporário
+    route: "user-guide",
     icon: TbMapSearch,
     text: "Guia do Usuário",
     active: false,

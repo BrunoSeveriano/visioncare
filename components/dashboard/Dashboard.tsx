@@ -375,7 +375,7 @@ const Dashboard = ({ children }: DashboardProps) => {
       >
         <div className="mt-12 flex justify-center">
           <div
-            className={`h-16 xl:px-7 2xl:px-16 border-b-2 border-careDarkPurple md:mb-6 2xl:mb-10`}
+            className={`h-16 xl:px-7 2xl:px-16 border-b-2 border-careLightBlue md:mb-6 2xl:mb-10`}
             style={imageStyle}
           >
             <Image
@@ -504,8 +504,8 @@ const Dashboard = ({ children }: DashboardProps) => {
                 onClick={handleOpenMyData}
                 className=" mt-8 pl-5 pr-5 border-b-[1px] pb-2 lg:pb-[27px]"
               >
-                <div className="border-purple-500 border-[1px] rounded-lg p-3 flex items-center">
-                  <div className="bg-carePurple rounded-full mr-4 p-2">
+                <div className="border-careDarkBlue border-[1px] rounded-lg p-3 flex items-center">
+                  <div className="bg-careDarkBlue rounded-full mr-4 p-2">
                     <IoPersonOutline size="1.5em" className=" text-white" />
                   </div>
                   <span className="text-lg mt-1">Meus Dados</span>
@@ -659,7 +659,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                       onClick={handleEditClick}
                     />
                     <Button
-                      customClass="bg-careDarkBlue border-careDarkBlue py-2 w-40 ml-2"
+                      customClass="bg-careLightBlue border-careLightBlue py-2 w-40 ml-2"
                       label="Salvar"
                       disabled={!isEditing}
                       onClick={handleEditData}
@@ -703,8 +703,8 @@ const Dashboard = ({ children }: DashboardProps) => {
                   onClick={handleOpenMyData}
                   className=" pl-5 pr-5 border-b-[1px] pb-2 lg:pb-[27px] cursor-pointer"
                 >
-                  <div className="border-purple-500 border-[1px] rounded-lg p-3 flex items-center">
-                    <div className="bg-carePurple rounded-full mr-4 p-2">
+                  <div className="border-careDarkBlue border-[1px] rounded-lg p-3 flex items-center">
+                    <div className="bg-careDarkBlue rounded-full mr-4 p-2">
                       <IoPersonOutline size="1.5em" className=" text-white" />
                     </div>
                     <span className="text-lg mt-1">Meus Dados</span>

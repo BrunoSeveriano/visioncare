@@ -19,15 +19,15 @@ export default function Home() {
   };
 
   return (
-    <main className="h-screen bg-careLightBlue">
+    <main className="h-screen bg-careDarkBlue">
       <div className="hidden xl:block">
-        <div className="fixed z-40 w-60 h-[7%] right-0 bottom-[40%] bg-[#FFB81C]"></div>
-        <div className="fixed z-40 w-60 h-[7%] right-0 bottom-[30%] bg-[#A51890]"></div>
-        <div className="fixed z-40 w-60 h-[7%] right-0 bottom-[20%] bg-[#FF6A39]"></div>
+        <div className="fixed z-40 w-60 h-[7%] right-0 bottom-[40%] bg-[#007cc4]"></div>
+        <div className="fixed z-40 w-60 h-[7%] right-0 bottom-[30%] bg-[#007cc4]"></div>
+        <div className="fixed z-40 w-60 h-[7%] right-0 bottom-[20%] bg-[#007cc4]"></div>
       </div>
       <Image
         src="/acuvue-letter.png"
-        className="block md:hidden absolute top-10 left-12"
+        className="z-40 block md:hidden absolute top-10 left-12"
         alt="acuvue letter"
         width={120}
         height={50}
@@ -37,8 +37,8 @@ export default function Home() {
           width={400}
           height={1000}
           alt="background-mobile"
-          src="/bg-login-orange-mobile.png"
-          className="z-40 absolute top-[100px]"
+          src="/bg-login-mobile.png"
+          className="absolute"
           quality={100}
         />
       </div>
@@ -46,22 +46,32 @@ export default function Home() {
         <Image
           fill
           alt="background"
-          src="/bg-login-desktop.png"
-          className="object-top object-cover"
+          src="/acuvue-new-background.png"
+          className="object-left-bottom object-cover"
           quality={100}
         />
       </div>
+
       <Card>
         <div className="flex justify-center items-center lg:mb-10">
           <Image
+            className="w-[150px] h-[170px] xl:w-[200px] xl:h-[220px]"
             quality={100}
-            width={500}
-            height={500}
-            src="/acuvue-login.png"
+            width={200}
+            height={220}
+            src="/logo.png"
             alt="acuvue-login"
           />
         </div>
-        <div className="xl:mb-10 mb-7 mt-14 lg:mt-6 z-40">
+        <div className="mt-5 flex flex-col items-center">
+          <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+            Sua experiência personalizada com
+          </span>
+          <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+            as lentes de contato ACUVUE
+          </span>
+        </div>
+        <div className="flex justify-center xl:mb-10 mb-7 mt-12 lg:mt-6 z-40">
           <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
             Acesse sua conta ou cadastre-se!
           </span>
