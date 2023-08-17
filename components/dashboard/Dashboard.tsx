@@ -41,6 +41,7 @@ import { useRouter } from "next/router";
 import { set } from "date-fns";
 import useDataStorage from "@/hooks/useDataStorage";
 import { is } from "date-fns/locale";
+import HuggyChat from "../specialist/HuggyChat";
 
 interface DashboardProps {
   children?: React.ReactNode;
@@ -358,6 +359,7 @@ const Dashboard = ({ children }: DashboardProps) => {
   if (!auth.isLogged) return null;
   return (
     <div className="flex w-full h-screen fade-in lg:overflow-auto">
+      <HuggyChat />
       <ToastContainer
         position="top-right"
         autoClose={5000}

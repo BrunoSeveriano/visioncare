@@ -67,7 +67,7 @@ const ContentCard = ({
               width={58}
               height={38}
               alt="card-svg"
-              className="object-contain mr-8 md:w-auto lg:w-10 xl:w-14 2xl:w-auto"
+              className="object-contain mr-8 md:w-auto lg:w-10 xl:w-14 2xl:w-auto ml-5"
             />
           )}
         </div>

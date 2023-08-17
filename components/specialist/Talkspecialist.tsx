@@ -1,7 +1,15 @@
 import React from "react";
 import ContentCard from "../card/ContentCard";
+import useLogin from "@/hooks/useLogin";
+import { showChats } from "../specialist/HuggyChat";
 
 const Talkspecialist = () => {
+  const login = useLogin();
+
+  const handleButtonClick = () => {
+    showChats();
+  };
+
   return (
     <div className="fade-in">
       <div className="mb-3">
@@ -19,6 +27,7 @@ const Talkspecialist = () => {
 
       <div className="grid md:grid-cols-1 gap-y-3 lg:grid-cols-2 gap-x-4 mb-3">
         <ContentCard
+          onButtonClick={handleButtonClick}
           svgIcon="/svg/v-card.svg"
           title="Quero tirar duvidas pelo chat​"
           buttonText="Clique aqui"
