@@ -16,9 +16,8 @@ import "dayjs/locale/pt-br";
 import useDataStorage from "@/hooks/useDataStorage";
 import { responseSurvey } from "@/services/questions";
 import { getLocation } from "@/services/location";
-import { set } from "date-fns";
+import Loading from "@/components/loading/Loading";
 import { getCalendar } from "@/services/calendar";
-import useClientData from "@/hooks/useClientData";
 import { schedulevisittoclinic } from "@/services/diagnostic";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
@@ -38,6 +37,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
   const dataStorage = useDataStorage();
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [timeSelected, setTimeSelected] = useState("");
   const [selectedDate, setSelectedDate] = useState<dayjs.Dayjs | null>(null);
   const [postalCode, setPostalCode] = useState("");
@@ -47,7 +47,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
   const [calendarData, setCalendarData] = useState([]);
   const [calendarHour, setCalendarHour] = useState(0);
   const [postData, setPostData] = useState<any>({
-    name: dataStorage.Name,
+    name: dataStorage.VoucherUserHistory.name,
     scheduleDateStart: "",
     eyePrescription: {
       refraction: {
@@ -113,14 +113,14 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
     if (selectedOption !== null) {
       const selectedOptionText = options[currentQuestion][selectedOption];
       const questionId = optionQuestionIds[currentQuestion][selectedOption];
-      setSurveyData([
-        ...surveyData,
+
+      setSurveyData((prevSurveyData: any) => [
+        ...prevSurveyData,
         {
           surveyId: "6b7c2c11-3951-4b5d-89b4-2797f487b9b7",
           questionResponse: selectedOptionText,
           questionId: questionId,
         },
-        console.log(surveyData),
       ]);
 
       if (currentQuestion === 1 && selectedOption === 0) {
@@ -145,7 +145,10 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
 
     if (currentQuestion === 4) {
       await schedulevisittoclinic(postData).then(() => {
-        toast.success("Agendamento realizado com sucesso!");
+        toast.success(
+          "Agendamento feito com sucesso! Aguarde o recebimento de confirmação do agendamento via e-mail. Até logo!"
+        );
+        router.push("/dashboard/home");
       });
     }
   };
@@ -167,7 +170,6 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
         },
       },
     });
-    console.log(postData);
   };
 
   const handleOptionClick = (index: number) => {
@@ -182,14 +184,18 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
     setPostalCode(newPostalCode);
 
     if (newPostalCode.length >= 8) {
+      setIsLoading(true);
       try {
         const filters = {
           postalCode: newPostalCode,
         };
         const data = await getLocation(filters);
+        setIsLoading(true);
         setLocationData(data);
       } catch (error) {
         console.error("Erro ao buscar dados de localização:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -372,28 +378,37 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
               startIcon
               iconStart={BiSearch}
             />
-            {locationData.map((location: any, index: number) => (
-              <div
-                className={`flex items-center gap-3 fade-in border-b w-72 md:w-96 border-careMenuGrey rounded cursor-pointer mt-1 ${
-                  isLocationClicked === location.id
-                    ? "bg-careDarkBlue"
-                    : "bg-[#f6f6f6]"
-                } p-5`}
-                key={index}
-              >
-                <MdOutlineLocationOn className="text-careLightBlue" size={24} />
-                <span
-                  onClick={() => handleSpanClick(location.id)}
-                  className={`text-base ${
-                    isLocationClicked === location.id
-                      ? "text-careLightBlue "
-                      : "text-careBlue"
-                  }`}
-                >
-                  {location.name}
-                </span>
-              </div>
-            ))}
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <>
+                {locationData.map((location: any, index: number) => (
+                  <div
+                    className={`flex items-center gap-3 fade-in border-b w-72 md:w-96 border-careMenuGrey rounded cursor-pointer mt-1 ${
+                      isLocationClicked === location.id
+                        ? "bg-careDarkBlue"
+                        : "bg-[#f6f6f6]"
+                    } p-5`}
+                    key={index}
+                  >
+                    <MdOutlineLocationOn
+                      className="text-careLightBlue"
+                      size={24}
+                    />
+                    <span
+                      onClick={() => handleSpanClick(location.id)}
+                      className={`text-base ${
+                        isLocationClicked === location.id
+                          ? "text-careLightBlue "
+                          : "text-careBlue"
+                      }`}
+                    >
+                      {location.name}
+                    </span>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </div>
       )}
