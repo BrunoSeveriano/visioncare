@@ -5,9 +5,9 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import Button from "../button/Button";
 import { useEffect, useState } from "react";
 import Input from "../input/Input";
-import { BiSearch } from "react-icons/bi";
+import { BiSearch, BiTrash } from "react-icons/bi";
 import { BsCalendar2Week } from "react-icons/bs";
-import { MdAlarm } from "react-icons/md";
+import { MdAlarm, MdOutlineLocationOn } from "react-icons/md";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
@@ -15,6 +15,13 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import useDataStorage from "@/hooks/useDataStorage";
 import { responseSurvey } from "@/services/questions";
+import { getLocation } from "@/services/location";
+import { set } from "date-fns";
+import { getCalendar } from "@/services/calendar";
+import useClientData from "@/hooks/useClientData";
+import { schedulevisittoclinic } from "@/services/diagnostic";
+import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 dayjs.extend(localizedFormat);
 dayjs.locale("pt-br");
@@ -29,17 +36,55 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
   setCurrentQuestion,
 }) => {
   const dataStorage = useDataStorage();
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(
-    null
-  );
+  const router = useRouter();
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [timeSelected, setTimeSelected] = useState("");
   const [selectedDate, setSelectedDate] = useState<dayjs.Dayjs | null>(null);
-
-  const questions = [
-    "Quando foi a última vez que você consultou um oftalmologista?",
-    "Você tem uma prescrição de óculos válida feita nos últimos 12 meses?",
-  ];
+  const [postalCode, setPostalCode] = useState("");
+  const [locationData, setLocationData] = useState([]);
+  const [isLocationClicked, setIsLocationClicked] = useState(false);
+  const [surveyData, setSurveyData] = useState<any>([]);
+  const [calendarData, setCalendarData] = useState([]);
+  const [calendarHour, setCalendarHour] = useState(0);
+  const [postData, setPostData] = useState<any>({
+    name: dataStorage.Name,
+    scheduleDateStart: "",
+    eyePrescription: {
+      refraction: {
+        spheric: {
+          left: {
+            far: 0,
+            near: 0,
+          },
+          right: {
+            far: 0,
+            near: 0,
+          },
+        },
+        cilindric: {
+          left: {
+            far: 0,
+            near: 0,
+          },
+          right: {
+            far: 0,
+            near: 0,
+          },
+        },
+        axis: {
+          left: {
+            far: 0,
+            near: 0,
+          },
+          right: {
+            far: 0,
+            near: 0,
+          },
+        },
+      },
+    },
+    accountId: "",
+  });
 
   const options = [
     [
@@ -51,25 +96,78 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
     ["Sim", "Não"],
   ];
 
-  const handleNextClick = async () => {
-    // if (selectedOption !== null) {
-    //   const selectedOptionText = options[currentQuestion][selectedOption];
-    //   const surveyData = {
-    //     surveyId: "02bc4ffe-7f5a-492e-b894-c6b817afef02",
-    //     questionResponse: selectedOptionText,
-    //     questionId: ,
-    //   };
+  const optionQuestionIds = [
+    [
+      "ffc89394-2bd4-4746-b36e-68f382f9b95d",
+      "ffc89394-2bd4-4746-b36e-68f382f9b95d",
+      "ffc89394-2bd4-4746-b36e-68f382f9b95d",
+      "ffc89394-2bd4-4746-b36e-68f382f9b95d",
+    ],
+    [
+      "25ba0262-2e06-4ed7-bda6-a009e78d05c0",
+      "25ba0262-2e06-4ed7-bda6-a009e78d05c0",
+    ],
+  ];
 
-    //   await responseSurvey(surveyData).then(() => {
-    //     console.log("resposta enviada");
-    //   });
-    // }
+  const handleNextClick = async () => {
+    if (selectedOption !== null) {
+      const selectedOptionText = options[currentQuestion][selectedOption];
+      const questionId = optionQuestionIds[currentQuestion][selectedOption];
+      setSurveyData([
+        ...surveyData,
+        {
+          surveyId: "6b7c2c11-3951-4b5d-89b4-2797f487b9b7",
+          questionResponse: selectedOptionText,
+          questionId: questionId,
+        },
+        console.log(surveyData),
+      ]);
+
+      if (currentQuestion === 1 && selectedOption === 0) {
+        await responseSurvey(surveyData).then(() => {});
+      }
+    }
+
+    if (currentQuestion === 3) {
+      setPostData({
+        ...postData,
+        scheduleDateStart: dayjs(selectedDate).format(
+          `YYYY-MM-DDT${calendarHour}:mm:ss.SSS`
+        ),
+      });
+    }
 
     const maxQuestion = 5;
     if (currentQuestion < maxQuestion - 1) {
       setCurrentQuestion(currentQuestion + 1);
       setSelectedOption(null);
     }
+
+    if (currentQuestion === 4) {
+      await schedulevisittoclinic(postData).then(() => {
+        toast.success("Agendamento realizado com sucesso!");
+      });
+    }
+  };
+
+  const handleChange = (e: any, side: string, option: string) => {
+    const { name, value } = e.target;
+    setPostData({
+      ...postData,
+      eyePrescription: {
+        refraction: {
+          ...postData.eyePrescription?.refraction,
+          [name]: {
+            ...postData.eyePrescription?.refraction[name],
+            [side]: {
+              ...postData.eyePrescription?.refraction[name][side],
+              [option]: value,
+            },
+          },
+        },
+      },
+    });
+    console.log(postData);
   };
 
   const handleOptionClick = (index: number) => {
@@ -78,6 +176,45 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
 
   const shouldShowSecondMessage =
     selectedOption === 3 || (currentQuestion === 1 && selectedOption === 1);
+
+  const handlePostalCodeChange = async (e: any) => {
+    const newPostalCode = e.target.value;
+    setPostalCode(newPostalCode);
+
+    if (newPostalCode.length >= 8) {
+      try {
+        const filters = {
+          postalCode: newPostalCode,
+        };
+        const data = await getLocation(filters);
+        setLocationData(data);
+      } catch (error) {
+        console.error("Erro ao buscar dados de localização:", error);
+      }
+    }
+  };
+
+  const handleSpanClick = (locationId: any) => {
+    setIsLocationClicked(locationId);
+    setPostData({ ...postData, accountId: locationId });
+  };
+
+  useEffect(() => {
+    async function fetchCalendarData() {
+      try {
+        const filters = {
+          accountId: postData.accountId,
+          month: dayjs().format("MM"),
+        };
+        const data = await getCalendar(filters);
+        setCalendarData(data);
+      } catch (error) {
+        console.error("Erro ao obter dados do calendário:", error);
+      }
+    }
+
+    fetchCalendarData();
+  }, [postData.accountId]);
 
   const disableWeekend = (date: dayjs.Dayjs) => {
     const dayOfWeek = dayjs(date).day();
@@ -98,6 +235,18 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
 
   return (
     <div className="w-full rounded-2xl bg-careGrey md:ml-10">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       {currentQuestion === 0 && (
         <div className="border-b-2 border-careLightGreen w-4/5 ml-5 md:ml-10 p-4">
           <span className="text-careBlue text-lg">
@@ -214,9 +363,37 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
       )}
 
       {currentQuestion === 2 && (
-        <div className="mt-5 md:ml-14 ml-5 fill-careBlue">
+        <div className="mt-5 md:ml-14 ml-5 flex flex-col fill-careBlue">
           <div>
-            <Input className="md:w-96 w-72" startIcon iconStart={BiSearch} />
+            <Input
+              value={postalCode}
+              onChange={handlePostalCodeChange}
+              className="md:w-96 w-72"
+              startIcon
+              iconStart={BiSearch}
+            />
+            {locationData.map((location: any, index: number) => (
+              <div
+                className={`flex items-center gap-3 fade-in border-b w-72 md:w-96 border-careMenuGrey rounded cursor-pointer mt-1 ${
+                  isLocationClicked === location.id
+                    ? "bg-careDarkBlue"
+                    : "bg-[#f6f6f6]"
+                } p-5`}
+                key={index}
+              >
+                <MdOutlineLocationOn className="text-careLightBlue" size={24} />
+                <span
+                  onClick={() => handleSpanClick(location.id)}
+                  className={`text-base ${
+                    isLocationClicked === location.id
+                      ? "text-careLightBlue "
+                      : "text-careBlue"
+                  }`}
+                >
+                  {location.name}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       )}
@@ -246,7 +423,10 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                 icon={<RadioButtonUncheckedIcon />}
                 checkedIcon={<RadioButtonCheckedIcon />}
                 checked={timeSelected === "09 horas da manhã"}
-                onClick={() => handleTimeSelected("09 horas da manhã")}
+                onClick={() => {
+                  handleTimeSelected("09 horas da manhã");
+                  setCalendarHour(9);
+                }}
               />
               <span
                 className={`text-sm text-careBlue ${
@@ -267,7 +447,10 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                 icon={<RadioButtonUncheckedIcon />}
                 checkedIcon={<RadioButtonCheckedIcon />}
                 checked={timeSelected === "10 horas da manhã"}
-                onClick={() => handleTimeSelected("10 horas da manhã")}
+                onClick={() => {
+                  handleTimeSelected("10 horas da manhã");
+                  setCalendarHour(10);
+                }}
               />
               <span
                 className={`text-sm text-careBlue ${
@@ -288,7 +471,10 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                 icon={<RadioButtonUncheckedIcon />}
                 checkedIcon={<RadioButtonCheckedIcon />}
                 checked={timeSelected === "11 horas da manhã"}
-                onClick={() => handleTimeSelected("11 horas da manhã")}
+                onClick={() => {
+                  handleTimeSelected("11 horas da manhã");
+                  setCalendarHour(11);
+                }}
               />
               <span
                 className={`text-sm text-careBlue ${
@@ -309,7 +495,10 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                 icon={<RadioButtonUncheckedIcon />}
                 checkedIcon={<RadioButtonCheckedIcon />}
                 checked={timeSelected === "12 horas da tarde"}
-                onClick={() => handleTimeSelected("12 horas da tarde")}
+                onClick={() => {
+                  handleTimeSelected("12 horas da tarde");
+                  setCalendarHour(12);
+                }}
               />
               <span
                 className={`text-sm text-careBlue ${
@@ -332,7 +521,10 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                 icon={<RadioButtonUncheckedIcon />}
                 checkedIcon={<RadioButtonCheckedIcon />}
                 checked={timeSelected === "13 horas da tarde"}
-                onClick={() => handleTimeSelected("13 horas da tarde")}
+                onClick={() => {
+                  handleTimeSelected("13 horas da tarde");
+                  setCalendarHour(13);
+                }}
               />
               <span
                 className={`text-sm text-careBlue ${
@@ -353,7 +545,10 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                 icon={<RadioButtonUncheckedIcon />}
                 checkedIcon={<RadioButtonCheckedIcon />}
                 checked={timeSelected === "14 horas da tarde"}
-                onClick={() => handleTimeSelected("14 horas da tarde")}
+                onClick={() => {
+                  handleTimeSelected("14 horas da tarde");
+                  setCalendarHour(14);
+                }}
               />
               <span
                 className={`text-sm text-careBlue ${
@@ -374,7 +569,10 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                 icon={<RadioButtonUncheckedIcon />}
                 checkedIcon={<RadioButtonCheckedIcon />}
                 checked={timeSelected === "15 horas da tarde"}
-                onClick={() => handleTimeSelected("15 horas da tarde")}
+                onClick={() => {
+                  handleTimeSelected("15 horas da tarde");
+                  setCalendarHour(15);
+                }}
               />
               <span
                 className={`text-sm text-careBlue ${
@@ -395,7 +593,10 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                 icon={<RadioButtonUncheckedIcon />}
                 checkedIcon={<RadioButtonCheckedIcon />}
                 checked={timeSelected === "16 horas da tarde"}
-                onClick={() => handleTimeSelected("16 horas da tarde")}
+                onClick={() => {
+                  handleTimeSelected("16 horas da tarde");
+                  setCalendarHour(16);
+                }}
               />
               <span
                 className={`text-sm text-careBlue ${
@@ -418,11 +619,14 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                 icon={<RadioButtonUncheckedIcon />}
                 checkedIcon={<RadioButtonCheckedIcon />}
                 checked={timeSelected === "17 horas da tarde"}
-                onClick={() => handleTimeSelected("17 horas da tarde")}
+                onClick={() => {
+                  handleTimeSelected("17 horas da tarde");
+                  setCalendarHour(17);
+                }}
               />
               <span
                 className={`text-sm text-careBlue ${
-                  timeSelected === "17horas da manhã"
+                  timeSelected === "17 horas da manhã"
                     ? "text-selected-color"
                     : ""
                 }`}
@@ -439,7 +643,10 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                 icon={<RadioButtonUncheckedIcon />}
                 checkedIcon={<RadioButtonCheckedIcon />}
                 checked={timeSelected === "18 horas da noite"}
-                onClick={() => handleTimeSelected("18 horas da noite")}
+                onClick={() => {
+                  handleTimeSelected("18 horas da noite");
+                  setCalendarHour(18);
+                }}
               />
               <span
                 className={`text-sm text-careBlue ${
@@ -460,7 +667,8 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
               </span>
               {selectedDate && (
                 <span className="text-careBlue text-base">
-                  {selectedDate.format("DD [de] MMMM [de] YYYY")}
+                  {calendarData &&
+                    selectedDate.format("DD [de] MMMM [de] YYYY")}
                 </span>
               )}
             </div>
@@ -493,27 +701,75 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
             <div className="relative top-16 ml-1 md:ml-10 ">
               <span className="text-careBlue">PARA LONGE</span>
             </div>
-            <Input type="number" />
-            <Input type="number" />
-            <Input type="number" />
+            <Input
+              name="spheric"
+              onChange={(e) => handleChange(e, "left", "far")}
+              type="number"
+            />
+            <Input
+              name="cilindric"
+              onChange={(e) => handleChange(e, "left", "far")}
+              type="number"
+            />
+            <Input
+              name="axis"
+              onChange={(e) => handleChange(e, "left", "far")}
+              type="number"
+            />
           </div>
           <div className="flex ml-[4.8rem] md:ml-[9.8rem] gap-5 mr-2">
-            <Input type="number" />
-            <Input type="number" />
-            <Input type="number" />
+            <Input
+              name="spheric"
+              onChange={(e) => handleChange(e, "right", "far")}
+              type="number"
+            />
+            <Input
+              name="cilindric"
+              onChange={(e) => handleChange(e, "right", "far")}
+              type="number"
+            />
+            <Input
+              name="axis"
+              onChange={(e) => handleChange(e, "right", "far")}
+              type="number"
+            />
           </div>
           <div className="flex  gap-5 mr-2">
             <div className="relative top-16 ml-1 md:ml-10">
               <span className="text-careBlue">PARA PERTO</span>
             </div>
-            <Input type="number" />
-            <Input type="number" />
-            <Input type="number" />
+            <Input
+              name="spheric"
+              onChange={(e) => handleChange(e, "left", "near")}
+              type="number"
+            />
+            <Input
+              name="cilindric"
+              onChange={(e) => handleChange(e, "left", "near")}
+              type="number"
+            />
+            <Input
+              name="axis"
+              onChange={(e) => handleChange(e, "left", "near")}
+              type="number"
+            />
           </div>
           <div className="flex ml-[4.8rem] md:ml-[9.7rem] gap-5 mr-2">
-            <Input type="number" />
-            <Input type="number" />
-            <Input type="number" />
+            <Input
+              name="spheric"
+              onChange={(e) => handleChange(e, "right", "near")}
+              type="number"
+            />
+            <Input
+              name="cilindric"
+              onChange={(e) => handleChange(e, "right", "near")}
+              type="number"
+            />
+            <Input
+              name="axis"
+              onChange={(e) => handleChange(e, "right", "near")}
+              type="number"
+            />
           </div>
         </div>
       )}
