@@ -1,4 +1,6 @@
 import useLogin from "@/hooks/useLogin";
+import { set } from "date-fns";
+import { hi } from "date-fns/locale";
 import React, { useEffect, useState } from "react";
 
 declare global {
@@ -22,7 +24,7 @@ const HuggyChat = () => {
       role: login.role,
     };
 
-    setUserRole(loginInfo.role);
+    setUserRole(login.role);
 
     const huggyChatInit = {
       contextID: "15f91584cbf3e1d1357ce07db31cc7bf",
@@ -46,12 +48,11 @@ const HuggyChat = () => {
         document.body.appendChild(script);
       }
     }
-
-    // return () => {
-    //   if (window.Huggy) {
-    //     window.Huggy.logout();
-    //   }
-    // };
+    return () => {
+      if (window.Huggy && window.Huggy.destroy) {
+        window.Huggy.destroy();
+      }
+    };
   }, [userRole, login.email]);
 
   return <div></div>;
