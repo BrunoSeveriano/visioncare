@@ -9,7 +9,7 @@ import {
   IoExitOutline,
   IoPersonOutline,
 } from "react-icons/io5";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useOnboardModal from "@/hooks/useOnboardModal";
 import useLogin from "@/hooks/useLogin";
 import {
@@ -38,10 +38,10 @@ import { ToastContainer, toast } from "react-toastify";
 import { homeMenuPacient } from "@/constants/homeMenuPacient";
 import { homeMenuAdmin } from "@/constants/homeMenuAdmin";
 import { useRouter } from "next/router";
-import { set } from "date-fns";
 import useDataStorage from "@/hooks/useDataStorage";
-import { is } from "date-fns/locale";
 import HuggyChat from "../specialist/HuggyChat";
+import { homeMenuEcp } from "@/constants/homeMenuECP";
+import { homeMenuPdv } from "@/constants/homeMenuPdv";
 
 interface DashboardProps {
   children?: React.ReactNode;
@@ -49,11 +49,10 @@ interface DashboardProps {
 
 const Dashboard = ({ children }: DashboardProps) => {
   const onBoardModal = useOnboardModal();
-
   const auth = useLogin();
   const router = useRouter();
-
   const dataStorage = useDataStorage();
+
   const [sideBarOpen, setSidebarOpen] = useState(true);
   const [textHidden, setTextHidden] = useState(false);
   const [showRightSidebar, setShowRightSidebar] = useState(false);
@@ -72,6 +71,10 @@ const Dashboard = ({ children }: DashboardProps) => {
   const [navbarSpanText, setNavbarSpanText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isAdminUser, setIsAdminUser] = useState(false);
+  const [isEcpUser, setIsEcpUser] = useState(false);
+  const [isPdvUser, setIsPdvUser] = useState(false);
+  const [userNameEcp, setUserNameEcp] = useState("");
+  const [userNamePdv, setUserNamePdv] = useState("");
   const [userData, setUserData] = useState({
     namePatient: "",
     patientBirthDate: "",
@@ -118,6 +121,26 @@ const Dashboard = ({ children }: DashboardProps) => {
       router.push("/login");
     }
 
+    const userRoleEcp = auth.role === "Parceiro VisionCare";
+    if (userRoleEcp) {
+      setIsEcpUser(true);
+    }
+
+    const userRolePdv = auth.role === "Partner POS VisionCare";
+    if (userRolePdv) {
+      setIsPdvUser(true);
+    }
+
+    const nameEcp = auth.name;
+    if (nameEcp) {
+      setUserNameEcp(nameEcp);
+    }
+
+    const namePdv = auth.name;
+    if (namePdv) {
+      setUserNamePdv(namePdv);
+    }
+
     const userEmail = localStorage.getItem("email") || "";
     userEmail.includes("its.jnj.com") ? setIsAdminUser(true) : null;
 
@@ -145,6 +168,20 @@ const Dashboard = ({ children }: DashboardProps) => {
   });
 
   const adminOptions = homeMenuAdmin.map((option) => {
+    return {
+      ...option,
+      active: option.text === navbarSpanText,
+    };
+  });
+
+  const EcpOptions = homeMenuEcp.map((option) => {
+    return {
+      ...option,
+      active: option.text === navbarSpanText,
+    };
+  });
+
+  const PdvOptions = homeMenuPdv.map((option) => {
     return {
       ...option,
       active: option.text === navbarSpanText,
@@ -391,23 +428,81 @@ const Dashboard = ({ children }: DashboardProps) => {
         </div>
         <div className="flex flex-col md:px-3 lg:px-3 xl:px-7 2xl:px-14 w-">
           <div className="border-b-2 ">
-            {(isAdminUser ? adminOptions : menuOptions).map((option, i) => (
-              <MenuOptions
-                spanClassname={`${
-                  option.active
-                    ? "bg-careLightBlue w-full text-white"
-                    : "text-careMenuGrey"
-                } p-5 rounded-lg last:mb-6 ${
-                  !sideBarOpen ? "flex items-center justify-center" : ""
-                } `}
-                iconClassname={`${!option.active && "text-careBlue"}`}
-                key={i}
-                text={textHidden ? "" : option.text}
-                route={option.route || ""}
-                icon={option.icon}
-                onNameChange={handleNameChange}
-              />
-            ))}
+            {(() => {
+              if (isAdminUser) {
+                return adminOptions.map((option, i) => (
+                  <MenuOptions
+                    spanClassname={`${
+                      option.active
+                        ? "bg-careLightBlue w-full text-white"
+                        : "text-careMenuGrey"
+                    } p-5 rounded-lg last:mb-6 ${
+                      !sideBarOpen ? "flex items-center justify-center" : ""
+                    } `}
+                    iconClassname={`${!option.active && "text-careBlue"}`}
+                    key={i}
+                    text={textHidden ? "" : option.text}
+                    route={option.route || ""}
+                    icon={option.icon}
+                    onNameChange={handleNameChange}
+                  />
+                ));
+              } else if (isEcpUser) {
+                return EcpOptions.map((option, i) => (
+                  <MenuOptions
+                    spanClassname={`${
+                      option.active
+                        ? "bg-careLightBlue w-full text-white"
+                        : "text-careMenuGrey"
+                    } p-5 rounded-lg last:mb-6 ${
+                      !sideBarOpen ? "flex items-center justify-center" : ""
+                    } `}
+                    iconClassname={`${!option.active && "text-careBlue"}`}
+                    key={i}
+                    text={textHidden ? "" : option.text}
+                    route={option.route || ""}
+                    icon={option.icon}
+                    onNameChange={handleNameChange}
+                  />
+                ));
+              } else if (isPdvUser) {
+                return PdvOptions.map((option, i) => (
+                  <MenuOptions
+                    spanClassname={`${
+                      option.active
+                        ? "bg-careLightBlue w-full text-white"
+                        : "text-careMenuGrey"
+                    } p-5 rounded-lg last:mb-6 ${
+                      !sideBarOpen ? "flex items-center justify-center" : ""
+                    } `}
+                    iconClassname={`${!option.active && "text-careBlue"}`}
+                    key={i}
+                    text={textHidden ? "" : option.text}
+                    route={option.route || ""}
+                    icon={option.icon}
+                    onNameChange={handleNameChange}
+                  />
+                ));
+              } else {
+                return menuOptions.map((option, i) => (
+                  <MenuOptions
+                    spanClassname={`${
+                      option.active
+                        ? "bg-careLightBlue w-full text-white"
+                        : "text-careMenuGrey"
+                    } p-5 rounded-lg last:mb-6 ${
+                      !sideBarOpen ? "flex items-center justify-center" : ""
+                    } `}
+                    iconClassname={`${!option.active && "text-careBlue"}`}
+                    key={i}
+                    text={textHidden ? "" : option.text}
+                    route={option.route || ""}
+                    icon={option.icon}
+                    onNameChange={handleNameChange}
+                  />
+                ));
+              }
+            })()}
           </div>
         </div>
         <div className="flex flex-col justify-end h-full mb-10 hover:opacity-70 md:mt-10 lg:mt-0 md:ml-8 xl:ml-12 2xl:ml-20">
@@ -461,7 +556,14 @@ const Dashboard = ({ children }: DashboardProps) => {
           <div className="border-b-[1px] py-3 px-6">
             <div className="flex justify-between items-center">
               <span className="text-careLightBlue text-3xl">
-                Olá, {isAdminUser ? userDataAdm.userName : userData.namePatient}
+                Olá,{" "}
+                {isAdminUser
+                  ? userDataAdm.userName
+                  : isEcpUser
+                  ? userNameEcp
+                  : isPdvUser
+                  ? userNamePdv
+                  : userData.namePatient}
               </span>
               <div className="hidden md:flex">
                 {!showRightSidebar ? (
@@ -673,23 +775,83 @@ const Dashboard = ({ children }: DashboardProps) => {
           )}
         </div>
         {menuLeftMobile && (
-          <div className="flex md:hidden bg-careDarkBlue h-full gap-3 ">
+          <div className="flex md:hidden bg-white h-full gap-3 ">
             <div className="flex flex-col gap-3 ml-14 mt-10 w-72">
-              {(isAdminUser ? adminOptions : menuOptions).map((option, i) => (
-                <MenuOptions
-                  spanClassname={`${
-                    option.active
-                      ? "bg-careLightBlue w-full text-white"
-                      : "text-careMenuGrey bg-white"
-                  }  p-5 rounded-lg last:mb-7 `}
-                  iconClassname={`${!option.active && "text-careBlue"}`}
-                  key={i}
-                  text={option.text}
-                  route={option.route || ""}
-                  icon={option.icon}
-                  onNameChange={handleNameChange}
-                />
-              ))}
+              {(() => {
+                if (isAdminUser) {
+                  return adminOptions.map((option, i) => (
+                    <MenuOptions
+                      spanClassname={`${
+                        option.active
+                          ? "bg-careLightBlue w-full text-white"
+                          : "text-careMenuGrey"
+                      } p-5 rounded-lg last:mb-6 ${
+                        !sideBarOpen ? "flex items-center justify-center" : ""
+                      } `}
+                      iconClassname={`${!option.active && "text-careBlue"}`}
+                      key={i}
+                      text={textHidden ? "" : option.text}
+                      route={option.route || ""}
+                      icon={option.icon}
+                      onNameChange={handleNameChange}
+                    />
+                  ));
+                } else if (isEcpUser) {
+                  return EcpOptions.map((option, i) => (
+                    <MenuOptions
+                      spanClassname={`${
+                        option.active
+                          ? "bg-careLightBlue w-full text-white"
+                          : "text-careMenuGrey"
+                      } p-5 rounded-lg last:mb-6 ${
+                        !sideBarOpen ? "flex items-center justify-center" : ""
+                      } `}
+                      iconClassname={`${!option.active && "text-careBlue"}`}
+                      key={i}
+                      text={textHidden ? "" : option.text}
+                      route={option.route || ""}
+                      icon={option.icon}
+                      onNameChange={handleNameChange}
+                    />
+                  ));
+                } else if (isPdvUser) {
+                  return PdvOptions.map((option, i) => (
+                    <MenuOptions
+                      spanClassname={`${
+                        option.active
+                          ? "bg-careLightBlue w-full text-white"
+                          : "text-careMenuGrey"
+                      } p-5 rounded-lg last:mb-6 ${
+                        !sideBarOpen ? "flex items-center justify-center" : ""
+                      } `}
+                      iconClassname={`${!option.active && "text-careBlue"}`}
+                      key={i}
+                      text={textHidden ? "" : option.text}
+                      route={option.route || ""}
+                      icon={option.icon}
+                      onNameChange={handleNameChange}
+                    />
+                  ));
+                } else {
+                  return menuOptions.map((option, i) => (
+                    <MenuOptions
+                      spanClassname={`${
+                        option.active
+                          ? "bg-careLightBlue w-full text-white"
+                          : "text-careMenuGrey"
+                      } p-5 rounded-lg last:mb-6 ${
+                        !sideBarOpen ? "flex items-center justify-center" : ""
+                      } `}
+                      iconClassname={`${!option.active && "text-careBlue"}`}
+                      key={i}
+                      text={textHidden ? "" : option.text}
+                      route={option.route || ""}
+                      icon={option.icon}
+                      onNameChange={handleNameChange}
+                    />
+                  ));
+                }
+              })()}
             </div>
           </div>
         )}
@@ -724,7 +886,7 @@ const Dashboard = ({ children }: DashboardProps) => {
               </div>
             </div>
           ) : (
-            <div className="mt-5 md:w-1/3  md:right-0 bg-white">
+            <div className="hidden md:block mt-5 md:w-1/3  md:right-0 bg-white">
               <div className="py-[30px] px-5 border-b-2 border-gray-200 flex flex-col">
                 <span className="text-2xl text-careLightBlue">
                   Histórico de utilização

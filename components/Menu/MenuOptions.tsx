@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { IconType } from "react-icons";
 import useLogin from "@/hooks/useLogin";
-import { homeMenuAdmin } from "@/constants/homeMenuAdmin";
 
 interface MenuOptionsProps {
   icon?: IconType | undefined | null;

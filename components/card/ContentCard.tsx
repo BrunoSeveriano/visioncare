@@ -6,6 +6,8 @@ interface ContentCardProps {
   isCustomBg?: boolean;
   bgColor?: string;
   textColor?: string;
+  buttonColor?: string;
+  buttonBorderColor?: string; // Adicionamos essa prop para a cor da borda do botão
   title: string;
   subtitle?: string;
   textemail?: string;
@@ -21,6 +23,8 @@ const ContentCard = ({
   isCustomBg,
   bgColor,
   textColor,
+  buttonColor,
+  buttonBorderColor, // Passamos a cor da borda do botão como prop
   title,
   subtitle,
   textemail,
@@ -55,7 +59,11 @@ const ContentCard = ({
         >
           {!hideButton && (
             <Button
-              customClass="px-14 py-2 bg-careLightBlue border-1 border-careLightBlue font-bold"
+              customClass={`px-14 py-2 ${
+                buttonColor || "bg-careLightBlue"
+              } border-1 ${
+                buttonBorderColor || "border-careLightBlue"
+              } font-bold`}
               label={buttonText}
               customColor={textColor}
               onClick={onButtonClick}

@@ -64,6 +64,14 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
     setShowHistory(!showHistory);
   };
 
+  function formatDate(date: string) {
+    const dateArray = date.split("-");
+    const year = dateArray[0];
+    const month = dateArray[1];
+    const day = dateArray[2].split("T")[0];
+    return `${day}/${month}/${year}`;
+  }
+
   return (
     <>
       <div className="grid-cols-1 mb-3">
@@ -82,7 +90,7 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
 
       {clientData && (
         <div>
-          <div className="w-[21rem] md:w-full mt-7 grid-cols-1 fade-in">
+          <div className="w-[23rem] md:w-full mt-7 grid-cols-1 fade-in">
             <div>
               <CustomTable
                 rowId="id"
@@ -93,6 +101,45 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
           </div>
         </div>
       )}
+      <div className="block md:hidden mt-5 md:w-1/3  md:right-0 bg-white">
+        <div className="py-[30px] px-5 border-b-2 border-gray-200 flex flex-col">
+          <span className="text-2xl text-careLightBlue">
+            Histórico de utilização
+          </span>
+        </div>
+        <div className="mb-5 py-5 px-5 border-b-2 border-gray-200 flex flex-col">
+          <span className="text-lg- text-careBlue">DATA / LOCAL</span>
+        </div>
+        <div className="grid grid-cols-2">
+          <div className="md:ml-4 mb-5">
+            {voucherHistory.VoucherUserHistory &&
+              voucherHistory.VoucherUserHistory.length > 0 &&
+              voucherHistory.VoucherUserHistory.map(
+                (historyItem: any, index: any) => (
+                  <>
+                    <div
+                      key={index}
+                      className="border border-careGrey bg-careGrey p-5 rounded-t-xl"
+                    >
+                      <div className="text-careLightBlue">
+                        {formatDate(historyItem.useDate)}
+                      </div>
+                      <div className="text-careBlue mt-1">
+                        <span className="font-bold text-lg">
+                          {historyItem.discountType} -
+                        </span>
+                        <span> {historyItem.locality}</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-end rounded-b-xl text-careLightBlue bg-careBlue text-lg p-3 ">
+                      {historyItem.discountType}
+                    </div>
+                  </>
+                )
+              )}
+          </div>
+        </div>
+      </div>
     </>
   );
 };
