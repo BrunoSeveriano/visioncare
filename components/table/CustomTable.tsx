@@ -11,9 +11,15 @@ interface ICustomTableProps {
   handleEditVoucherRow?: (voucher: Rows) => void;
 }
 
-const CustomTable = ({ columns, rows, rowId }: ICustomTableProps) => {
+const CustomTable = ({
+  columns,
+  rows,
+  rowId,
+  handleEditVoucherRow,
+}: ICustomTableProps) => {
   const pageSize = 5;
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedRow, setSelectedRow] = useState<any | null>(null);
 
   const validatedRows = Array.isArray(rows) ? rows : [];
   const validatedCurrentPage = currentPage || 1;
@@ -34,6 +40,15 @@ const CustomTable = ({ columns, rows, rowId }: ICustomTableProps) => {
     setCurrentPage(page);
   };
 
+  const handleRowClick = (params: any) => {
+    const selectedRowData = params.row;
+    setSelectedRow(selectedRowData);
+
+    if (handleEditVoucherRow) {
+      handleEditVoucherRow(selectedRowData);
+    }
+  };
+
   return (
     <>
       <DataGrid
@@ -45,6 +60,7 @@ const CustomTable = ({ columns, rows, rowId }: ICustomTableProps) => {
         disableRowSelectionOnClick
         rowHeight={75}
         disableColumnFilter
+        onRowClick={handleRowClick}
         sx={{
           "& .MuiDataGrid-row": {
             backgroundColor: "#F4F5F7",

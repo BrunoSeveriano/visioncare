@@ -52,9 +52,9 @@ const VoucherPartinerEcp = () => {
   };
 
   const handleClearButtonClick = () => {
-    setSearchCpf(""); // Clear the CPF input
-    setShowCustomTable(true); // Reset custom table visibility
-    setShowSearchModal(false); // Hide the search modal
+    setSearchCpf("");
+    setShowCustomTable(true);
+    setShowSearchModal(false);
   };
 
   const maskedCpf = () => {

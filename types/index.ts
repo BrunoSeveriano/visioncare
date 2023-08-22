@@ -173,8 +173,11 @@ interface IPurchaseAdd {
     }
   ];
 }
-
 interface IVoucherUse {
+  programCode: string;
+  voucherId: string;
+}
+interface IRescueVoucher {
   programCode: string;
   voucherId: string;
 }

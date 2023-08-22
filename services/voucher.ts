@@ -10,6 +10,16 @@ export const useVoucher = async (data: IVoucherUse) => {
   return response.data;
 };
 
+export const rescueVoucher = async (data: IRescueVoucher) => {
+  const response = await api.post("/voucher/rescue", null, {
+    params: {
+      programCode: "073",
+      voucherId: data.voucherId,
+    },
+  });
+  return response.data;
+};
+
 export const addVoucher = async (data: IaddVoucherData) => {
   const response = await api.post("/voucher/add", data);
   return response.data;

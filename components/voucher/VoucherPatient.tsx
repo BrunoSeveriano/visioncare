@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import CustomTable from "../table/CustomTable";
-import { getListVoucherPatients } from "@/services/voucher";
+import { getListVoucherPatients, rescueVoucher } from "@/services/voucher";
 import ContentCard from "../card/ContentCard";
 import { TableUserPacient } from "@/helpers/TableUserPacient";
 import useDataStorage from "@/hooks/useDataStorage";
+import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 interface ClientData {
   cpf: string;
@@ -37,6 +39,7 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
   const [utilizedHistory, setUtilizedHistory] = useState<UtilizedHistory[]>([]);
   const [showHistory, setShowHistory] = useState(true);
   const voucherHistory = useDataStorage();
+  const router = useRouter();
 
   useEffect(() => {
     if (clientData && clientData.cpf) {
@@ -51,6 +54,21 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
         });
     }
   }, [clientData]);
+
+  const handleSendProduct = (row: any) => {
+    const statusVoucher = {
+      programCode: "073",
+      voucherId: row.id,
+    };
+    rescueVoucher(statusVoucher).then((response) => {
+      if (response.isValidData === true) {
+        toast.success("Voucher resgatado com sucesso!");
+      }
+      if (response.isValidData === false) {
+        toast.error("Erro ao resgatar voucher: Voucher inválido.");
+      }
+    });
+  };
 
   function getFilteredVouchers(vouchers: Voucher[], status: string) {
     if (!status) {
@@ -75,6 +93,19 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
   return (
     <>
       <div className="grid-cols-1 mb-3">
+        <ToastContainer
+          position="top-right"
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover={false}
+          theme="light"
+        />
+
         <ContentCard
           svgIcon="/svg/v-card.svg"
           title="Meus Vouchers​"
@@ -93,6 +124,7 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
           <div className="w-[23rem] md:w-full mt-7 grid-cols-1 fade-in">
             <div>
               <CustomTable
+                handleEditVoucherRow={handleSendProduct}
                 rowId="id"
                 rows={getFilteredVouchers(clientData.vouchers, selectedStatus)}
                 columns={TableUserPacient.columns}
