@@ -1,5 +1,15 @@
 import { api } from "./api";
 
+export const useVoucher = async (data: IVoucherUse) => {
+  const response = await api.post("/voucher/use", null, {
+    params: {
+      programCode: "073",
+      voucherId: data.voucherId,
+    },
+  });
+  return response.data;
+};
+
 export const addVoucher = async (data: IaddVoucherData) => {
   const response = await api.post("/voucher/add", data);
   return response.data;
@@ -65,4 +75,61 @@ export const getResumeVoucher = async (filters?: any) => {
     },
   });
   return response.data.value;
+};
+
+export const getListRescueVoucherPatients = async (filters?: any) => {
+  const response = await api.get("/voucher/listbypatientrescue", {
+    params: {
+      programCode: "073",
+      ...filters,
+    },
+  });
+  return response.data.value;
+};
+
+export const getCodeNumber = async (filters?: any) => {
+  const response = await api.get("/logistic/stuff/codeNumber", {
+    params: {
+      programCode: "073",
+      ...filters,
+    },
+  });
+  return response.data;
+};
+
+export const getDegree = async (codeNumber?: string) => {
+  const response = await api.get("/logistic/stuff/degree", {
+    params: {
+      programCode: "073",
+      codeNumber: codeNumber,
+    },
+  });
+  return response.data;
+};
+
+export const getCylinder = async (codeNumber?: string, degree?: string) => {
+  const response = await api.get("/logistic/stuff/cylinder", {
+    params: {
+      programCode: "073",
+      codeNumber: codeNumber,
+      degree: degree,
+    },
+  });
+  return response.data;
+};
+
+export const getAxle = async (
+  codeNumber?: string,
+  degree?: string,
+  cylinder?: string
+) => {
+  const response = await api.get("/logistic/stuff/axle", {
+    params: {
+      programCode: "073",
+      codeNumber: codeNumber,
+      degree: degree,
+      cylinder: cylinder,
+    },
+  });
+  return response.data;
 };

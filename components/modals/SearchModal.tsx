@@ -53,14 +53,6 @@ const SearchModal: React.FC<SearchModalProps> = ({
     }
   }, [clientData]);
 
-  function formatDate(date: string) {
-    const dateArray = date.split("-");
-    const year = dateArray[0];
-    const month = dateArray[1];
-    const day = dateArray[2].split("T")[0];
-    return `${day}/${month}/${year}`;
-  }
-
   function getFilteredVouchers(vouchers: Voucher[], status: string) {
     if (!status) {
       return vouchers;
@@ -143,7 +135,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                           className="border border-careGrey bg-careGrey p-5 rounded-t-xl"
                         >
                           <div className="text-careLightBlue">
-                            {formatDate(historyItem.useDate)}
+                            {historyItem.useDate}
                           </div>
                           <div className="text-careBlue mt-1">
                             <span className="font-bold text-lg">

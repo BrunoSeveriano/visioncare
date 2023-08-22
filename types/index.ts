@@ -163,3 +163,18 @@ interface IUpdatePartiner {
   ProgramCode: string;
   accountTypeStringMapFlag: string;
 }
+
+interface IPurchaseAdd {
+  ProgramCode: string;
+  Items: [
+    {
+      ProductId: string;
+      Amount: number;
+    }
+  ];
+}
+
+interface IVoucherUse {
+  programCode: string;
+  voucherId: string;
+}

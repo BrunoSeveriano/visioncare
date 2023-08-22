@@ -40,8 +40,9 @@ import { homeMenuAdmin } from "@/constants/homeMenuAdmin";
 import { useRouter } from "next/router";
 import useDataStorage from "@/hooks/useDataStorage";
 import HuggyChat from "../specialist/HuggyChat";
-import { homeMenuEcp } from "@/constants/homeMenuECP";
+
 import { homeMenuPdv } from "@/constants/homeMenuPdv";
+import { homeMenuEcp } from "@/constants/homeMenuEcp";
 
 interface DashboardProps {
   children?: React.ReactNode;
@@ -121,7 +122,7 @@ const Dashboard = ({ children }: DashboardProps) => {
       router.push("/login");
     }
 
-    const userRoleEcp = auth.role === "Parceiro VisionCare";
+    const userRoleEcp = auth.role === "Partner ECP VisionCare";
     if (userRoleEcp) {
       setIsEcpUser(true);
     }
@@ -332,14 +333,6 @@ const Dashboard = ({ children }: DashboardProps) => {
     paddingTop: sideBarOpen ? "" : "0.8rem",
   };
 
-  function formatDate(date: string) {
-    const dateArray = date.split("-");
-    const year = dateArray[0];
-    const month = dateArray[1];
-    const day = dateArray[2].split("T")[0];
-    return `${day}/${month}/${year}`;
-  }
-
   const maskedPhoneNumber = () => {
     return (
       <InputMask
@@ -414,14 +407,21 @@ const Dashboard = ({ children }: DashboardProps) => {
       >
         <div className="mt-12 flex justify-center">
           <div
-            className={`h-16 xl:px-7 2xl:px-16 border-b-2 border-careLightBlue md:mb-6 2xl:mb-10`}
+            className={`flex item-center gap-2 h-16 xl:px-7 2xl:px-16 border-b-2 border-careLightBlue md:mb-6 2xl:mb-10`}
             style={imageStyle}
           >
             <Image
-              src="/acuvue-dashboard.png"
+              src="/acuvue.png"
+              width={60}
+              height={60}
+              className={`object-contain ${sideBarOpen ? "" : "mb-2"}mb-5`}
+              alt="acuvue"
+            />
+            <Image
+              src="/my-acuvue-dashboard.png"
               width={160}
               height={500}
-              className={`object-contain ${sideBarOpen ? "" : "mb-2"}`}
+              className={`object-contain ${sideBarOpen ? "" : "mb-2"}mb-5`}
               alt="acuvue"
             />
           </div>
@@ -443,12 +443,13 @@ const Dashboard = ({ children }: DashboardProps) => {
                     key={i}
                     text={textHidden ? "" : option.text}
                     route={option.route || ""}
-                    icon={option.icon}
+                    image 
+                    path={option.path}
                     onNameChange={handleNameChange}
                   />
                 ));
               } else if (isEcpUser) {
-                return EcpOptions.map((option, i) => (
+                return EcpOptions.map((option,i) => (
                   <MenuOptions
                     spanClassname={`${
                       option.active
@@ -461,7 +462,8 @@ const Dashboard = ({ children }: DashboardProps) => {
                     key={i}
                     text={textHidden ? "" : option.text}
                     route={option.route || ""}
-                    icon={option.icon}
+                    image 
+                    path={option.path}
                     onNameChange={handleNameChange}
                   />
                 ));
@@ -479,7 +481,8 @@ const Dashboard = ({ children }: DashboardProps) => {
                     key={i}
                     text={textHidden ? "" : option.text}
                     route={option.route || ""}
-                    icon={option.icon}
+                    image 
+                    path={option.path}
                     onNameChange={handleNameChange}
                   />
                 ));
@@ -497,7 +500,8 @@ const Dashboard = ({ children }: DashboardProps) => {
                     key={i}
                     text={textHidden ? "" : option.text}
                     route={option.route || ""}
-                    icon={option.icon}
+                    image 
+                    path={option.path}
                     onNameChange={handleNameChange}
                   />
                 ));
@@ -792,7 +796,8 @@ const Dashboard = ({ children }: DashboardProps) => {
                       key={i}
                       text={textHidden ? "" : option.text}
                       route={option.route || ""}
-                      icon={option.icon}
+                      image 
+                      path={option.path}
                       onNameChange={handleNameChange}
                     />
                   ));
@@ -810,7 +815,8 @@ const Dashboard = ({ children }: DashboardProps) => {
                       key={i}
                       text={textHidden ? "" : option.text}
                       route={option.route || ""}
-                      icon={option.icon}
+                      image 
+                      path={option.path}
                       onNameChange={handleNameChange}
                     />
                   ));
@@ -828,7 +834,8 @@ const Dashboard = ({ children }: DashboardProps) => {
                       key={i}
                       text={textHidden ? "" : option.text}
                       route={option.route || ""}
-                      icon={option.icon}
+                      image 
+                      path={option.path}
                       onNameChange={handleNameChange}
                     />
                   ));
@@ -846,7 +853,8 @@ const Dashboard = ({ children }: DashboardProps) => {
                       key={i}
                       text={textHidden ? "" : option.text}
                       route={option.route || ""}
-                      icon={option.icon}
+                      image 
+                      path={option.path}
                       onNameChange={handleNameChange}
                     />
                   ));
@@ -907,7 +915,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                             className="border border-careGrey bg-careGrey p-5 rounded-t-xl"
                           >
                             <div className="text-careLightBlue">
-                              {formatDate(historyItem.useDate)}
+                              {historyItem.useDate}
                             </div>
                             <div className="text-careBlue mt-1">
                               <span className="font-bold text-lg">

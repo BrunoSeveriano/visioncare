@@ -18,7 +18,7 @@ const UsersGuide = () => {
     <div className="fade-in">
       <div className="mb-3">
         <ContentCard
-          svgIcon="/svg/questions.svg"
+          svgIcon="/partner.png"
           title="Guia do usuário​"
           subtitle="Tudo que você precisa saber sobre suas lentes"
           buttonText="Ver mais"
@@ -146,7 +146,7 @@ const UsersGuide = () => {
                   quality={100}
                 />
                 <Image
-                  src="/inside-out.png"
+                  src="/eye-opening-lens.png"
                   className="md:w-20 md:h-20"
                   alt="inside out"
                   width={60}
@@ -154,7 +154,7 @@ const UsersGuide = () => {
                   quality={100}
                 />
                 <Image
-                  src="/inside-out.png"
+                  src="/eye-opening-lens2.png"
                   className="md:w-20 md:h-20"
                   alt="inside out"
                   width={60}

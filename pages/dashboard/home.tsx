@@ -10,7 +10,7 @@ const Home = () => {
   const auth = useLogin();
   const userEmail = localStorage.getItem("email") || "";
   const isAdminUser = userEmail.endsWith("@its.jnj.com");
-  const isEcpUser = auth.role === "Parceiro VisionCare";
+  const isEcpUser = auth.role === "Partner ECP VisionCare";
   const isPdvUser = auth.role === "Partner POS VisionCare";
 
   return (

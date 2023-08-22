@@ -26,10 +26,10 @@ export default function Home() {
         <div className="fixed z-40 w-60 h-[7%] right-0 bottom-[20%] bg-[#007cc4]"></div>
       </div>
       <Image
-        src="/acuvue-letter.png"
-        className="z-40 block md:hidden absolute top-10 left-12"
+        src="/LogoMyAcuvue.png"
+        className="z-40 block absolute top-5 left-10"
         alt="acuvue letter"
-        width={120}
+        width={220}
         height={50}
       />
       <div className="block md:hidden">

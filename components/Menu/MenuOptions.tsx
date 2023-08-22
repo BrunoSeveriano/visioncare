@@ -2,9 +2,12 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { IconType } from "react-icons";
 import useLogin from "@/hooks/useLogin";
+import Image from "next/image";
 
 interface MenuOptionsProps {
   icon?: IconType | undefined | null;
+  image?:  any;
+  path?: string | any;
   text: string;
   route: string;
   spanClassname?: string;
@@ -22,6 +25,8 @@ const MenuOptions = ({
   iconClassname,
   logout,
   onNameChange,
+  image,
+  path,
 }: MenuOptionsProps) => {
   const router = useRouter();
   const auth = useLogin();
@@ -38,6 +43,11 @@ const MenuOptions = ({
       ${spanClassname} hover:opacity-50 transition-all`}
     >
       {Icon && <Icon className={iconClassname} size="1.5em" />}
+      {
+        image && (
+          <Image alt='icon' width={24} height={24} src={path||''}/>
+        )
+      }
       <span
         onClick={() => {
           handleClick();

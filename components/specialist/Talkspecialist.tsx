@@ -28,7 +28,7 @@ const Talkspecialist = () => {
       <div className="grid md:grid-cols-1 gap-y-3 lg:grid-cols-2 gap-x-4 mb-3">
         <ContentCard
           onButtonClick={handleButtonClick}
-          svgIcon="/svg/v-card.svg"
+          svgIcon='/chat.png'
           title="Quero tirar duvidas pelo chat​"
           buttonText="Clique aqui"
           textColor="text-white"
@@ -36,7 +36,7 @@ const Talkspecialist = () => {
           hasIcon
         />
         <ContentCard
-          svgIcon="/svg/v-card.svg"
+          svgIcon="/calluser.png"
           title="Quero falar por telefone​"
           subtitle="Nosso horário de atendimento é de segunda a sexta-feira, das 8h âs 20h"
           textphone="(00) 1234-5678"
@@ -49,7 +49,7 @@ const Talkspecialist = () => {
       </div>
       <div className="grid md:grid-cols-1 gap-y-3 lg:grid-cols-2 gap-x-4 mb-3">
         <ContentCard
-          svgIcon="/svg/v-card.svg"
+          svgIcon="/email.png"
           title="Email​"
           subtitle="Escreva para"
           textemail="programamyacuvue@suporteaopaciente.com.br"

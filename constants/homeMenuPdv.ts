@@ -1,31 +1,27 @@
 import { RiHome6Line } from "react-icons/ri";
 import { RxCalendar } from "react-icons/rx";
-import { FaUserFriends } from "react-icons/fa";
 import { GiTakeMyMoney } from "react-icons/gi";
 
 export const homeMenuPdv = [
   {
     route: "home",
     icon: RiHome6Line,
-    text: "Início PDV",
+    path: "/home2.png",
+    text: "Início",
     active: true,
   },
   {
-    route: "",
-    icon: FaUserFriends,
-    text: "Validar Vouchers PDV",
-    active: false,
-  },
-  {
-    route: "",
+    route: "scheduling-ecp",
     icon: RxCalendar,
-    text: "Agendamento PDV",
+    path: "/scheduling.png",
+    text: "Agendamento",
     active: false,
   },
   {
     route: "",
     icon: GiTakeMyMoney,
-    text: "Reembolso PDV",
+    path: "/reimbursement.png",
+    text: "Reembolso",
     active: false,
   },
 ];

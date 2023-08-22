@@ -45,7 +45,7 @@ const OpenGuide = () => {
 
             <div className="flex items-center gap-3">
               <Image
-                src="/inside-out.png"
+                src="/eye-opening-lens.png"
                 className="md:w-20 md:h-20"
                 alt="inside out"
                 width={60}
@@ -59,7 +59,7 @@ const OpenGuide = () => {
             </div>
             <div className="flex items-center gap-3">
               <Image
-                src="/inside-out.png"
+                src="/eye-opening-lens2.png"
                 className="md:w-20 md:h-20"
                 alt="inside out"
                 width={60}
@@ -73,7 +73,7 @@ const OpenGuide = () => {
             </div>
             <div className="flex items-center gap-3">
               <Image
-                src="/inside-out.png"
+                src="/eye-opening-lens3.png"
                 className="md:w-20 md:h-20"
                 alt="inside out"
                 width={60}
@@ -189,7 +189,7 @@ const OpenGuide = () => {
             </div>
             <div className="flex items-center gap-3">
               <Image
-                src="/removal-look-up.png"
+                src="/clean-contacts.png"
                 className="md:w-36  md:h-36"
                 alt="inside out"
                 width={100}
@@ -248,7 +248,7 @@ const OpenGuide = () => {
           <div className="flex gap-7 mt-5 ">
             <div className="flex items-center gap-3">
               <Image
-                src="/wash-hands.png"
+                src="/lens-case.png"
                 className="md:w-36  md:h-36"
                 alt="wash hands"
                 width={100}
