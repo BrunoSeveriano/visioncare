@@ -403,25 +403,29 @@ const Dashboard = ({ children }: DashboardProps) => {
         theme="light"
       />
       <div
-        className={`w-1/3 hidden w- md:flex border-r-[0.5px] h-screen flex-col border-careGrey ${sidebarClasses}`}
+        className={`w-1/3 hidden md:flex border-r-[0.5px] h-screen flex-col border-careGrey ${sidebarClasses}`}
       >
         <div className="mt-12 flex justify-center">
           <div
-            className={`flex item-center gap-2 h-16 xl:px-7 2xl:px-16 border-b-2 border-careLightBlue md:mb-6 2xl:mb-10`}
+            className={`flex gap-2 h-16 xl:px-7 2xl:px-16 border-b-2 border-careLightBlue md:mb-6 2xl:mb-5`}
             style={imageStyle}
           >
             <Image
               src="/acuvue.png"
               width={60}
               height={60}
-              className={`object-contain ${sideBarOpen ? "" : "mb-2"}mb-5`}
+              className={`object-contain ${
+                sideBarOpen ? "relative bottom-1 " : "relative bottom-4"
+              } `}
               alt="acuvue"
             />
             <Image
               src="/my-acuvue-dashboard.png"
               width={160}
               height={500}
-              className={`object-contain ${sideBarOpen ? "" : "mb-2"}mb-5`}
+              className={`object-contain ${
+                sideBarOpen ? "block left-10" : "hidden"
+              } `}
               alt="acuvue"
             />
           </div>
@@ -443,13 +447,13 @@ const Dashboard = ({ children }: DashboardProps) => {
                     key={i}
                     text={textHidden ? "" : option.text}
                     route={option.route || ""}
-                    image 
+                    image
                     path={option.path}
                     onNameChange={handleNameChange}
                   />
                 ));
               } else if (isEcpUser) {
-                return EcpOptions.map((option,i) => (
+                return EcpOptions.map((option, i) => (
                   <MenuOptions
                     spanClassname={`${
                       option.active
@@ -462,7 +466,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                     key={i}
                     text={textHidden ? "" : option.text}
                     route={option.route || ""}
-                    image 
+                    image
                     path={option.path}
                     onNameChange={handleNameChange}
                   />
@@ -481,7 +485,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                     key={i}
                     text={textHidden ? "" : option.text}
                     route={option.route || ""}
-                    image 
+                    image
                     path={option.path}
                     onNameChange={handleNameChange}
                   />
@@ -500,7 +504,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                     key={i}
                     text={textHidden ? "" : option.text}
                     route={option.route || ""}
-                    image 
+                    image
                     path={option.path}
                     onNameChange={handleNameChange}
                   />
@@ -796,7 +800,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                       key={i}
                       text={textHidden ? "" : option.text}
                       route={option.route || ""}
-                      image 
+                      image
                       path={option.path}
                       onNameChange={handleNameChange}
                     />
@@ -815,7 +819,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                       key={i}
                       text={textHidden ? "" : option.text}
                       route={option.route || ""}
-                      image 
+                      image
                       path={option.path}
                       onNameChange={handleNameChange}
                     />
@@ -834,7 +838,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                       key={i}
                       text={textHidden ? "" : option.text}
                       route={option.route || ""}
-                      image 
+                      image
                       path={option.path}
                       onNameChange={handleNameChange}
                     />
@@ -853,7 +857,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                       key={i}
                       text={textHidden ? "" : option.text}
                       route={option.route || ""}
-                      image 
+                      image
                       path={option.path}
                       onNameChange={handleNameChange}
                     />

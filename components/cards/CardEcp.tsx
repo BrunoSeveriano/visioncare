@@ -35,7 +35,7 @@ const CardEcp = () => {
       <div className="grid md:grid-cols-1 gap-y-3 lg:grid-cols-2 gap-x-4 mb-5 md:mb-5">
         <ContentCard
           onButtonClick={() => route.push("/dashboard/talk-to-specialist")}
-          svgIcon="/svg/questions.svg"
+          svgIcon="/card-terugbetaling.png"
           title="Reembolso​"
           subtitle="Saiba como obter reembolsos."
           buttonText="ver mais"

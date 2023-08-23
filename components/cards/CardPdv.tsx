@@ -21,7 +21,7 @@ const CardPdv = () => {
         />
         <ContentCard
           onButtonClick={() => route.push("/dashboard/scheduling")}
-          svgIcon="/svg/questions.svg"
+          svgIcon="/card-terugbetaling.png"
           title="Reembolso"
           subtitle="Acompanhe, confirme ou recuse solicitações de agendamento."
           buttonText="Agendar"
