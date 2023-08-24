@@ -28,7 +28,7 @@ const Talkspecialist = () => {
       <div className="grid md:grid-cols-1 gap-y-3 lg:grid-cols-2 gap-x-4 mb-3">
         <ContentCard
           onButtonClick={handleButtonClick}
-          svgIcon='/chat.png'
+          svgIcon="/chat.png"
           title="Quero tirar duvidas pelo chat​"
           buttonText="Clique aqui"
           textColor="text-white"
@@ -39,7 +39,7 @@ const Talkspecialist = () => {
           svgIcon="/calluser.png"
           title="Quero falar por telefone​"
           subtitle="Nosso horário de atendimento é de segunda a sexta-feira, das 8h âs 20h"
-          textphone="(00) 1234-5678"
+          textphone="0800 400 5001"
           buttonText="Ver mais"
           textColor="text-careDarkBlue"
           bgColor="bg-careDarkBlue "

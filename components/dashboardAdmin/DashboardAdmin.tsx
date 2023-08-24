@@ -235,11 +235,11 @@ const DashboardAdmin = () => {
       <div className="w-3/5 md:w-full fade-in">
         <div className=" md:grid md:grid-cols-4 rounded-lg">
           <div className="bg-careGrey col-span-3 rounded-md p-2 flex items-center">
-            <div className="border-careDarkPurple border-r-[2px] text-careDarkPurple">
+            <div className="border-careDarkBlue border-r-[2px] text-careDarkBlue">
               <AiOutlineInfoCircle className="mr-3" size="2rem" />
             </div>
             <span className="pl-5 text-careDarkBlue">
-              Ao clicar em INICIAR, a informação será exportada via CSV/PDF.​
+              Ao clicar em INICIAR, a informação será exportada via CSV.​
             </span>
           </div>
           <div className="mt-2 md:ml-10 mb-2">
