@@ -1,10 +1,41 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import CustomTable from "../table/CustomTable";
 import { TableScheduleManagement } from "@/helpers/TableScheduleManagement";
 import { TableAttendanceConfirmation } from "@/helpers/TableAttendanceConfirmation";
+import {
+  confirmVisitClinic,
+  listConfirmedVisitiClinic,
+  listVisitiClinic,
+} from "@/services/diagnostic";
+import useDataStorage from "@/hooks/useDataStorage";
 
 const SchedulingPartiner = () => {
+  const dataScheduling = useDataStorage();
+  const [listClinic, setListVisitiClinic] = useState<any[]>([]);
+  const [listConfirmed, setListConfirmed] = useState<any[]>([]);
+
+  const getVisitiData = useCallback(() => {
+    listVisitiClinic(listClinic).then((response) => {
+      dataScheduling.setIdSchedule(response);
+      setListVisitiClinic(response);
+    });
+  }, []);
+
+  useEffect(() => {
+    getVisitiData();
+  }, [getVisitiData]);
+
+  const getConfirmedVisitiClinic = useCallback(() => {
+    listConfirmedVisitiClinic(listConfirmed).then((response) => {
+      setListConfirmed(response);
+    });
+  }, []);
+
+  useEffect(() => {
+    getConfirmedVisitiClinic();
+  }, [getConfirmedVisitiClinic]);
+
   return (
     <div>
       <div className="bg-careGrey col-span-3 rounded-md p-2 flex items-center">
@@ -22,8 +53,8 @@ const SchedulingPartiner = () => {
         </span>
         <div className="md:w-full w-[21.5rem] mt-3">
           <CustomTable
-            rowId="pacient"
-            rows={TableScheduleManagement.rows}
+            rowId="scheduleDateStart"
+            rows={listClinic}
             columns={TableScheduleManagement.columns}
           />
         </div>
@@ -34,8 +65,8 @@ const SchedulingPartiner = () => {
         </span>
         <div className="md:w-full w-[21.5rem] mt-3 mb-5">
           <CustomTable
-            rowId="pacient"
-            rows={TableAttendanceConfirmation.rows}
+            rowId="scheduleDateStart"
+            rows={listConfirmed}
             columns={TableAttendanceConfirmation.columns}
           />
         </div>

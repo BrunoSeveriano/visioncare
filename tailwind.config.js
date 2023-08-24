@@ -26,6 +26,7 @@ module.exports = {
         careBackgroundInput: "#f6f6f6",
         careNavyBlue: "#051F4A",
         careOffWhite: "#F4F5F7",
+        careRedButton: "#E20C0C",
       },
     },
   },

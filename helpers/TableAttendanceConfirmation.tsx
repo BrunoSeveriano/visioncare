@@ -1,13 +1,17 @@
-import Button from "@/components/button/Button";
+import ButtonAttendanceConfirmation from "@/components/button/ButtonAttendanceConfirmation";
+import {
+  cancelVisitAttendance,
+  confirmVisitAttendance,
+  patientNotAttended,
+} from "@/services/diagnostic";
 import { FormControlLabel, styled, Switch, SwitchProps } from "@mui/material";
+import { format } from "date-fns";
+import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 export interface Rows {
-  date: string;
-  pacient: string;
-  number: number;
-  status: string;
-  confirmation: string;
-  switch: string;
+  scheduleDateStart: string;
+  patientName: string;
 }
 
 const IOSSwitch = styled((props: SwitchProps) => (
@@ -25,7 +29,7 @@ const IOSSwitch = styled((props: SwitchProps) => (
       transform: "translateX(16px)",
       color: "#fff",
       "& + .MuiSwitch-track": {
-        backgroundColor: theme.palette.mode === "dark" ? "#753BBD" : "#753BBD",
+        backgroundColor: theme.palette.mode === "dark" ? "#3e0385" : "#3e0385",
         opacity: 1,
         border: 0,
       },
@@ -34,7 +38,7 @@ const IOSSwitch = styled((props: SwitchProps) => (
       },
     },
     "&.Mui-focusVisible .MuiSwitch-thumb": {
-      color: "#753BBD",
+      color: "#3e0385",
       border: "6px solid #fff",
     },
     "&.Mui-disabled .MuiSwitch-thumb": {
@@ -65,7 +69,7 @@ const IOSSwitch = styled((props: SwitchProps) => (
 export const TableAttendanceConfirmation: TableData = {
   columns: [
     {
-      field: "date",
+      field: "scheduleDateStart",
       headerName: "Data",
       minWidth: 95,
       headerAlign: "center",
@@ -73,9 +77,21 @@ export const TableAttendanceConfirmation: TableData = {
       headerClassName: "columnTitle",
       sortable: false,
       flex: 1,
+      renderCell: (params: any) => {
+        const formattedDate = format(new Date(params.value), "dd/MM/yyyy");
+        return (
+          <div
+            style={{
+              paddingLeft: "5px",
+            }}
+          >
+            {formattedDate}
+          </div>
+        );
+      },
     },
     {
-      field: "pacient",
+      field: "patientName",
       headerName: "Paciente",
       minWidth: 95,
       headerAlign: "center",
@@ -84,20 +100,11 @@ export const TableAttendanceConfirmation: TableData = {
       sortable: false,
       flex: 1,
     },
-    {
-      field: "number",
-      headerName: "Número",
-      headerAlign: "center",
-      minWidth: 95,
-      align: "center",
-      headerClassName: "columnTitle",
-      sortable: false,
-      flex: 1,
-    },
+
     {
       field: "status",
       headerName: "Ações",
-      headerAlign: "center",
+      headerAlign: "",
       minWidth: 95,
       align: "center",
       headerClassName: "columnTitle",
@@ -105,29 +112,10 @@ export const TableAttendanceConfirmation: TableData = {
       flex: 1,
       renderCell: (params: any) => (
         <div className={`w-full`}>
-          <Button
+          <ButtonAttendanceConfirmation
             disableHover
             label="Ver mais"
-            customClass="bg-careDarkBlue border-careDarkBlue w-full py-2 text-sm"
-          />
-        </div>
-      ),
-    },
-    {
-      field: "cancel",
-      headerName: "",
-      headerAlign: "center",
-      minWidth: 95,
-      align: "center",
-      headerClassName: "columnTitle",
-      sortable: false,
-      flex: 1,
-      renderCell: (params: any) => (
-        <div className={`w-full`}>
-          <Button
-            disableHover
-            label="Cancelar"
-            customClass="border-careDarkBlue w-full py-2 text-sm text-careDarkBlue"
+            customClass="bg-careDarkBlue border-careDarkBlue w-full md:w-40 py-2 text-sm"
           />
         </div>
       ),
@@ -135,64 +123,112 @@ export const TableAttendanceConfirmation: TableData = {
     {
       field: "confirmation",
       headerName: "Confirmar comparecimento",
-      headerAlign: "center",
+      headerAlign: "",
       minWidth: 95,
       align: "center",
       headerClassName: "columnTitle",
       sortable: false,
       flex: 1,
-      renderCell: (params: any) => (
-        <div className={`w-full`}>
-          <Button
-            disableHover
-            label="Confirmar"
-            customClass="bg-careGreen border-careGreen w-full py-2 text-sm"
-          />
-        </div>
-      ),
-    },
-    {
-      field: "switch",
-      headerName: "",
-      headerAlign: "center",
-      minWidth: 95,
-      align: "center",
-      headerClassName: "columnTitle",
-      sortable: false,
-      flex: 1,
-      renderCell: (params: any) => (
-        <div>
-          <FormControlLabel
-            control={<IOSSwitch sx={{ m: 2 }} defaultChecked />}
-            label=""
-          />
-        </div>
-      ),
+      renderCell: (params: any) => {
+        const initialState = {
+          isConfirmed:
+            localStorage.getItem(`isConfirmed_${params.row.visitId}`) ===
+            "true",
+        };
+
+        const initialStateCancel = {
+          showButtons:
+            localStorage.getItem(`showButtons_${params.row.visitId}`) ===
+            "true",
+        };
+
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [isConfirmed, setIsConfirmed] = useState(
+          initialState.isConfirmed
+        );
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [showButtons, setShowButtons] = useState(
+          initialStateCancel.showButtons
+        );
+
+        const handleCancelClick = () => {
+          const idVisit = {
+            originEntityId: params.row.visitId,
+          };
+          cancelVisitAttendance(idVisit).then((response) => {
+            toast.success("Comparecimento do paciente cancelado efetivamente!");
+            setShowButtons(false);
+            localStorage.setItem(`showButtons_${params.row.visitId}`, "false");
+          });
+        };
+
+        const handleConfirmation = () => {
+          const idVisit = {
+            originEntityId: params.row.visitId,
+          };
+          confirmVisitAttendance(idVisit).then((response) => {
+            toast.success("Comparecimento do paciente confirmado!");
+            setIsConfirmed(true);
+            localStorage.setItem(`isConfirmed_${params.row.visitId}`, "true");
+          });
+        };
+
+        const handleSwitchClick = () => {
+          const idVisit = {
+            originEntityId: params.row.visitId,
+          };
+          patientNotAttended(idVisit).then((response) => {
+            toast.error("Paciente não compareceu!");
+            setIsConfirmed(false);
+            localStorage.setItem(`isConfirmed_${params.row.visitId}`, "false");
+          });
+        };
+
+        return (
+          <div className={`w-full flex gap-2`}>
+            <ButtonAttendanceConfirmation
+              onClick={handleCancelClick}
+              params={params.row.visitId}
+              disableHover
+              label="Cancelar"
+              customClass="border-careDarkBlue w-full md:w-40 py-2 text-sm text-careDarkBlue"
+            />
+            {showButtons && (
+              <>
+                <ButtonAttendanceConfirmation
+                  onClick={handleConfirmation}
+                  params={params.row.visitId}
+                  disableHover
+                  label={isConfirmed ? "Confirmado" : "Não compareceu"}
+                  customClass={
+                    isConfirmed
+                      ? "bg-careGreen border-careGreen w-full md:w-36 w-full py-2 text-sm"
+                      : "bg-careOrange border-careOrange w-full md:w-36 w-full py-2 text-sm"
+                  }
+                />
+                <FormControlLabel
+                  control={
+                    <IOSSwitch
+                      sx={{ m: 1 }}
+                      checked={isConfirmed}
+                      onClick={handleSwitchClick}
+                    />
+                  }
+                  label=""
+                />
+              </>
+            )}
+          </div>
+        );
+      },
     },
   ],
 
   rows: [
     {
-      date: "10/10/2021",
-      pacient: "Maria da Silva",
-      number: 10,
-      status: "Pendente",
-      confirmation: "",
-      switch: "",
-    },
-    {
-      date: "10/10/2021",
-      pacient: "Maria da Silva",
-      number: 10,
-      status: "Pendente",
-      confirmation: "",
-    },
-    {
-      date: "10/10/2021",
-      pacient: "Maria da Silva",
-      number: 10,
-      status: "Pendente",
-      confirmation: "",
+      scheduleDateStart: "18/10/2021",
+      patientName: "Maria da Silva",
+      visitId: "unique_id_1",
     },
   ],
 };

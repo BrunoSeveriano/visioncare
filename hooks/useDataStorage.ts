@@ -15,11 +15,15 @@ interface DataStore {
   setSurveyData: (surveyData: any) => void;
   idVoucher: string;
   setIdVoucher: (idVoucher: string) => void;
+  idSchedule: string;
+  setIdSchedule: (idSchedule: string) => void;
 }
 
 const useDataStorage = create(
   persist<DataStore>(
     (set) => ({
+      idSchedule: "",
+      setIdSchedule: (idSchedule) => set({ idSchedule }),
       idVoucher: "",
       setIdVoucher: (idVoucher) => set({ idVoucher }),
       VoucherUserHistory: [],

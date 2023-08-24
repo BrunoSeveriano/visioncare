@@ -1,9 +1,11 @@
-import Button from "@/components/button/Button";
+import ButtonScheduleManagement from "@/components/button/ButtonScheduleManagement";
+import { cancelVisitClinic, confirmVisitClinic } from "@/services/diagnostic";
+import { format } from "date-fns";
 
 export interface Rows {
-  date: string;
-  pacient: string;
-  number: number;
+  scheduleDateStart: string;
+  name: string;
+  friendlyCode: number;
   status: string;
   confirmation: string;
 }
@@ -11,7 +13,7 @@ export interface Rows {
 export const TableScheduleManagement: TableData = {
   columns: [
     {
-      field: "date",
+      field: "scheduleDateStart",
       headerName: "Data",
       minWidth: 95,
       headerAlign: "center",
@@ -19,9 +21,21 @@ export const TableScheduleManagement: TableData = {
       headerClassName: "columnTitleScheduleManagement",
       sortable: false,
       flex: 1,
+      renderCell: (params: any) => {
+        const formattedDate = format(new Date(params.value), "dd/MM/yyyy");
+        return (
+          <div
+            style={{
+              paddingLeft: "5px",
+            }}
+          >
+            {formattedDate}
+          </div>
+        );
+      },
     },
     {
-      field: "pacient",
+      field: "name",
       headerName: "Paciente",
       minWidth: 95,
       headerAlign: "center",
@@ -31,7 +45,7 @@ export const TableScheduleManagement: TableData = {
       flex: 1,
     },
     {
-      field: "number",
+      field: "friendlyCode",
       headerName: "Número",
       headerAlign: "center",
       minWidth: 95,
@@ -51,7 +65,7 @@ export const TableScheduleManagement: TableData = {
       flex: 1,
       renderCell: (params: any) => (
         <div className={`w-full`}>
-          <Button
+          <ButtonScheduleManagement
             disableHover
             label="Ver mais"
             customClass="bg-careDarkBlue border-careDarkBlue w-full py-2 text-sm"
@@ -70,7 +84,17 @@ export const TableScheduleManagement: TableData = {
       flex: 1,
       renderCell: (params: any) => (
         <div className={`w-full`}>
-          <Button
+          <ButtonScheduleManagement
+            onClick={() => {
+              const idVisit = {
+                programCode: "073",
+                visitid: params.row.visitId,
+              };
+              cancelVisitClinic(idVisit).then((response) => {
+                alert("Agendamento confirmado com sucesso!");
+              });
+            }}
+            params={params.row.visitId}
             disableHover
             label="Cancelar"
             customClass="border-careDarkBlue w-full py-2 text-sm text-careDarkBlue"
@@ -89,7 +113,17 @@ export const TableScheduleManagement: TableData = {
       flex: 1,
       renderCell: (params: any) => (
         <div className={`w-full`}>
-          <Button
+          <ButtonScheduleManagement
+            onClick={() => {
+              const idVisit = {
+                programCode: "073",
+                visitid: params.row.visitId,
+              };
+              confirmVisitClinic(idVisit).then((response) => {
+                alert("Agendamento confirmado com sucesso!");
+              });
+            }}
+            params={params.row.visitId}
             disableHover
             label="Confirmar"
             customClass="bg-careGreen border-careGreen w-full py-2 text-sm"
@@ -101,39 +135,11 @@ export const TableScheduleManagement: TableData = {
 
   rows: [
     {
-      date: "10/10/2021",
-      pacient: "Maria da Silva",
-      number: 10,
-      status: "Pendente",
-      confirmation: "",
-    },
-    {
-      date: "10/10/2021",
-      pacient: "Maria da Silva",
-      number: 10,
-      status: "Pendente",
-      confirmation: "",
-    },
-    {
-      date: "10/10/2021",
-      pacient: "Maria da Silva",
-      number: 10,
-      status: "Pendente",
-      confirmation: "",
-    },
-    {
-      date: "10/10/2021",
-      pacient: "Maria da Silva",
-      number: 10,
-      status: "Pendente",
-      confirmation: "",
-    },
-    {
-      date: "10/10/2021",
-      pacient: "Maria da Silva",
-      number: 10,
-      status: "Pendente",
-      confirmation: "",
+      scheduleDateStart: "10/10/2021",
+      name: "Maria da Silva",
+      friendlyCode: 123456,
+      status: "Agendado",
+      confirmation: "Confirmado",
     },
   ],
 };
