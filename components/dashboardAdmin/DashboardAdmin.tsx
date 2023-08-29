@@ -6,7 +6,6 @@ import { MdOutlinePerson } from "react-icons/md";
 import { BsSearch } from "react-icons/bs";
 import CustomSelect from "../select/Select";
 import CustomTable from "../table/CustomTable";
-import { voucherListTable } from "@/helpers/TableMockup";
 import SearchModal from "../modals/SearchModal";
 import useRegisterVoucher from "@/hooks/useRegisterVoucher";
 import useEditVoucher from "@/hooks/useEditVoucher";
@@ -33,10 +32,16 @@ import useDataStoragePartiner from "@/hooks/useDataStoragePartiner";
 import { TableMockupAllPacient } from "@/helpers/TableMockupAllPacient";
 import ExportToExcel from "../button/ExportToExcel";
 import CardsDashboardAdmin from "../cards/CardsDashboardAdmin";
+import useDataStorage from "@/hooks/useDataStorage";
+import InputMask from "react-input-mask";
+import { VoucherListTableDashboard } from "@/helpers/VoucherListTableDashboard";
+import { TableMockupPartinerDashboard } from "@/helpers/TableMockupPartinerDashboard";
+import ExportToCSV from "../button/ExportToCSV";
 
 const DashboardAdmin = () => {
   const registerVoucher = useRegisterVoucher();
   const editVoucher = useEditVoucher();
+  const useData = useDataStorage();
   const [editVoucherData, setEditVoucherData] = useState<any>({});
   const [voucherTypesOptions, setVoucherTypesOptions] = useState([{}]);
   const [listVoucher, setListVoucher] = useState<any[]>([]);
@@ -47,6 +52,8 @@ const DashboardAdmin = () => {
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [showTimeLine, setShowTimeLine] = useState(false);
   const [searchModalData, setSearchModalData] = useState(null);
+  const [refreshTable, setRefreshTable] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState<{
     voucherTypes: string;
     status: string;
@@ -88,18 +95,27 @@ const DashboardAdmin = () => {
     []
   );
 
-  const getPartinerData = useCallback(async () => {
-    try {
-      const filters = {
-        friendlyCode: filterValueRef.current,
-        mainContact: filterValueRef.current,
-      };
-      const partiners = await listPartiner(filters);
-      setPartinerList(partiners);
-    } catch (error) {
-      console.error("Erro ao buscar a lista de parceiros:", error);
-    }
-  }, []);
+  const getPartinerData = useCallback(() => {
+    setIsLoading(true);
+    const filters = {
+      friendlyCode: filterValueRef.current,
+      mainContact: filterValueRef.current,
+    };
+
+    listPartiner(filters)
+      .then((partiners) => {
+        setPartinerList(partiners);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar a lista de parceiros:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        if (refreshTable) {
+          setRefreshTable(false);
+        }
+      });
+  }, [refreshTable, useData.refresh]);
 
   useEffect(() => {
     getPartinerData();
@@ -131,6 +147,9 @@ const DashboardAdmin = () => {
   };
 
   const handleFilterChange = (filterName: string, value: string) => {
+    if (filterName === "voucherTypes" && value === "All") {
+      value = "";
+    }
     setFilters((prevState) => ({
       ...prevState,
       [filterName]: value,
@@ -146,29 +165,42 @@ const DashboardAdmin = () => {
   );
 
   const getVoucherData = useCallback(() => {
-    getListVoucher(filters).then((response) => {
-      setListVoucher(response);
-    });
-  }, [filters]);
+    const voucherTypeFilter =
+      filters.voucherTypes === "All" ? "" : filters.voucherTypes;
+
+    getListVoucher({ ...filters, voucherTypes: voucherTypeFilter }).then(
+      (response) => {
+        setListVoucher(response);
+      }
+    );
+  }, [refreshTable, filters, useData.refresh]);
 
   useEffect(() => {
     getVoucherData();
   }, [getVoucherData]);
 
   useEffect(() => {
-    getVoucherTypes().then((response) => {
-      if (response && Array.isArray(response.value)) {
-        response.value.map((item: any) => {
-          setVoucherTypesOptions((prevState) => [
-            ...prevState,
-            { id: item, value: item },
-          ]);
-        });
-      } else {
-        console.error("A resposta da API não contém o formato esperado.");
-      }
-    });
-  }, []);
+    setIsLoading(true);
+    getVoucherTypes()
+      .then((response) => {
+        if (response && Array.isArray(response.value)) {
+          response.value.map((item: any) => {
+            setVoucherTypesOptions((prevState) => [
+              ...prevState,
+              { id: item, value: item },
+            ]);
+          });
+        } else {
+          console.error("A resposta da API não contém o formato esperado.");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [refreshTable, useData.refresh]);
 
   const formatCpf = (value: any) => {
     const cleanedValue = value.replace(/\D/g, "");
@@ -230,6 +262,31 @@ const DashboardAdmin = () => {
     });
   };
 
+  const refreshTableData = () => {
+    setRefreshTable(true);
+  };
+
+  const maskedCpf = () => {
+    return (
+      <InputMask
+        maxLength={14}
+        name="cpf"
+        mask="999.999.999-99"
+        alwaysShowMask
+        maskPlaceholder={null}
+        value={searchCpf}
+        onChange={handleCpfChange}
+      >
+        <Input
+          placeholder="Buscar cliente pelo CPF"
+          startIcon
+          iconStart={BsSearch}
+          onEnter={handleSearchClient}
+        />
+      </InputMask>
+    );
+  };
+
   return (
     <>
       <div className="w-3/5 md:w-full fade-in">
@@ -243,7 +300,7 @@ const DashboardAdmin = () => {
             </span>
           </div>
           <div className="mt-2 md:ml-10 mb-2">
-            <ExportToExcel
+            <ExportToCSV
               rows={patientList}
               label="Exportar Planilha"
               className="bg-careBlue border-careBlue text-white py-2"
@@ -258,8 +315,9 @@ const DashboardAdmin = () => {
             <div className="sm:grid-cols-1 md:grid md:grid-cols-4 gap-6">
               <CustomSelect
                 fullWidth
+                value={filters.voucherTypes}
                 name="voucherTypes"
-                options={voucherTypesOptions}
+                options={[{ id: "", value: "Todos" }, ...voucherTypesOptions]}
                 placeholder="Selecione o tipo de Voucher"
                 onChange={(e) =>
                   handleFilterChange("voucherTypes", e.target.value as string)
@@ -267,18 +325,20 @@ const DashboardAdmin = () => {
               />
               <CustomSelect
                 fullWidth
+                value={filters.status}
                 name="status"
                 placeholder="Selecione status do Voucher"
-                options={VoucherFiltersStatus}
+                options={[{ id: "", value: "Todos" }, ...VoucherFiltersStatus]}
                 onChange={(e) =>
                   handleFilterChange("status", e.target.value as string)
                 }
               />
               <CustomSelect
                 fullWidth
+                value={filters.deadlineInDays}
                 name="deadlineInDays"
                 placeholder="Período do Voucher"
-                options={VoucherFiltersPeriod}
+                options={[{ id: "", value: "Todos" }, ...VoucherFiltersPeriod]}
                 onChange={(e) =>
                   handleFilterChange("deadlineInDays", e.target.value as string)
                 }
@@ -307,21 +367,14 @@ const DashboardAdmin = () => {
               Localizar Cliente
             </span>
             <div className=" mb-8 md:mb-0 sm:grid-cols-1 md:grid md:grid-cols-3 gap-6">
-              <div className="col-span-1">
-                <Input
-                  placeholder="Buscar cliente pelo CPF"
-                  maxLength={11}
-                  value={searchCpf}
-                  onChange={handleCpfChange}
-                  iconStart={BsSearch}
-                  startIcon
-                  onEnter={handleSearchClient}
-                />
-              </div>
+              <div className="col-span-1">{maskedCpf()}</div>
               <div>
                 <CustomSelect
                   name=""
-                  options={VoucherFiltersStatusPacient}
+                  options={[
+                    { id: "", value: "Todos" },
+                    ...VoucherFiltersStatusPacient,
+                  ]}
                   value={selectedStatus}
                   onChange={(e) => setSelectedStatus(e.target.value)}
                   iconStart={MdOutlinePerson}
@@ -406,9 +459,10 @@ const DashboardAdmin = () => {
               <div className="mb-8 md:mb-0 fade-in">
                 <div>
                   <CustomTable
+                    isLoading={isLoading}
                     rowId="friendlyCode"
                     rows={filteredPartinerList}
-                    columns={TableMockupPartiner.columns}
+                    columns={TableMockupPartinerDashboard.columns}
                   />
                 </div>
               </div>
@@ -417,6 +471,7 @@ const DashboardAdmin = () => {
           <div className="mb-8 md:mb-0">
             {showSearchModal && (
               <SearchModal
+                refreshTable={refreshTableData}
                 clientData={searchModalData}
                 selectedStatus={selectedStatus}
               />
@@ -425,16 +480,18 @@ const DashboardAdmin = () => {
           {showCustomTable && showCustomTableVoucher && (
             <div className="fade-in">
               <CustomTable
+                isLoading={isLoading}
                 rowId="id"
                 handleEditVoucherRow={handleEditVoucherRow}
                 rows={listVoucher}
-                columns={voucherListTable.columns}
+                columns={VoucherListTableDashboard.columns}
               />
             </div>
           )}
           {showCustomTablePatient && (
             <div className="fade-in mt-5">
               <CustomTable
+                isLoading={isLoading}
                 rowId="id"
                 rows={patientList}
                 columns={TableMockupAllPacient.columns}

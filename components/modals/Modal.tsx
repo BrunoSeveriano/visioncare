@@ -43,7 +43,7 @@ const Modal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70">
+    <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-blue-950/70">
       <div className={`${customClass ? customClass : "w-700 mx-auto h-475"}`}>
         <div
           className={`translate duration-300 h-full 

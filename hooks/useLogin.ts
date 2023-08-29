@@ -7,6 +7,8 @@ interface LoginStore {
   role: string;
   name?: string;
   token: string;
+  userData?: any;
+  setUserData: (userData: any) => void;
   setRole: (role: string) => void;
   setName: (name: string) => void;
   onLogin: () => void;
@@ -22,6 +24,8 @@ const useLogin = create(
       email: "",
       role: "",
       name: "",
+      userData: [],
+      setUserData: (userData) => set({ userData: userData }),
       setName: (name) => set({ name: name }),
       setRole: (role) => set({ role: role }),
       onLogin: () => set({ isLogged: true }),

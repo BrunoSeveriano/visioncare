@@ -1,6 +1,6 @@
 import React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Rows } from "@/helpers/TableMockup";
+import { Rows } from "@/helpers/VoucherListTable";
 import Pagination from "@mui/material/Pagination";
 import { useState } from "react";
 
@@ -9,12 +9,14 @@ interface ICustomTableProps {
   columns: GridColDef[];
   rows: any[];
   handleEditVoucherRow?: (voucher: Rows) => void;
+  isLoading?: boolean;
 }
 
 const CustomTable = ({
   columns,
   rows,
   rowId,
+  isLoading,
   handleEditVoucherRow,
 }: ICustomTableProps) => {
   const pageSize = 5;
@@ -61,6 +63,7 @@ const CustomTable = ({
         rowHeight={75}
         disableColumnFilter
         onRowClick={handleRowClick}
+        loading={isLoading}
         sx={{
           "& .MuiDataGrid-row": {
             backgroundColor: "#F4F5F7",

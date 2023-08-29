@@ -8,7 +8,7 @@ import { MdOutlineDateRange, MdOutlinePerson } from "react-icons/md";
 import { BsSearch } from "react-icons/bs";
 import CustomSelect from "../select/Select";
 import CustomTable from "../table/CustomTable";
-import { voucherListTable } from "@/helpers/TableMockup";
+
 import SearchModal from "../modals/SearchModal";
 import RegisterVoucher from "./RegisterVoucher";
 import EditVoucher from "./EditVoucher";
@@ -25,6 +25,9 @@ import {
   VoucherFiltersStatus,
 } from "@/helpers/FiltersData";
 import { VoucherFiltersStatusPacient } from "@/helpers/FiltersDataPacient";
+import useDataStorage from "@/hooks/useDataStorage";
+import InputMask from "react-input-mask";
+import { VoucherListTable } from "@/helpers/VoucherListTable";
 
 const Voucher = () => {
   const registerVoucher = useRegisterVoucher();
@@ -37,6 +40,9 @@ const Voucher = () => {
   const [showCustomTable, setShowCustomTable] = useState(true);
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [searchModalData, setSearchModalData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [refreshTable, setRefreshTable] = useState(false);
+  const useData = useDataStorage();
   const [filters, setFilters] = useState<{
     voucherTypes: string;
     status: string;
@@ -64,44 +70,57 @@ const Voucher = () => {
   };
 
   const handleFilterChange = (filterName: string, value: string) => {
+    if (filterName === "voucherTypes" && value === "All") {
+      value = "";
+    }
     setFilters((prevState) => ({
       ...prevState,
       [filterName]: value,
     }));
   };
 
-  const handleEditVoucherRow = useCallback(
-    (voucher: any) => {
-      setEditVoucherData(voucher);
-      editVoucher.onOpen();
-    },
-    [editVoucher]
-  );
+  const handleEditVoucherRow = useCallback((voucher: any) => {
+    setEditVoucherData(voucher);
+    editVoucher.onOpen();
+  }, []);
 
   const getVoucherData = useCallback(() => {
-    getListVoucher(filters).then((response) => {
-      setListVoucher(response);
-    });
-  }, [filters]);
+    const voucherTypeFilter =
+      filters.voucherTypes === "All" ? "" : filters.voucherTypes;
+
+    getListVoucher({ ...filters, voucherTypes: voucherTypeFilter }).then(
+      (response) => {
+        setListVoucher(response);
+      }
+    );
+  }, [refreshTable, filters, useData.refresh]);
 
   useEffect(() => {
     getVoucherData();
   }, [getVoucherData]);
 
   useEffect(() => {
-    getVoucherTypes().then((response) => {
-      if (response && Array.isArray(response.value)) {
-        response.value.map((item: any) => {
-          setVoucherTypesOptions((prevState) => [
-            ...prevState,
-            { id: item, value: item },
-          ]);
-        });
-      } else {
-        console.error("A resposta da API não contém o formato esperado.");
-      }
-    });
-  }, []);
+    setIsLoading(true);
+    getVoucherTypes()
+      .then((response) => {
+        if (response && Array.isArray(response.value)) {
+          response.value.map((item: any) => {
+            setVoucherTypesOptions((prevState) => [
+              ...prevState,
+              { id: item, value: item },
+            ]);
+          });
+        } else {
+          console.error("A resposta da API não contém o formato esperado.");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [refreshTable, useData.refresh]);
 
   const formatCpf = (value: any) => {
     const cleanedValue = value.replace(/\D/g, "");
@@ -119,12 +138,39 @@ const Voucher = () => {
     setSearchCpf(formattedCpf);
   };
 
+  const maskedCpf = () => {
+    return (
+      <InputMask
+        maxLength={14}
+        name="cpf"
+        mask="999.999.999-99"
+        alwaysShowMask
+        maskPlaceholder={null}
+        value={searchCpf}
+        onChange={handleCpfChange}
+      >
+        <Input
+          placeholder="Digite o CPF do cliente"
+          startIcon
+          iconStart={BsSearch}
+          onEnter={handleSearchClient}
+        />
+      </InputMask>
+    );
+  };
+
+  const refreshTableData = () => {
+    setRefreshTable(true);
+  };
+
   return (
     <>
-      {registerVoucher.isOpen && <RegisterVoucher />}
-      {editVoucher.isOpen && <EditVoucher />}
+      {registerVoucher.isOpen && (
+        <RegisterVoucher refreshTable={refreshTableData} />
+      )}
+      {editVoucher.isOpen && <EditVoucher refreshTable={refreshTableData} />}
       {!registerVoucher.isOpen && !editVoucher.isOpen && (
-        <div className="w-3/5 md:w-full fade-in">
+        <div className="md:w-full fade-in mb-5">
           <div className=" md:grid md:grid-cols-4 rounded-lg">
             <div className="bg-careGrey col-span-3 rounded-md p-2 flex items-center">
               <div className="border-careDarkBlue border-r-[2px] text-careDarkBlue">
@@ -150,34 +196,43 @@ const Voucher = () => {
               </span>
               <div className="sm:grid-cols-1 md:grid md:grid-cols-3 gap-6">
                 <CustomSelect
+                  value={filters.voucherTypes}
                   iconStart={FaRegAddressCard}
                   startIcon
                   fullWidth
                   name="voucherTypes"
-                  options={voucherTypesOptions}
+                  options={[{ id: "", value: "Todos" }, ...voucherTypesOptions]}
                   placeholder="Selecione o tipo de Voucher"
                   onChange={(e) =>
                     handleFilterChange("voucherTypes", e.target.value as string)
                   }
                 />
                 <CustomSelect
+                  value={filters.status}
                   iconStart={BiTransfer}
                   startIcon
                   fullWidth
                   name="status"
                   placeholder="Selecione status do Voucher"
-                  options={VoucherFiltersStatus}
+                  options={[
+                    { id: "", value: "Todos" },
+                    ...VoucherFiltersStatus,
+                  ]}
                   onChange={(e) =>
                     handleFilterChange("status", e.target.value as string)
                   }
                 />
                 <CustomSelect
+                  value={filters.deadlineInDays}
                   iconStart={MdOutlineDateRange}
                   startIcon
                   fullWidth
                   name="deadlineInDays"
                   placeholder="Período do Voucher"
-                  options={VoucherFiltersPeriod}
+                  options={[
+                    { id: "", value: "Todos" },
+                    ...VoucherFiltersPeriod,
+                  ]}
                   onChange={(e) =>
                     handleFilterChange(
                       "deadlineInDays",
@@ -193,21 +248,15 @@ const Voucher = () => {
               <span className="text-2xl text-careLightBlue">
                 Localizar Voucher por Cliente
               </span>
-              <div className=" mb-8 md:mb-0 sm:grid-cols-1 md:grid md:grid-cols-3 gap-6">
-                <div className="col-span-2">
-                  <Input
-                    maxLength={11}
-                    value={searchCpf}
-                    onChange={handleCpfChange}
-                    iconStart={BsSearch}
-                    startIcon
-                    onEnter={handleSearchClient}
-                  />
-                </div>
+              <div className=" mb-8 md:mb-0 grid-cols-1 md:grid md:grid-cols-3 gap-6">
+                <div className="col-span-2">{maskedCpf()}</div>
                 <div>
                   <CustomSelect
                     name=""
-                    options={VoucherFiltersStatusPacient}
+                    options={[
+                      { id: "", value: "Todos" },
+                      ...VoucherFiltersStatusPacient,
+                    ]}
                     value={selectedStatus}
                     onChange={(e) => setSelectedStatus(e.target.value)}
                     iconStart={MdOutlinePerson}
@@ -221,22 +270,24 @@ const Voucher = () => {
             <div className="mb-8 md:mb-0">
               {showSearchModal && (
                 <SearchModal
+                  refreshTable={refreshTableData}
                   clientData={searchModalData}
                   selectedStatus={selectedStatus}
                 />
               )}
             </div>
-            {showCustomTable && (
-              <div>
-                <CustomTable
-                  rowId="id"
-                  handleEditVoucherRow={handleEditVoucherRow}
-                  rows={listVoucher}
-                  columns={voucherListTable.columns}
-                />
-              </div>
-            )}
           </div>
+          {showCustomTable && (
+            <div>
+              <CustomTable
+                isLoading={isLoading}
+                rowId="number"
+                handleEditVoucherRow={handleEditVoucherRow}
+                rows={listVoucher}
+                columns={VoucherListTable.columns}
+              />
+            </div>
+          )}
         </div>
       )}
     </>

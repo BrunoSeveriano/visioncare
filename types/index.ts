@@ -173,6 +173,16 @@ interface IPurchaseAdd {
     }
   ];
 }
+
+interface IRepayment {
+  ProgramCode: string;
+  Items: [
+    {
+      ProductId: string;
+      Amount: number;
+    }
+  ];
+}
 interface IVoucherUse {
   programCode: string;
   voucherId: string;

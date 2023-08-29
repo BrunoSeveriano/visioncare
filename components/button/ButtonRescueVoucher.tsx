@@ -1,10 +1,12 @@
+import useClientColors from "@/hooks/useClientConfiguration";
 import useDataStorage from "@/hooks/useDataStorage";
-import useEditVoucher from "@/hooks/useEditVoucher";
+import { rescueVoucher } from "@/services/voucher";
 import { IconType } from "react-icons";
+import { toast } from "react-toastify";
 
 interface ButtonProps {
   label: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: () => void;
   disabled?: boolean;
   small?: boolean;
   icon?: IconType;
@@ -13,11 +15,12 @@ interface ButtonProps {
   customColor?: string;
   isLoading?: boolean;
   disableHover?: boolean;
-  voucher: any;
+  params?: any;
 }
 
-const ButtonEditVoucher = ({
+const ButtonRescueVoucher = ({
   label,
+  onClick,
   disabled,
   icon: Icon,
   type,
@@ -25,25 +28,32 @@ const ButtonEditVoucher = ({
   customColor,
   isLoading,
   disableHover,
-  voucher,
+  params,
 }: ButtonProps) => {
-  const dataStorage = useDataStorage();
-  const editVoucher = useEditVoucher();
-  const handleEditVoucher = () => {
-    dataStorage.setVoucherData({
-      id: voucher.id,
-      Name: voucher.name,
-      DiscountType: voucher.discountType,
-      DiscountValue: voucher.discountValue,
-      DeadlineInDays: voucher.deadlineInDays,
-      Note: voucher.note,
-    });
-    editVoucher.onOpen();
+  const dataScheduling = useDataStorage();
+
+  const handleSendProduct = () => {
+    const statusVoucher = {
+      programCode: "073",
+      voucherId: params,
+    };
+    rescueVoucher(statusVoucher)
+      .then((response) => {
+        toast.success("Voucher resgatado com sucesso!");
+        dataScheduling.setRefresh(!dataScheduling.refresh);
+      })
+      .catch((error) => {
+        toast.error("Erro ao resgatar voucher!");
+      });
   };
 
   return (
     <button
-      onClick={handleEditVoucher}
+      onClick={() => {
+        onClick && onClick();
+        dataScheduling.setIdSchedule(params);
+        handleSendProduct();
+      }}
       disabled={disabled}
       className={`relative disabled:bg-gray-500 disabled:border-gray-500 disabled:opacity-70  border-2 z-0 text-md disabled:cursor-not-allowed rounded-lg  transition ${
         disableHover ? "" : "hover:opacity-80"
@@ -64,4 +74,4 @@ const ButtonEditVoucher = ({
   );
 };
 
-export default ButtonEditVoucher;
+export default ButtonRescueVoucher;

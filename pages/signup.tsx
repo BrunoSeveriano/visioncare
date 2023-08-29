@@ -75,7 +75,12 @@ export default function Signup() {
         });
     } else {
       registerUser(registerAccount)
-        .then(() => {
+        .then((res) => {
+          if (!res.isValidData) {
+            toast.error(res.value);
+            setLoading(false);
+            return;
+          }
           toast.success("Cadastro realizado com sucesso");
           localStorage.setItem("mobilephone", registerAccount.mobilephone);
           router.push("/confirmation");

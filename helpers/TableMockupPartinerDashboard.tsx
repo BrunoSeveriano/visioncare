@@ -1,4 +1,5 @@
 import ButtonEditPartiner from "@/components/button/ButtonEditPartiner";
+import ButtonEditVoucher from "@/components/button/ButtonEditVoucher";
 import { format } from "date-fns";
 
 export interface Rows {
@@ -10,7 +11,7 @@ export interface Rows {
   actions: string;
 }
 
-export const TableMockupPartiner: TableData = {
+export const TableMockupPartinerDashboard: TableData = {
   columns: [
     {
       field: "createdOn",
@@ -86,6 +87,7 @@ export const TableMockupPartiner: TableData = {
       renderCell: (params: any) => (
         <div className="w-full">
           <ButtonEditPartiner
+            disabled
             data={params.row}
             disableHover
             label="Ver mais"

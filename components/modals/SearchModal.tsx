@@ -4,6 +4,7 @@ import CustomTable from "../table/CustomTable";
 import { TableMockupPacient } from "@/helpers/TableMockupPacient";
 import { getListVoucherPatients } from "@/services/voucher";
 import useTalkModal from "@/hooks/useTalkModal";
+import useDataStorage from "@/hooks/useDataStorage";
 
 interface ClientData {
   name: string;
@@ -29,29 +30,37 @@ interface UtilizedHistory {
 interface SearchModalProps {
   clientData: ClientData | null;
   selectedStatus: string;
+  refreshTable: () => void;
 }
 
 const SearchModal: React.FC<SearchModalProps> = ({
   clientData,
   selectedStatus,
+  refreshTable,
 }) => {
   const [clientVouchers, setClientVouchers] = useState<Voucher[]>([]);
   const [utilizedHistory, setUtilizedHistory] = useState<UtilizedHistory[]>([]);
   const showHistoryPacient = useTalkModal();
+  const [isLoading, setIsLoading] = useState(false);
+  const useData = useDataStorage();
 
   useEffect(() => {
     if (clientData && clientData.cpf) {
+      setIsLoading(true);
       getListVoucherPatients({ cpf: clientData.cpf })
         .then((data) => {
           setClientVouchers(data);
           setUtilizedHistory(data.utilizedHistory);
-          console.log("Vouchers de clientes:", data);
+          refreshTable();
         })
         .catch((error) => {
-          console.error("Erro ao buscar vouchers de clientes:", error);
+          console.error(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
-  }, [clientData]);
+  }, [clientData, useData.refresh]);
 
   function getFilteredVouchers(vouchers: Voucher[], status: string) {
     if (!status) {
@@ -110,6 +119,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                 </div>
                 <div>
                   <CustomTable
+                    isLoading={isLoading}
                     rowId="id"
                     rows={getFilteredVouchers(
                       clientData.vouchers,
@@ -125,14 +135,14 @@ const SearchModal: React.FC<SearchModalProps> = ({
                     Histórico de utilização
                   </span>
                 </div>
-                <div className="w-full ">
+                <div className="w-full">
                   {utilizedHistory &&
                     utilizedHistory.length > 0 &&
                     utilizedHistory.map((historyItem, index) => (
                       <>
                         <div
                           key={index}
-                          className="border border-careGrey bg-careGrey p-5 rounded-t-xl"
+                          className="border border-careGrey bg-careGrey p-5 rounded-t-xl mt-3"
                         >
                           <div className="text-careLightBlue">
                             {historyItem.useDate}

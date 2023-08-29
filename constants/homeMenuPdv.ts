@@ -18,7 +18,7 @@ export const homeMenuPdv = [
     active: false,
   },
   {
-    route: "",
+    route: "reimbursement",
     icon: GiTakeMyMoney,
     path: "/reimbursement.png",
     text: "Reembolso",

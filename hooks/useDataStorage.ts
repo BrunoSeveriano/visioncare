@@ -17,11 +17,24 @@ interface DataStore {
   setIdVoucher: (idVoucher: string) => void;
   idSchedule: string;
   setIdSchedule: (idSchedule: string) => void;
+  Idconfirmation: boolean;
+  setIdConfirmation: (confirmation: boolean) => void;
+  Idcancel: boolean;
+  setIdCancel: (cancel: boolean) => void;
+  refresh: boolean;
+  setRefresh: (refresh: boolean) => void;
 }
 
 const useDataStorage = create(
   persist<DataStore>(
     (set) => ({
+      Idconfirmation: false,
+      setIdConfirmation: (confirmation) =>
+        set({ Idconfirmation: confirmation }),
+      Idcancel: false,
+      setIdCancel: (cancel) => set({ Idcancel: cancel }),
+      refresh: false,
+      setRefresh: (refresh) => set({ refresh }),
       idSchedule: "",
       setIdSchedule: (idSchedule) => set({ idSchedule }),
       idVoucher: "",

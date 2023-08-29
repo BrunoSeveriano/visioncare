@@ -1,3 +1,4 @@
+import useDataStorage from "@/hooks/useDataStorage";
 import { getResumeVoucher } from "@/services/voucher";
 import React, { useCallback, useEffect } from "react";
 import { AiOutlineCheckCircle, AiOutlinePoweroff } from "react-icons/ai";
@@ -9,7 +10,6 @@ const CardsDashboardAdmin = () => {
 
   const getResume = useCallback(() => {
     getResumeVoucher().then((response) => {
-      console.log(response);
       setResumeVoucher(response);
     });
   }, []);

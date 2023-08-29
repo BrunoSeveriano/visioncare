@@ -8,9 +8,12 @@ import { ToastContainer, toast } from "react-toastify";
 import RegisterVoucherModal from "../modals/RegisterVoucherModal";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useDataStorage from "@/hooks/useDataStorage";
+import { addVoucher } from "@/services/voucher";
 
-const RegisterVoucher = () => {
+const RegisterVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
   const dataStorage = useDataStorage();
+  const registerVoucher = useRegisterVoucher();
+  const register = useRegisterModal();
 
   const [voucher, setVoucher] = useState({
     Name: "",
@@ -20,18 +23,30 @@ const RegisterVoucher = () => {
     Note: "",
   });
 
-  const openModal = () => {
-    dataStorage.setVoucherData(voucher);
-    register.onOpen();
+  const handleVoucher = async () => {
+    addVoucher({
+      Name: voucher.Name,
+      DiscountType: voucher.DiscountType,
+      DiscountValue: voucher.DiscountValue,
+      DeadlineInDays: voucher.DeadlineInDays,
+      Note: voucher.Note,
+      ProgramCode: "073",
+    })
+      .then(() => {
+        toast.success("Voucher cadastrado com sucesso!");
+        registerVoucher.onClose();
+        refreshTable();
+      })
+
+      .catch(() => {
+        toast.error("Erro ao cadastrar voucher!");
+      });
   };
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setVoucher({ ...voucher, [name]: value });
   };
-
-  const registerVoucher = useRegisterVoucher();
-  const register = useRegisterModal();
 
   return (
     <div className="w-full fade-in">
@@ -142,12 +157,11 @@ const RegisterVoucher = () => {
           label="Voltar"
         />
         <Button
-          onClick={openModal}
+          onClick={handleVoucher}
           customClass=" bg-careDarkBlue border-careDarkBlue p-4 py-3 px-10"
           label="Adicionar"
         />
       </div>
-      {register.isOpen && <RegisterVoucherModal />}
     </div>
   );
 };

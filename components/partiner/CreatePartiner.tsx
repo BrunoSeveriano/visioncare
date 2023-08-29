@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect, useState, useCallback } from "react";
 import Input from "../input/Input";
 import CustomSelect from "../select/Select";
 import Button from "../button/Button";
@@ -15,10 +16,12 @@ import { addPartiner } from "@/services/partiner";
 import { ToastContainer, toast } from "react-toastify";
 import InputMask from "react-input-mask";
 import useRegisterPartiner from "@/hooks/useRegisterPartiner";
+import { getAddressByCep } from "@/services/cep";
 
-const CreatePartiner = () => {
+const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const partiner = useRegisterPartiner();
-  const [registerPartiner, setRegisterPartiner] = React.useState({
+  const [isLoadingAddress, setIsLoadingAddress] = useState(false);
+  const [registerPartiner, setRegisterPartiner] = useState({
     accountTypeStringMapFlag: "",
     name: "",
     telephone1: "",
@@ -43,17 +46,35 @@ const CreatePartiner = () => {
     addPartiner(registerPartiner)
       .then((res) => {
         toast.success("Parceiro cadastrado com sucesso!");
-        console.log(res);
+        partiner.onClose();
+        refreshTable();
       })
       .catch((err) => {
         toast.error("Erro ao cadastrar parceiro!");
-        console.log(err);
       });
   };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setRegisterPartiner({ ...registerPartiner, [name]: value });
+  };
+
+  const handleAddress = () => {
+    setIsLoadingAddress(true);
+    getAddressByCep(registerPartiner.addressPostalCode)
+      .then((res) => {
+        setRegisterPartiner({
+          ...registerPartiner,
+          addressName: res.street,
+          addressDistrict: res.neighborhood,
+          addressCity: res.city,
+          addressState: res.state,
+          addressCountry: "Brasil",
+        });
+      })
+      .catch((err) => {
+        setIsLoadingAddress(false);
+      });
   };
 
   const maskedCNPJ = () => {
@@ -74,13 +95,32 @@ const CreatePartiner = () => {
       <InputMask
         name="telephone1"
         onChange={handleChange}
-        mask="(99) 99999-9999"
+        mask="(99) 9999-9999"
         maskChar={null}
       >
         <Input
           placeholder="(DDD) XXXX-XXXX"
           startIcon
           iconStart={BsTelephone}
+        />
+      </InputMask>
+    );
+  };
+
+  const maskedCep = () => {
+    return (
+      <InputMask
+        name="addressPostalCode"
+        onChange={handleChange}
+        mask="99999-999"
+        maskChar={null}
+        onBlur={handleAddress}
+      >
+        <Input
+          maxLength={160}
+          placeholder="Digite seu CEP"
+          startIcon
+          iconStart={MdOutlineLocationOn}
         />
       </InputMask>
     );
@@ -158,6 +198,7 @@ const CreatePartiner = () => {
             <div>
               <span className="text-careLightBlue">Tipo</span>
               <CustomSelect
+                value={registerPartiner.accountTypeStringMapFlag}
                 startIcon
                 iconStart={FaEye}
                 fullWidth
@@ -166,7 +207,7 @@ const CreatePartiner = () => {
                 placeholder="Especifique"
                 options={[
                   {
-                    id: "#CLINIC",
+                    id: "#Clinic",
                     value: "(ECP) Clínicas",
                   },
                   {
@@ -178,18 +219,13 @@ const CreatePartiner = () => {
             </div>
             <div className="md:grid md:grid-cols-1">
               <span className="text-careLightBlue">CEP</span>
-              <Input
-                maxLength={160}
-                name="addressPostalCode"
-                onChange={handleChange}
-                startIcon
-                iconStart={MdOutlineLocationOn}
-                placeholder="Digite o endereço, número e CEP"
-              />
+              {maskedCep()}
             </div>
+
             <div className="md:grid md:grid-cols-1">
               <span className="text-careLightBlue">Estado</span>
               <Input
+                value={registerPartiner.addressState}
                 maxLength={160}
                 name="addressState"
                 onChange={handleChange}
@@ -201,6 +237,7 @@ const CreatePartiner = () => {
             <div className="md:grid md:grid-cols-1">
               <span className="text-careLightBlue">Cidade</span>
               <Input
+                value={registerPartiner.addressCity}
                 maxLength={160}
                 name="addressCity"
                 onChange={handleChange}
@@ -212,6 +249,7 @@ const CreatePartiner = () => {
             <div className="md:grid md:grid-cols-1">
               <span className="text-careLightBlue">Bairro</span>
               <Input
+                value={registerPartiner.addressDistrict}
                 maxLength={160}
                 name="addressDistrict"
                 onChange={handleChange}
@@ -223,6 +261,7 @@ const CreatePartiner = () => {
             <div className="md:grid md:grid-cols-1">
               <span className="text-careLightBlue">Pais</span>
               <Input
+                value={registerPartiner.addressCountry}
                 maxLength={160}
                 name="addressCountry"
                 onChange={handleChange}
@@ -234,6 +273,7 @@ const CreatePartiner = () => {
             <div className="col-span-1 ">
               <span className="text-careLightBlue">Endereço</span>
               <Input
+                value={registerPartiner.addressName}
                 maxLength={160}
                 name="addressName"
                 onChange={handleChange}
@@ -242,6 +282,7 @@ const CreatePartiner = () => {
                 placeholder="Digite o endereço"
               />
             </div>
+
             <div className="md:grid md:grid-cols-1">
               <span className="text-careLightBlue">Número</span>
               <Input

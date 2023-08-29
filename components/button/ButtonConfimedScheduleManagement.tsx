@@ -1,10 +1,11 @@
 import useDataStorage from "@/hooks/useDataStorage";
-import useEditVoucher from "@/hooks/useEditVoucher";
+import { confirmVisitClinic } from "@/services/diagnostic";
 import { IconType } from "react-icons";
+import { toast } from "react-toastify";
 
 interface ButtonProps {
   label: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: () => void;
   disabled?: boolean;
   small?: boolean;
   icon?: IconType;
@@ -13,11 +14,13 @@ interface ButtonProps {
   customColor?: string;
   isLoading?: boolean;
   disableHover?: boolean;
-  voucher: any;
+  params?: any;
 }
 
-const ButtonEditVoucher = ({
+const ButtonConfimedScheduleManagement = ({
   label,
+  onClick,
+  params,
   disabled,
   icon: Icon,
   type,
@@ -25,25 +28,27 @@ const ButtonEditVoucher = ({
   customColor,
   isLoading,
   disableHover,
-  voucher,
 }: ButtonProps) => {
-  const dataStorage = useDataStorage();
-  const editVoucher = useEditVoucher();
-  const handleEditVoucher = () => {
-    dataStorage.setVoucherData({
-      id: voucher.id,
-      Name: voucher.name,
-      DiscountType: voucher.discountType,
-      DiscountValue: voucher.discountValue,
-      DeadlineInDays: voucher.deadlineInDays,
-      Note: voucher.note,
+  const dataScheduling = useDataStorage();
+
+  const handleClickedConfirm = () => {
+    const idVisitConfirm = {
+      programCode: "073",
+      visitid: params,
+    };
+    confirmVisitClinic(idVisitConfirm).then((response) => {
+      toast.success("Agendamento confirmado com sucesso!");
+      dataScheduling.setRefresh(!dataScheduling.refresh);
     });
-    editVoucher.onOpen();
   };
 
   return (
     <button
-      onClick={handleEditVoucher}
+      onClick={() => {
+        onClick && onClick();
+        dataScheduling.setIdSchedule(params);
+        handleClickedConfirm();
+      }}
       disabled={disabled}
       className={`relative disabled:bg-gray-500 disabled:border-gray-500 disabled:opacity-70  border-2 z-0 text-md disabled:cursor-not-allowed rounded-lg  transition ${
         disableHover ? "" : "hover:opacity-80"
@@ -64,4 +69,4 @@ const ButtonEditVoucher = ({
   );
 };
 
-export default ButtonEditVoucher;
+export default ButtonConfimedScheduleManagement;

@@ -20,11 +20,15 @@ import {
 } from "@/services/partiner";
 import useEditPartiner from "@/hooks/useEditPartiner";
 import useDataStoragePartiner from "@/hooks/useDataStoragePartiner";
+import { getAddressByCep } from "@/services/cep";
+import { useRouter } from "next/router";
 
-const EditPartiner = () => {
+const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const dataStoragePartiner = useDataStoragePartiner();
   const editPartiner = useEditPartiner();
+  const router = useRouter();
   const [editMode, setEditMode] = useState(false);
+  const [isLoadingAddress, setIsLoadingAddress] = useState(false);
   const [updatedPartiner, setUpdatedPartiner] = useState({
     name: dataStoragePartiner.partnerData.name,
     telephone1: dataStoragePartiner.partnerData.telephone,
@@ -54,23 +58,44 @@ const EditPartiner = () => {
     deletePartiner(friendlyCode, programCodeToDelete)
       .then((res) => {
         toast.success("Parceiro deletado com sucesso!");
-        console.log(res);
+        editPartiner.onClose();
+        refreshTable();
       })
       .catch((err) => {
         toast.error("Erro ao deletar parceiro!");
-        console.log(err);
       });
   };
 
   const handleUpdatePartiner = () => {
     updatePartiner(updatedPartiner)
       .then((res) => {
-        toast.success("Parceiro atualizado com sucesso!");
-        console.log(res);
+        toast.success("Dados do Parceiro atualizado com sucesso!");
+        editPartiner.onClose();
+        refreshTable();
       })
       .catch((err) => {
-        toast.error("Erro ao atualizar parceiro!");
-        console.log(err);
+        toast.error("Erro ao atualizar dados do parceiro!");
+      });
+  };
+
+  const handleAddress = () => {
+    setIsLoadingAddress(true);
+    getAddressByCep(updatedPartiner.addressPostalCode)
+      .then((res) => {
+        console.log(res);
+        setUpdatedPartiner({
+          ...updatedPartiner,
+          addressName: res.street,
+          addressDistrict: res.neighborhood,
+          addressCity: res.city,
+          addressState: res.state,
+          addressCountry: "Brasil",
+        });
+        console.log(updatedPartiner);
+        setIsLoadingAddress(false);
+      })
+      .catch((err) => {
+        setIsLoadingAddress(false);
       });
   };
 
@@ -104,7 +129,7 @@ const EditPartiner = () => {
         name="telephone1"
         value={updatedPartiner.telephone1}
         onChange={handleChange}
-        mask="(99) 99999-9999"
+        mask="(99) 9999-9999"
         maskChar={null}
       >
         <Input
@@ -131,6 +156,22 @@ const EditPartiner = () => {
           startIcon
           iconStart={BsTelephone}
         />
+      </InputMask>
+    );
+  };
+
+  const maskedCep = () => {
+    return (
+      <InputMask
+        disabled={!editMode}
+        value={updatedPartiner.addressPostalCode}
+        name="addressPostalCode"
+        onChange={handleChange}
+        mask="99999-999"
+        maskChar={null}
+        onBlur={handleAddress}
+      >
+        <Input maxLength={10} startIcon iconStart={MdOutlineLocationOn} />
       </InputMask>
     );
   };
@@ -202,7 +243,7 @@ const EditPartiner = () => {
                 placeholder="Especifique"
                 options={[
                   {
-                    id: "#CLINIC",
+                    id: "#Clinic",
                     value: "(ECP) Clínicas",
                   },
                   {
@@ -214,16 +255,7 @@ const EditPartiner = () => {
             </div>
             <div className="md:grid md:grid-cols-1">
               <span className="text-careLightBlue">CEP</span>
-              <Input
-                disabled={!editMode}
-                maxLength={160}
-                name="addressPostalCode"
-                value={updatedPartiner.addressPostalCode}
-                onChange={handleChange}
-                startIcon
-                iconStart={MdOutlineLocationOn}
-                placeholder="Digite o endereço, número e CEP"
-              />
+              {maskedCep()}
             </div>
             <div className="md:grid md:grid-cols-1">
               <span className="text-careLightBlue">Estado</span>

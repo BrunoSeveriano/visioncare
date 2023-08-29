@@ -1,3 +1,4 @@
+import { vi } from "date-fns/locale";
 import { api } from "./api";
 
 export const schedulevisittoclinic = async (data: any) => {
@@ -9,23 +10,32 @@ export const schedulevisittoclinic = async (data: any) => {
   return response.data;
 };
 
-export const listVisitiClinic = async (filters?: any) => {
+export const listVisitiClinic = async () => {
   const response = await api.get(`/diagnostic/listvisitstoclinic`, {
     params: {
       programCode: "073",
+      isPreScheduling: true,
       pageSize: 1000000000,
-      ...filters,
     },
   });
   return response.data;
 };
 
-export const listConfirmedVisitiClinic = async (filters?: any) => {
+export const listConfirmedVisitiClinic = async () => {
   const response = await api.get(`/diagnostic/listvisitattendance`, {
     params: {
       programCode: "073",
       pageSize: 1000000000,
-      ...filters,
+    },
+  });
+  return response.data;
+};
+
+export const getPatientData = async (visitid: string) => {
+  const response = await api.get(`/diagnostic/listvisitdetails`, {
+    params: {
+      programCode: "073",
+      visitid: visitid,
     },
   });
   return response.data;

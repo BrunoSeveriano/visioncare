@@ -4,10 +4,7 @@ export const listPartiner = async (filters?: any) => {
   const response = await api.get(`/account/list`, {
     params: {
       programCode: "073",
-      isSelf: false,
       pageSize: 1000000000,
-      mainContact: "",
-      friendlyCode: "",
       ...filters,
     },
   });

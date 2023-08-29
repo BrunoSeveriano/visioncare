@@ -55,10 +55,10 @@ export default function Home() {
       <Card>
         <div className="flex justify-center items-center lg:mb-10">
           <Image
-            className="w-[150px] h-[170px] xl:w-[200px] xl:h-[220px]"
             quality={100}
             width={200}
             height={220}
+            style={{ maxWidth: "120px" }}
             src="/logo.png"
             alt="acuvue-login"
           />

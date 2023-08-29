@@ -66,7 +66,7 @@ export const TableMockupPacient: TableData = {
               customClass="bg-careOrange border-careOrange w-full py-2 text-sm"
             />
           )}
-          {params.value === "2522f876-15c9-4570-ae76-c88f09ec014d" && (
+          {params.value === "6b820a03-0da0-4e09-8948-452e4eadac1c" && (
             <Button
               disableHover
               label="Resgatado"

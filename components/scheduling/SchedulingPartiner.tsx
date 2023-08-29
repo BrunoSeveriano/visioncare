@@ -9,28 +9,49 @@ import {
   listVisitiClinic,
 } from "@/services/diagnostic";
 import useDataStorage from "@/hooks/useDataStorage";
+import { set } from "date-fns";
+import ModalSeeMoreRecipe from "../modals/ModalSeeMoreRecipe";
+import useRegisterModal from "@/hooks/useRegisterModal";
 
 const SchedulingPartiner = () => {
   const dataScheduling = useDataStorage();
+  const register = useRegisterModal();
   const [listClinic, setListVisitiClinic] = useState<any[]>([]);
   const [listConfirmed, setListConfirmed] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getVisitiData = useCallback(() => {
-    listVisitiClinic(listClinic).then((response) => {
-      dataScheduling.setIdSchedule(response);
-      setListVisitiClinic(response);
-    });
-  }, []);
+    setIsLoading(true);
+    listVisitiClinic()
+      .then((response) => {
+        dataScheduling.setIdSchedule(response);
+        setListVisitiClinic(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [dataScheduling.refresh]);
 
   useEffect(() => {
     getVisitiData();
   }, [getVisitiData]);
 
   const getConfirmedVisitiClinic = useCallback(() => {
-    listConfirmedVisitiClinic(listConfirmed).then((response) => {
-      setListConfirmed(response);
-    });
-  }, []);
+    setIsLoading(true);
+    listConfirmedVisitiClinic()
+      .then((response) => {
+        setListConfirmed(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [dataScheduling.refresh]);
 
   useEffect(() => {
     getConfirmedVisitiClinic();
@@ -53,7 +74,8 @@ const SchedulingPartiner = () => {
         </span>
         <div className="md:w-full w-[21.5rem] mt-3">
           <CustomTable
-            rowId="scheduleDateStart"
+            isLoading={isLoading}
+            rowId="visitId"
             rows={listClinic}
             columns={TableScheduleManagement.columns}
           />
@@ -65,12 +87,18 @@ const SchedulingPartiner = () => {
         </span>
         <div className="md:w-full w-[21.5rem] mt-3 mb-5">
           <CustomTable
-            rowId="scheduleDateStart"
+            isLoading={isLoading}
+            rowId="visitId"
             rows={listConfirmed}
             columns={TableAttendanceConfirmation.columns}
           />
         </div>
       </div>
+      {register.isOpen && (
+        <div>
+          <ModalSeeMoreRecipe />
+        </div>
+      )}
     </div>
   );
 };

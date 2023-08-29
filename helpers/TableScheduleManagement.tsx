@@ -1,5 +1,7 @@
-import ButtonScheduleManagement from "@/components/button/ButtonScheduleManagement";
-import { cancelVisitClinic, confirmVisitClinic } from "@/services/diagnostic";
+import ButtonCancelScheduleManagement from "@/components/button/ButtonCancelScheduleManagement";
+import ButtonConfimedScheduleManagement from "@/components/button/ButtonConfimedScheduleManagement";
+import ButtonScheduleManagement from "@/components/button/ButtonConfimedScheduleManagement";
+import ButtonViewMore from "@/components/button/ButtonViewMore";
 import { format } from "date-fns";
 
 export interface Rows {
@@ -65,7 +67,8 @@ export const TableScheduleManagement: TableData = {
       flex: 1,
       renderCell: (params: any) => (
         <div className={`w-full`}>
-          <ButtonScheduleManagement
+          <ButtonViewMore
+            params={params}
             disableHover
             label="Ver mais"
             customClass="bg-careDarkBlue border-careDarkBlue w-full py-2 text-sm"
@@ -84,16 +87,7 @@ export const TableScheduleManagement: TableData = {
       flex: 1,
       renderCell: (params: any) => (
         <div className={`w-full`}>
-          <ButtonScheduleManagement
-            onClick={() => {
-              const idVisit = {
-                programCode: "073",
-                visitid: params.row.visitId,
-              };
-              cancelVisitClinic(idVisit).then((response) => {
-                alert("Agendamento confirmado com sucesso!");
-              });
-            }}
+          <ButtonCancelScheduleManagement
             params={params.row.visitId}
             disableHover
             label="Cancelar"
@@ -113,20 +107,11 @@ export const TableScheduleManagement: TableData = {
       flex: 1,
       renderCell: (params: any) => (
         <div className={`w-full`}>
-          <ButtonScheduleManagement
-            onClick={() => {
-              const idVisit = {
-                programCode: "073",
-                visitid: params.row.visitId,
-              };
-              confirmVisitClinic(idVisit).then((response) => {
-                alert("Agendamento confirmado com sucesso!");
-              });
-            }}
+          <ButtonConfimedScheduleManagement
             params={params.row.visitId}
             disableHover
             label="Confirmar"
-            customClass="bg-careGreen border-careGreen w-full py-2 text-sm"
+            customClass="bg-careGreen border-careGreen text-white w-full py-2 text-sm"
           />
         </div>
       ),
@@ -139,7 +124,6 @@ export const TableScheduleManagement: TableData = {
       name: "Maria da Silva",
       friendlyCode: 123456,
       status: "Agendado",
-      confirmation: "Confirmado",
     },
   ],
 };

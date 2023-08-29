@@ -21,6 +21,7 @@ import { addPurchase } from "@/services/purchase";
 import { ToastContainer, toast } from "react-toastify";
 import useDataStorage from "@/hooks/useDataStorage";
 import useOpen from "@/hooks/useOpen";
+import { is } from "date-fns/locale";
 
 interface ClientData {
   name: string;
@@ -54,9 +55,9 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
   const [selectedCylinder, setSelectedCylinder] = useState("");
   const [selectedAxies, setSelectedAxies] = useState("");
   const [selectedCodeNumber, setSelectedCodeNumber] = useState("");
-  const [optionsQuatity, setOptionsQuatity] = useState("4");
+  const [optionsQuatity, setOptionsQuatity] = useState("");
   const [inputBlocks, setInputBlocks] = useState([{ id: 1 }]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const showHistoryPacient = useTalkModal();
   const useData = useDataStorage();
   const openProduct = useOpen();
@@ -64,13 +65,19 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
 
   useEffect(() => {
     if (clientData && clientData.cpf) {
+      setIsLoading(true);
       getListRescueVoucherPatients({ cpf: clientData.cpf })
         .then((data) => {
           setClientVouchers(data);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          error;
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
-  }, [clientData]);
+  }, [clientData, useData.refresh]);
 
   useEffect(() => {
     getCodeNumber()
@@ -149,6 +156,7 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
         return addPurchase(sendProduct as any);
       })
       .then((response) => {
+        handleClearFields();
         toast.success("Voucher e Produto resgatado enviado com sucesso!");
       })
       .catch((error) => {
@@ -177,6 +185,16 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
         ...prevBlocks.slice(currentIndex + 1),
       ]);
     }
+  };
+
+  const handleClearFields = () => {
+    setSelectedCodeNumber("");
+    setSelectedProduct("");
+    setSelectedCylinder("");
+    setSelectedAxies("");
+    setOptionsQuatity("");
+    openProduct.onClose();
+    handleCloseHistory();
   };
 
   const GreenSwitch = styled(Switch)(({ theme }) => ({
@@ -223,11 +241,7 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
               </span>
               <div className="flex justify-end pt-2">
                 <Button
-                  onClick={
-                    showHistoryPacient.isOpen
-                      ? handleCloseHistory
-                      : showHistoryPacient.onOpen
-                  }
+                  onClick={showHistoryPacient.onOpen}
                   disableHover
                   label="Ver mais"
                   customClass="bg-careDarkBlue border-careDarkBlue p-9 py-1 mr-1"
@@ -239,6 +253,7 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
             <div className="mt-7 md:flex md:flex-row gap-5 fade-in">
               <div className="md:w-full w-[22rem]">
                 <CustomTable
+                  isLoading={isLoading}
                   rowId="id"
                   rows={getFilteredVouchers(
                     clientData.vouchers,
@@ -354,7 +369,7 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
           </div>
           <div className="mt-5 md:flex md:flex-row flex flex-col items-center justify-end">
             <Button
-              onClick={openProduct.onClose}
+              onClick={handleClearFields}
               label="Cancelar"
               customClass="bg-careDarkBlue border-careDarkBlue h-12 md:w-40 w-full text-sm mr-2 mt-2"
             />

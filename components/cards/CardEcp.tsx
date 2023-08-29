@@ -8,7 +8,7 @@ const CardEcp = () => {
     <div>
       <div className="grid md:grid-cols-1 gap-y-3 lg:grid-cols-2 gap-x-4 mb-3">
         <ContentCard
-          onButtonClick={() => route.push("/dashboard/patient-voucher")}
+          onButtonClick={() => route.push("/dashboard/validate-voucher")}
           svgIcon="/svg/v-card.svg"
           title="Validar Voucher"
           subtitle="Validar os vouchers dos seus pacientes."
@@ -20,8 +20,8 @@ const CardEcp = () => {
           hasIcon
         />
         <ContentCard
-          onButtonClick={() => route.push("/dashboard/scheduling")}
-          svgIcon="/svg/calendar.svg"
+          onButtonClick={() => route.push("/dashboard/scheduling-ecp")}
+          svgIcon="/svg/v-card.svg"
           title="Agendamentos"
           subtitle="Acompanhe, confirme ou recuse solicitações de agendamento."
           buttonText="Agendar"
@@ -34,7 +34,7 @@ const CardEcp = () => {
       </div>
       <div className="grid md:grid-cols-1 gap-y-3 lg:grid-cols-2 gap-x-4 mb-5 md:mb-5">
         <ContentCard
-          onButtonClick={() => route.push("/dashboard/talk-to-specialist")}
+          onButtonClick={() => route.push("/dashboard/reimbursement")}
           svgIcon="/card-terugbetaling.png"
           title="Reembolso​"
           subtitle="Saiba como obter reembolsos."

@@ -9,6 +9,8 @@ import { userLogin } from "@/services/login";
 import { ToastContainer, toast } from "react-toastify";
 import useLogin from "@/hooks/useLogin";
 import api from "@/services/api";
+import { listPartiner } from "@/services/partiner";
+import { get } from "http";
 
 const Login = () => {
   const [emailValid, setEmailValid] = useState(false);
@@ -23,6 +25,17 @@ const Login = () => {
     healthProgramCode: "073",
   });
 
+  const getPartinerData = async (cnpj: string) => {
+    listPartiner(cnpj)
+      .then((res) => {
+        console.log(res);
+        auth.setUserData(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleLogin = async () => {
     setLoading(true);
     userLogin(userData)
@@ -34,6 +47,7 @@ const Login = () => {
         toast.success("Login realizado com sucesso");
         localStorage.setItem("email", userData.email);
         auth.onLogin();
+        getPartinerData(res.cnpj);
         return router.push("/dashboard/home");
       })
       .catch(() => {

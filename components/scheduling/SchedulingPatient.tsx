@@ -24,7 +24,7 @@ const SchedulingPatient = () => {
           hideButton
         />
       </div>
-      <div className="flex flex-col mt-10 md:flex md:flex-row  w-full">
+      <div className="flex flex-col mt-10 mb-5 md:flex md:flex-row  w-full">
         <div className="w-60 flex flex-row md:flex md:flex-col items-center gap-3">
           <div className="flex flex-col md:flex md:flex-row items-center gap-5">
             <span

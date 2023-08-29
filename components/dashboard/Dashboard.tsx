@@ -164,28 +164,28 @@ const Dashboard = ({ children }: DashboardProps) => {
   const menuOptions = homeMenuPacient.map((option) => {
     return {
       ...option,
-      active: option.text === navbarSpanText,
+      active: router.pathname.includes(option.route),
     };
   });
 
   const adminOptions = homeMenuAdmin.map((option) => {
     return {
       ...option,
-      active: option.text === navbarSpanText,
+      active: router.pathname.includes(option.route),
     };
   });
 
   const EcpOptions = homeMenuEcp.map((option) => {
     return {
       ...option,
-      active: option.text === navbarSpanText,
+      active: router.pathname.includes(option.route),
     };
   });
 
   const PdvOptions = homeMenuPdv.map((option) => {
     return {
       ...option,
-      active: option.text === navbarSpanText,
+      active: router.pathname.includes(option.route),
     };
   });
 
@@ -907,11 +907,11 @@ const Dashboard = ({ children }: DashboardProps) => {
               <div className="mb-5 py-5 px-5 border-b-2 border-gray-200 flex flex-col">
                 <span className="text-lg- text-careBlue">DATA / LOCAL</span>
               </div>
-              <div className="grid grid-cols-2">
+              <div className="w-[23rem]">
                 <div className="md:ml-4 mb-5">
-                  {dataStorage.VoucherUserHistory &&
-                    dataStorage.VoucherUserHistory.length > 0 &&
-                    dataStorage.VoucherUserHistory.map(
+                  {dataStorage.VoucherUserHistory.utilizedHistory &&
+                    dataStorage.VoucherUserHistory.utilizedHistory.length > 0 &&
+                    dataStorage.VoucherUserHistory.utilizedHistory.map(
                       (historyItem: any, index: any) => (
                         <>
                           <div
@@ -919,7 +919,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                             className="border border-careGrey bg-careGrey p-5 rounded-t-xl"
                           >
                             <div className="text-careLightBlue">
-                              {historyItem.useDate}
+                              {dayjs(historyItem.useDate).format("DD/MM/YYYY")}
                             </div>
                             <div className="text-careBlue mt-1">
                               <span className="font-bold text-lg">
@@ -928,7 +928,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                               <span> {historyItem.locality}</span>
                             </div>
                           </div>
-                          <div className="flex justify-end rounded-b-xl text-careLightBlue bg-careBlue text-lg p-3 ">
+                          <div className="flex justify-end rounded-b-xl mb-3 text-careLightBlue bg-careBlue text-lg p-3 ">
                             {historyItem.discountType}
                           </div>
                         </>

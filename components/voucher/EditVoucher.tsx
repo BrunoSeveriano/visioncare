@@ -5,14 +5,13 @@ import Button from "../button/Button";
 import useEditVoucher from "@/hooks/useEditVoucher";
 import { deleteVoucher, updateVoucher } from "@/services/voucher";
 import { ToastContainer, toast } from "react-toastify";
-import useCancelVoucher from "@/hooks/useCancelVoucher";
-import CancelVoucherModal from "../modals/CancelVoucherModal";
 import useDataStorage from "@/hooks/useDataStorage";
 import CustomSelect from "../select/Select";
 
-const EditVoucher = () => {
+const EditVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
   const [isEditing, setIsEditing] = useState(true);
   const dataStorage = useDataStorage();
+  const editVoucher = useEditVoucher();
 
   const [voucher, setVoucher] = useState({
     Id: dataStorage.id,
@@ -24,10 +23,51 @@ const EditVoucher = () => {
     ProgramCode: "073",
   });
 
+  const [voucherCancel, setVoucherCancel] = useState({
+    id: dataStorage.id,
+    Name: "",
+    DiscountType: "",
+    DiscountValue: 0,
+    DeadlineInDays: 0,
+    Note: "",
+    ProgramCode: "073",
+  });
+
+  const handleDeleteVoucher = async () => {
+    try {
+      const response = await deleteVoucher(
+        voucherCancel.id,
+        voucherCancel.ProgramCode
+      );
+      if (response.isValidData) {
+        toast.success("Voucher excluído com sucesso!");
+        editVoucher.onClose();
+        refreshTable();
+        setVoucherCancel({
+          id: "",
+          Name: "",
+          DiscountType: "",
+          DiscountValue: 0,
+          DeadlineInDays: 0,
+          Note: "",
+          ProgramCode: "073",
+        });
+      } else {
+        toast.warning(response.additionalMessage || "Voucher não encontrado");
+        editVoucher.onClose();
+        refreshTable();
+      }
+    } catch (err) {
+      toast.error("Erro ao cancelar voucher.");
+    }
+  };
+
   const handleUpdateVoucher = async () => {
     updateVoucher(voucher)
       .then((res) => {
         toast.success("Voucher editado com sucesso!");
+        editVoucher.onClose();
+        refreshTable();
       })
       .catch((err) => {
         toast.error("Erro ao editar voucher.");
@@ -38,9 +78,6 @@ const EditVoucher = () => {
     const { name, value } = event.target;
     setVoucher({ ...voucher, [name]: value });
   };
-
-  const editVoucher = useEditVoucher();
-  const cancelVoucher = useCancelVoucher();
 
   return (
     <div className="w-full h-full fade-in">
@@ -157,7 +194,7 @@ const EditVoucher = () => {
 
           <div className=" mb-3 md:mt-1 md:mr-3">
             <Button
-              onClick={cancelVoucher.onOpen}
+              onClick={handleDeleteVoucher}
               customClass="w-full border-careDarkBlue text-[#03014C] p-4 py-3 px-10"
               label="Cancelar Voucher"
             />
@@ -181,7 +218,6 @@ const EditVoucher = () => {
           </div>
         </div>
       </div>
-      {cancelVoucher.isOpen && <CancelVoucherModal />}
     </div>
   );
 };

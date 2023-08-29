@@ -8,11 +8,11 @@ const CardPdv = () => {
     <div>
       <div className="grid md:grid-cols-1 gap-y-3 lg:grid-cols-2 gap-x-4 mb-3">
         <ContentCard
-          onButtonClick={() => route.push("/dashboard/talk-to-specialist")}
-          svgIcon="/svg/calendar.svg"
+          onButtonClick={() => route.push("/dashboard/scheduling-ecp")}
+          svgIcon="/svg/v-card.svg"
           title="​Agendamentos"
           subtitle="Saiba como obter reembolsos."
-          buttonText="ver mais"
+          buttonText="Validar"
           textColor="text-white"
           buttonColor="bg-careDarkBlue"
           bgColor="bg-careLightBlue"
@@ -20,11 +20,11 @@ const CardPdv = () => {
           hasIcon
         />
         <ContentCard
-          onButtonClick={() => route.push("/dashboard/scheduling")}
+          onButtonClick={() => route.push("/dashboard/reimbursement")}
           svgIcon="/card-terugbetaling.png"
           title="Reembolso"
           subtitle="Acompanhe, confirme ou recuse solicitações de agendamento."
-          buttonText="Agendar"
+          buttonText="Ver Mais"
           textColor="text-white"
           buttonColor="bg-careDarkBlue"
           bgColor="bg-careLightBlue"

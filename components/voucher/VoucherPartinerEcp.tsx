@@ -10,6 +10,7 @@ import InputMask from "react-input-mask";
 import SearchModalEcp from "../modals/SearchModalEcp";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import Button from "../button/Button";
+import useTalkModal from "@/hooks/useTalkModal";
 
 const VoucherPartinerEcp = () => {
   const [searchCpf, setSearchCpf] = useState("");
@@ -17,6 +18,7 @@ const VoucherPartinerEcp = () => {
   const [showCustomTable, setShowCustomTable] = useState(true);
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [searchModalData, setSearchModalData] = useState(null);
+  const showHistoryPacient = useTalkModal();
 
   const handleSearchClient = async () => {
     try {
@@ -35,26 +37,15 @@ const VoucherPartinerEcp = () => {
     }
   };
 
-  const formatCpf = (value: any) => {
-    const cleanedValue = value.replace(/\D/g, "");
-    const match = cleanedValue.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
-
-    if (match) {
-      return `${match[1]}.${match[2]}.${match[3]}-${match[4]}`;
-    }
-
-    return cleanedValue;
-  };
-
   const handleCpfChange = (e: any) => {
-    const formattedCpf = formatCpf(e.target.value);
-    setSearchCpf(formattedCpf);
+    setSearchCpf(e.target.value);
   };
 
   const handleClearButtonClick = () => {
     setSearchCpf("");
     setShowCustomTable(true);
     setShowSearchModal(false);
+    showHistoryPacient.onClose();
   };
 
   const maskedCpf = () => {

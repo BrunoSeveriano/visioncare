@@ -6,6 +6,7 @@ import { TableUserPacient } from "@/helpers/TableUserPacient";
 import useDataStorage from "@/hooks/useDataStorage";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
+import dayjs from "dayjs";
 
 interface ClientData {
   cpf: string;
@@ -39,10 +40,13 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
   const [utilizedHistory, setUtilizedHistory] = useState<UtilizedHistory[]>([]);
   const [showHistory, setShowHistory] = useState(true);
   const voucherHistory = useDataStorage();
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const useData = useDataStorage();
 
   useEffect(() => {
     if (clientData && clientData.cpf) {
+      setIsLoading(true);
       getListVoucherPatients({ cpf: clientData.cpf })
         .then((data) => {
           voucherHistory.setVoucherUserHistory(data);
@@ -50,25 +54,13 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
           setUtilizedHistory(data.utilizedHistory);
         })
         .catch((error) => {
-          console.error("Erro ao buscar vouchers de clientes:", error);
+          error;
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
-  }, [clientData]);
-
-  const handleSendProduct = (row: any) => {
-    const statusVoucher = {
-      programCode: "073",
-      voucherId: row.id,
-    };
-    rescueVoucher(statusVoucher).then((response) => {
-      if (response.isValidData === true) {
-        toast.success("Voucher resgatado com sucesso!");
-      }
-      if (response.isValidData === false) {
-        toast.error("Erro ao resgatar voucher: Voucher inválido.");
-      }
-    });
-  };
+  }, [clientData, useData.refresh]);
 
   function getFilteredVouchers(vouchers: Voucher[], status: string) {
     if (!status) {
@@ -82,30 +74,9 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
     setShowHistory(!showHistory);
   };
 
-  function formatDate(date: string) {
-    const dateArray = date.split("-");
-    const year = dateArray[0];
-    const month = dateArray[1];
-    const day = dateArray[2].split("T")[0];
-    return `${day}/${month}/${year}`;
-  }
-
   return (
     <>
-      <div className="grid-cols-1 mb-3">
-        <ToastContainer
-          position="top-right"
-          autoClose={4000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss={false}
-          draggable
-          pauseOnHover={false}
-          theme="light"
-        />
-
+      <div className="grid-cols-1 mb-3 md:mr-0 mr-1">
         <ContentCard
           svgIcon="/svg/v-card.svg"
           title="Meus Vouchers​"
@@ -121,10 +92,10 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
 
       {clientData && (
         <div>
-          <div className="w-[23rem] md:w-full mt-7 grid-cols-1 fade-in">
+          <div className="w-[22rem] md:w-full mt-7 grid-cols-1 fade-in">
             <div>
               <CustomTable
-                handleEditVoucherRow={handleSendProduct}
+                isLoading={isLoading}
                 rowId="id"
                 rows={getFilteredVouchers(clientData.vouchers, selectedStatus)}
                 columns={TableUserPacient.columns}
@@ -142,11 +113,11 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
         <div className="mb-5 py-5 px-5 border-b-2 border-gray-200 flex flex-col">
           <span className="text-lg- text-careBlue">DATA / LOCAL</span>
         </div>
-        <div className="grid grid-cols-2">
+        <div className="w-[22rem]">
           <div className="md:ml-4 mb-5">
-            {voucherHistory.VoucherUserHistory &&
-              voucherHistory.VoucherUserHistory.length > 0 &&
-              voucherHistory.VoucherUserHistory.map(
+            {voucherHistory.VoucherUserHistory.utilizedHistory &&
+              voucherHistory.VoucherUserHistory.utilizedHistory.length > 0 &&
+              voucherHistory.VoucherUserHistory.utilizedHistory.map(
                 (historyItem: any, index: any) => (
                   <>
                     <div
@@ -154,7 +125,7 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
                       className="border border-careGrey bg-careGrey p-5 rounded-t-xl"
                     >
                       <div className="text-careLightBlue">
-                        {formatDate(historyItem.useDate)}
+                        {dayjs(historyItem.useDate).format("DD/MM/YYYY")}
                       </div>
                       <div className="text-careBlue mt-1">
                         <span className="font-bold text-lg">
@@ -163,7 +134,7 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
                         <span> {historyItem.locality}</span>
                       </div>
                     </div>
-                    <div className="flex justify-end rounded-b-xl text-careLightBlue bg-careBlue text-lg p-3 ">
+                    <div className="flex justify-end rounded-b-xl mb-3 text-careLightBlue bg-careBlue text-lg p-3 ">
                       {historyItem.discountType}
                     </div>
                   </>

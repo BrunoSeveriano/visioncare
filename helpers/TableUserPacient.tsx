@@ -1,4 +1,4 @@
-import Button from "@/components/button/Button";
+import ButtonRescueVoucher from "@/components/button/ButtonRescueVoucher";
 
 export interface Rows {
   number: string;
@@ -64,28 +64,32 @@ export const TableUserPacient: TableData = {
       renderCell: (params: any) => (
         <div className={`w-full`}>
           {params.value === "20f3c61b-128c-4f11-9e5b-0fc47677f489" && (
-            <Button
+            <ButtonRescueVoucher
+              params={params.row.id}
               disableHover
               label="Resgatar"
               customClass="bg-careGreen border-careGreen w-full py-2 text-sm"
             />
           )}
           {params.value === "389dfdad-0999-4eac-9bf5-e7ef4a4fd5c2" && (
-            <Button
+            <ButtonRescueVoucher
+              params={params.row.id}
               disableHover
               label="Expirado"
               customClass="bg-careOrange border-careOrange w-full py-2 text-sm"
             />
           )}
-          {params.value === "2522f876-15c9-4570-ae76-c88f09ec014d" && (
-            <Button
+          {params.value === "6b820a03-0da0-4e09-8948-452e4eadac1c" && (
+            <ButtonRescueVoucher
+              params={params.row.id}
               disableHover
               label="Resgatado"
               customClass="bg-careYellow border-careYellow w-full py-2 text-sm"
             />
           )}
           {params.value === "24c3dd75-0ba6-459b-8b4c-f6bc77ea3713" && (
-            <Button
+            <ButtonRescueVoucher
+              params={params.row.id}
               disableHover
               label="Utilizado"
               customClass="bg-carePurple border-carePurple w-full py-2 text-sm"
