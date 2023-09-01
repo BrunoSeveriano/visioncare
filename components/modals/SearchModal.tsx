@@ -5,6 +5,7 @@ import { TableMockupPacient } from "@/helpers/TableMockupPacient";
 import { getListVoucherPatients } from "@/services/voucher";
 import useTalkModal from "@/hooks/useTalkModal";
 import useDataStorage from "@/hooks/useDataStorage";
+import dayjs from "dayjs";
 
 interface ClientData {
   name: string;
@@ -145,7 +146,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                           className="border border-careGrey bg-careGrey p-5 rounded-t-xl mt-3"
                         >
                           <div className="text-careLightBlue">
-                            {historyItem.useDate}
+                            {dayjs(historyItem.useDate).format("DD/MM/YYYY")}
                           </div>
                           <div className="text-careBlue mt-1">
                             <span className="font-bold text-lg">

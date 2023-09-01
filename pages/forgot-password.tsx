@@ -15,8 +15,9 @@ const Confirmation = () => {
   const [loading, setLoading] = useState(false);
 
   const [forgetPassword, setForgetPassword] = useState({
-    email: "",
-    code: "073",
+    userEmail: "",
+    templateName: "#ForgotPasswordToken",
+    programCode: "073",
   });
 
   const handleChange = (e: any) => {
@@ -32,7 +33,7 @@ const Confirmation = () => {
     resetPassword(forgetPassword)
       .then(() => {
         toast.success("Email enviado com sucesso!");
-        router.push("/login");
+        router.push("/new-password");
       })
       .catch((err) => {
         toast.error("Erro ao enviar email!");
@@ -108,7 +109,7 @@ const Confirmation = () => {
         </div>
         <div className="w-full flex flex-col gap-2 xl:gap-2 justify-end md:my-7 md:mb-0">
           <Input
-            name="email"
+            name="userEmail"
             className="fill-careBlue h-12 md:h-16"
             startIcon
             iconStart={BsChatSquareDots}

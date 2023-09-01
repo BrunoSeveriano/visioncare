@@ -1,11 +1,13 @@
 import Button from "@/components/button/Button";
 import Card from "@/components/card/Card";
+import useLogin from "@/hooks/useLogin";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 export default function Home() {
   const router = useRouter();
+  const auth = useLogin();
 
   const [loading, setLoading] = useState(false);
 
@@ -18,6 +20,7 @@ export default function Home() {
     router.push("/login");
   };
 
+  if (auth.isLogged) return null;
   return (
     <main className="h-screen bg-careDarkBlue">
       <div className="hidden xl:block">

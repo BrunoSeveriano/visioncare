@@ -1,6 +1,7 @@
 import { RiHome6Line } from "react-icons/ri";
 import { RxCalendar } from "react-icons/rx";
 import { GiTakeMyMoney } from "react-icons/gi";
+import { FaUserFriends } from "react-icons/fa";
 
 export const homeMenuPdv = [
   {
@@ -9,6 +10,13 @@ export const homeMenuPdv = [
     path: "/home2.png",
     text: "Início",
     active: true,
+  },
+  {
+    route: "validate-voucher",
+    icon: FaUserFriends,
+    path: "/cardDashboard.png",
+    text: "Validar Vouchers",
+    active: false,
   },
   {
     route: "scheduling-ecp",

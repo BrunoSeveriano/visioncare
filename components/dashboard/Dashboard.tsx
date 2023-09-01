@@ -2,7 +2,7 @@ import MenuOptions from "@/components/Menu/MenuOptions";
 import Modal from "@/components/modals/Modal";
 import ContentCard from "@/components/card/ContentCard";
 import Image from "next/image";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { BsCalendar2Week, BsThreeDotsVertical, BsTrash3 } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import {
   IoArrowBackCircleOutline,
@@ -21,7 +21,11 @@ import {
 } from "react-icons/md";
 import Input from "@/components/input/Input";
 import InputMask from "react-input-mask";
-import { AiOutlinePhone } from "react-icons/ai";
+import {
+  AiOutlineClockCircle,
+  AiOutlineInfoCircle,
+  AiOutlinePhone,
+} from "react-icons/ai";
 import { FaRegAddressCard } from "react-icons/fa";
 import Switch from "@mui/material/Switch";
 import { alpha, styled } from "@mui/material/styles";
@@ -43,6 +47,13 @@ import HuggyChat from "../specialist/HuggyChat";
 
 import { homeMenuPdv } from "@/constants/homeMenuPdv";
 import { homeMenuEcp } from "@/constants/homeMenuEcp";
+import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
+import { Checkbox } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import CustomSelect from "../select/Select";
+import { BiTransfer } from "react-icons/bi";
+import { updateDataPartiner, updatePartiner } from "@/services/partiner";
+import CalendarEcp from "../calendar/CalendarEcp";
 
 interface DashboardProps {
   children?: React.ReactNode;
@@ -94,6 +105,17 @@ const Dashboard = ({ children }: DashboardProps) => {
     userPassword: "",
   });
 
+  const [userDataPartiner, setUserDataPartiner] = useState({
+    mainContact: "",
+    name: "",
+    cnpj: "",
+    mobilePhone: "",
+    addressName: "",
+    emailAddress: "",
+    password: "",
+    accountTypeStringMapFlag: "",
+  });
+
   const [editData, setEditData] = useState({
     User: {
       Email: userData.patientEmail,
@@ -115,6 +137,18 @@ const Dashboard = ({ children }: DashboardProps) => {
     userCPF: userDataAdm.userCPF,
     userPassword: userDataAdm.userPassword,
     programCode: "073",
+  });
+
+  const [updatedPartiner, setUpdatedPartiner] = useState({
+    mainContact: auth.userData.mainContact,
+    name: auth.userData.name,
+    cnpj: auth.userData.cnpj,
+    mobilePhone: auth.userData.mobilePhone,
+    addressName: auth.userData.addressName,
+    emailAddress: auth.userData.emailAddress,
+    password: auth.userData.password,
+    ProgramCode: "073",
+    accountTypeStringMapFlag: "",
   });
 
   useEffect(() => {
@@ -159,7 +193,20 @@ const Dashboard = ({ children }: DashboardProps) => {
     if (!isAdminUser) {
       handleGetUserData();
     }
-  }, [isAdminUser]);
+    if (isEcpUser || isPdvUser) {
+      setIsLoading(true);
+      setUserDataPartiner({
+        accountTypeStringMapFlag: "",
+        mainContact: auth.userData.mainContact,
+        name: auth.userData.name,
+        cnpj: auth.userData.cnpj,
+        mobilePhone: auth.userData.mobilePhone,
+        addressName: auth.userData.addressName,
+        emailAddress: auth.userData.emailAddress,
+        password: auth.userData.password,
+      });
+    }
+  }, [isAdminUser, isEcpUser, isPdvUser]);
 
   const menuOptions = homeMenuPacient.map((option) => {
     return {
@@ -226,6 +273,16 @@ const Dashboard = ({ children }: DashboardProps) => {
     }
   };
 
+  const handleUpdatePartiner = () => {
+    updateDataPartiner(updatedPartiner)
+      .then((res) => {
+        toast.success("Dados do Parceiro atualizado com sucesso!");
+      })
+      .catch((err) => {
+        toast.error("Erro ao atualizar dados do parceiro!");
+      });
+  };
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     if (isAdminUser) {
@@ -248,6 +305,14 @@ const Dashboard = ({ children }: DashboardProps) => {
       setEditData((prevData) => ({ ...prevData, [name]: value }));
       setUserData((prevData) => ({ ...prevData, [name]: value }));
     }
+  };
+
+  const handleChangePartiner = (e: any) => {
+    const { name, value } = e.target;
+    setUpdatedPartiner((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleGetUserData = () => {
@@ -293,6 +358,8 @@ const Dashboard = ({ children }: DashboardProps) => {
   };
 
   const handleEditClick = () => {
+    console.log(userDataPartiner);
+    console.log(updatedPartiner);
     setIsEditing(true);
     // setEditData({
     //   ...editData,
@@ -568,9 +635,9 @@ const Dashboard = ({ children }: DashboardProps) => {
                 {isAdminUser
                   ? userDataAdm.userName
                   : isEcpUser
-                  ? userNameEcp
+                  ? userDataPartiner.name
                   : isPdvUser
-                  ? userNamePdv
+                  ? userDataPartiner.name
                   : userData.namePatient}
               </span>
               <div className="hidden md:flex">
@@ -641,144 +708,306 @@ const Dashboard = ({ children }: DashboardProps) => {
           )}
 
           {showMyData && (
-            <div className="w-full md:mt-5 lg:xl:mt-6 px-8 mt-5">
-              {isLoading ? (
-                <div className="h-full mt-10">
-                  <Loading className="flex justify-center items-center " />
-                </div>
-              ) : (
-                <div className="bg-careGrey rounded-2xl p-8 fill-careBlue">
-                  <div className="flex flex-col">
-                    <span className="text-neutral-400">Nome</span>
-                    <Input
-                      onChange={handleChange}
-                      name={isAdminUser ? "userName" : "namePatient"}
-                      value={
-                        isAdminUser
-                          ? userDataAdm.userName
-                          : userData.namePatient
-                      }
-                      placeholder="Seu nome"
-                      fullWidth
-                      startIcon
-                      iconStart={MdOutlinePerson}
-                      disabled={!isEditing}
-                    />
-                  </div>
-                  <div className="my-5 md:grid md:grid-cols-2 gap-8 md:my-5">
-                    <div className="flex flex-col">
-                      <span className="text-neutral-400">Email</span>
-                      <Input
-                        onChange={handleChange}
-                        name={isAdminUser ? "userEmail" : "patientEmail"}
-                        value={
-                          isAdminUser
-                            ? userDataAdm.userEmail
-                            : userData.patientEmail
-                        }
-                        placeholder="Email"
-                        required
-                        startIcon
-                        iconStart={MdOutlineMail}
-                        disabled={!isEditing}
-                      />
+            <div className="w-full md:mt-5 xl:mt-6 px-8 mt-5 fade-in">
+              {isEcpUser || isPdvUser ? (
+                <>
+                  <div className="bg-careGrey rounded-2xl p-8 fill-careBlue">
+                    <div className="md:grid md:grid-cols-2 gap-8 md:my-5">
+                      <div className="flex flex-col">
+                        <span className="text-neutral-400">Nome</span>
+                        <Input
+                          name="mainContact"
+                          onChange={handleChangePartiner}
+                          value={
+                            !isEditing
+                              ? userDataPartiner.mainContact
+                              : updatedPartiner.mainContact
+                          }
+                          fullWidth
+                          startIcon
+                          imageSrc="/user-user.png"
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-neutral-400">Razão Social</span>
+                        <Input
+                          name="name"
+                          onChange={handleChangePartiner}
+                          value={
+                            !isEditing
+                              ? userDataPartiner.name
+                              : updatedPartiner.name
+                          }
+                          fullWidth
+                          startIcon
+                          imageSrc="/health-hospital.png"
+                          disabled={!isEditing}
+                        />
+                      </div>
                     </div>
-                    <div className="my-5 md:my-0">
-                      <span className="text-neutral-400">
-                        Data de nascimento
+                    <div className="md:grid md:grid-cols-2 gap-8 md:my-5">
+                      <div className="flex flex-col ">
+                        <span className="text-neutral-400">Meu CNPJ</span>
+                        <Input
+                          name="cnpj"
+                          onChange={handleChangePartiner}
+                          value={userDataPartiner.cnpj}
+                          required
+                          startIcon
+                          fullWidth
+                          imageSrc="/education-teacher.png"
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-neutral-400">Telefone</span>
+                        <Input
+                          name="mobilePhone"
+                          onChange={handleChangePartiner}
+                          value={
+                            !isEditing
+                              ? userDataPartiner.mobilePhone
+                              : updatedPartiner.mobilePhone
+                          }
+                          fullWidth
+                          imageSrc="/communication-call.png"
+                          startIcon
+                          disabled={!isEditing}
+                        />
+                      </div>
+                    </div>
+                    <div className="md:grid md:grid-cols-1 gap-8 md:my-5">
+                      <div>
+                        <span className="text-neutral-400">Endereço</span>
+                        <Input
+                          name="addressName"
+                          onChange={handleChangePartiner}
+                          value={
+                            !isEditing
+                              ? userDataPartiner.addressName
+                              : updatedPartiner.addressName
+                          }
+                          fullWidth
+                          startIcon
+                          imageSrc="/navigation-maps.png"
+                          disabled={!isEditing}
+                        />
+                      </div>
+                    </div>
+                    <div className="md:grid md:grid-cols-2 gap-8 md:my-5">
+                      <div>
+                        <span className="text-neutral-400">
+                          Meu E-mail cadastrado
+                        </span>
+                        <Input
+                          name="emailAddress"
+                          onChange={handleChangePartiner}
+                          value={
+                            !isEditing
+                              ? userDataPartiner.emailAddress
+                              : updatedPartiner.emailAddress
+                          }
+                          fullWidth
+                          startIcon
+                          disabled={!isEditing}
+                        />
+                      </div>
+                    </div>
+                    <div className="md:grid md:grid-cols-2 gap-8 my-5 fill-careBlue">
+                      <div>
+                        <span className="text-neutral-400">Senha</span>
+                        <Input
+                          name="password"
+                          value={
+                            !isEditing
+                              ? userDataPartiner.password
+                              : updatedPartiner.password
+                          }
+                          disabled={!isEditing}
+                          placeholder="Senha"
+                          startIcon
+                          className=""
+                          endIcon
+                          type="password"
+                          onChange={handleChangePartiner}
+                        />
+                      </div>
+                      <div className="my-5 md:my-0">
+                        <span className="text-neutral-400">
+                          Confirmar senha
+                        </span>
+                        <Input
+                          name="confirmedPassword"
+                          disabled={!isEditing}
+                          placeholder="Confirmar senha"
+                          startIcon
+                          endIcon
+                          type="password"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex w-full items-center">
+                      <GreenSwitch {...label} defaultChecked />
+                      <span className="ml-2 text-neutral-400">
+                        Aceito receber comunicações e contatos nos canais
+                        informados.
                       </span>
+                    </div>
+                    <div className="flex justify-start mt-20">
+                      <Button
+                        customClass="bg-careDarkBlue border-careDarkBlue py-2 w-40"
+                        label="Editar"
+                        onClick={handleEditClick}
+                      />
+                      <Button
+                        customClass="bg-careLightBlue border-careLightBlue py-2 w-40 ml-2"
+                        label="Salvar"
+                        disabled={!isEditing}
+                        onClick={handleUpdatePartiner}
+                      />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="bg-careGrey rounded-2xl p-8 fill-careBlue fade-in">
+                    <div className="flex flex-col">
+                      <span className="text-neutral-400">Nome</span>
                       <Input
-                        name={
-                          isAdminUser ? "userBirthdate" : "patientBirthDate"
-                        }
+                        onChange={handleChange}
+                        name={isAdminUser ? "userName" : "namePatient"}
                         value={
                           isAdminUser
-                            ? userDataAdm.userBirthdate
-                            : userData.patientBirthDate
+                            ? userDataAdm.userName
+                            : userData.namePatient
                         }
-                        disabled={!isEditing}
-                        onBlur={onBlur}
-                        onFocus={onFocus}
-                        placeholder="Data de nascimento"
+                        placeholder="Seu nome"
+                        fullWidth
                         startIcon
-                        iconStart={MdCalendarMonth}
-                        onChange={(e) => {
-                          handleChange(e);
-                          if (e.target.value) setHasValue(true);
-                          else setHasValue(false);
-                        }}
-                        type={hasValue || focus ? "date" : "text"}
+                        iconStart={MdOutlinePerson}
+                        disabled={!isEditing}
+                      />
+                    </div>
+                    <div className="my-5 md:grid md:grid-cols-2 gap-8 md:my-5">
+                      <div className="flex flex-col">
+                        <span className="text-neutral-400">Email</span>
+                        <Input
+                          onChange={handleChange}
+                          name={isAdminUser ? "userEmail" : "patientEmail"}
+                          value={
+                            isAdminUser
+                              ? userDataAdm.userEmail
+                              : userData.patientEmail
+                          }
+                          placeholder="Email"
+                          required
+                          startIcon
+                          iconStart={MdOutlineMail}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="my-5 md:my-0">
+                        <span className="text-neutral-400">
+                          Data de nascimento
+                        </span>
+                        <Input
+                          name={
+                            isAdminUser ? "userBirthdate" : "patientBirthDate"
+                          }
+                          value={
+                            isAdminUser
+                              ? userDataAdm.userBirthdate
+                              : userData.patientBirthDate
+                          }
+                          disabled={!isEditing}
+                          onBlur={onBlur}
+                          onFocus={onFocus}
+                          placeholder="Data de nascimento"
+                          startIcon
+                          iconStart={MdCalendarMonth}
+                          onChange={(e) => {
+                            handleChange(e);
+                            if (e.target.value) setHasValue(true);
+                            else setHasValue(false);
+                          }}
+                          type={hasValue || focus ? "date" : "text"}
+                        />
+                      </div>
+                    </div>
+                    <div className="md:grid md:grid-cols-2 gap-8 md:my-5">
+                      <div>
+                        <span className="text-neutral-400">Telefone</span>
+                        {maskedPhoneNumber()}
+                      </div>
+                      <div className="my-5 md:my-0">
+                        <span className="text-neutral-400">CPF</span>
+                        {maskedCpf()}
+                      </div>
+                    </div>
+                    <div className="md:grid md:grid-cols-2 gap-8 my-5 fill-careBlue">
+                      <div>
+                        <span className="text-neutral-400">Senha</span>
+                        <Input
+                          name={
+                            isAdminUser ? "userPassword" : "patientUserPassword"
+                          }
+                          value={
+                            isAdminUser
+                              ? userDataAdm.userPassword
+                              : userData.patientUserPassword
+                          }
+                          disabled={!isEditing}
+                          placeholder="Senha"
+                          startIcon
+                          className=""
+                          iconStart={MdOutlineLock}
+                          endIcon
+                          type="password"
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="my-5 md:my-0">
+                        <span className="text-neutral-400">
+                          Confirmar senha
+                        </span>
+                        <Input
+                          name="confirmedPassword"
+                          disabled={!isEditing}
+                          placeholder="Confirmar senha"
+                          startIcon
+                          iconStart={MdOutlineLock}
+                          endIcon
+                          type="password"
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex w-full items-center">
+                      <GreenSwitch {...label} defaultChecked />
+                      <span className="ml-2 text-neutral-400">
+                        Aceito receber comunicações e contatos nos canais
+                        informados.
+                      </span>
+                    </div>
+                    <div className="flex justify-start mt-20">
+                      <Button
+                        customClass="bg-careDarkBlue border-careDarkBlue py-2 w-40"
+                        label="Editar"
+                        onClick={handleEditClick}
+                      />
+                      <Button
+                        customClass="bg-careLightBlue border-careLightBlue py-2 w-40 ml-2"
+                        label="Salvar"
+                        disabled={!isEditing}
+                        onClick={handleEditData}
                       />
                     </div>
                   </div>
-                  <div className="md:grid md:grid-cols-2 gap-8 md:my-5">
-                    <div>
-                      <span className="text-neutral-400">Telefone</span>
-                      {maskedPhoneNumber()}
-                    </div>
-                    <div className="my-5 md:my-0">
-                      <span className="text-neutral-400">CPF</span>
-                      {maskedCpf()}
-                    </div>
-                  </div>
-                  <div className="md:grid md:grid-cols-2 gap-8 my-5 fill-careBlue">
-                    <div>
-                      <span className="text-neutral-400">Senha</span>
-                      <Input
-                        name={
-                          isAdminUser ? "userPassword" : "patientUserPassword"
-                        }
-                        value={
-                          isAdminUser
-                            ? userDataAdm.userPassword
-                            : userData.patientUserPassword
-                        }
-                        disabled={!isEditing}
-                        placeholder="Senha"
-                        startIcon
-                        className=""
-                        iconStart={MdOutlineLock}
-                        endIcon
-                        type="password"
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="my-5 md:my-0">
-                      <span className="text-neutral-400">Confirmar senha</span>
-                      <Input
-                        name="confirmedPassword"
-                        disabled={!isEditing}
-                        placeholder="Confirmar senha"
-                        startIcon
-                        iconStart={MdOutlineLock}
-                        endIcon
-                        type="password"
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-                  <div className="flex w-full items-center">
-                    <GreenSwitch {...label} defaultChecked />
-                    <span className="ml-2 text-neutral-400">
-                      Aceito receber comunicações e contatos nos canais
-                      informados.
-                    </span>
-                  </div>
-                  <div className="flex justify-start mt-20">
-                    <Button
-                      customClass="bg-careDarkBlue border-careDarkBlue py-2 w-40"
-                      label="Editar"
-                      onClick={handleEditClick}
-                    />
-                    <Button
-                      customClass="bg-careLightBlue border-careLightBlue py-2 w-40 ml-2"
-                      label="Salvar"
-                      disabled={!isEditing}
-                      onClick={handleEditData}
-                    />
-                  </div>
-                </div>
+                </>
               )}
+
+              {isEcpUser && <CalendarEcp />}
             </div>
           )}
         </div>

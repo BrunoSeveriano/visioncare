@@ -10,10 +10,24 @@ import Dashboard from "@/components/dashboard/Dashboard";
 export default function App({ Component, pageProps }: AppProps) {
   const loginData = useLogin();
   const router = useRouter();
+  const avaiableRoutes = [
+    "/login",
+    "/signup",
+    "/forgot-password",
+    "/confirmation",
+    "/new-password",
+    "/",
+  ];
 
   useEffect(() => {
     if (router.pathname === "/_error") {
       router.push("/login");
+    }
+    if (!loginData.isLogged && !avaiableRoutes.includes(router.pathname)) {
+      router.push("/");
+    }
+    if (loginData.isLogged && avaiableRoutes.includes(router.pathname)) {
+      router.push("/dashboard/home");
     }
   }, [loginData.isLogged, router]);
 

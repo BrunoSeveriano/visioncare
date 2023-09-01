@@ -21,7 +21,7 @@ export const registerAdm = async (data: IRegisterAdm) => {
 };
 
 export const resetPassword = async (data: IResetPasswordData) => {
-  const response = await api.post("/forgotPassword", data);
+  const response = await api.post("user/forgotpassword", data);
   return response.data;
 };
 

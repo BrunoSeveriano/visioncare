@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import useLogin from "@/hooks/useLogin";
 import api from "@/services/api";
 import { listPartiner } from "@/services/partiner";
-import { get } from "http";
+import { useEffect } from "react";
 
 const Login = () => {
   const [emailValid, setEmailValid] = useState(false);
@@ -25,11 +25,16 @@ const Login = () => {
     healthProgramCode: "073",
   });
 
+  useEffect(() => {
+    if (auth.isLogged) {
+      router.push("/dashboard/home");
+    }
+  }, [auth.isLogged, router]);
+
   const getPartinerData = async (cnpj: string) => {
     listPartiner(cnpj)
       .then((res) => {
-        console.log(res);
-        auth.setUserData(res);
+        auth.setUserData(res[0]);
       })
       .catch((err) => {
         console.log(err);
@@ -70,6 +75,8 @@ const Login = () => {
     setEmailValid(!!email);
     setPasswordValid(!!password && isValidEmail);
   };
+
+  if (auth.isLogged) return null;
 
   return (
     <div className="h-screen bg-careDarkBlue">
@@ -160,10 +167,9 @@ const Login = () => {
             name="password"
             disabled={loading}
           />
-          <span
-            onClick={() => router.push("/forgot-password")}
-            className="flex justify-end text-sm md:text-base cursor-pointer hover:opacity-60 text-careLightBlue underline"
-          >
+        </div>
+        <div className="flex justify-end text-sm md:text-base cursor-pointer hover:opacity-60 text-careLightBlue underline">
+          <span onClick={() => router.push("/forgot-password")}>
             Esqueci minha senha
           </span>
         </div>

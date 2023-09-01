@@ -4,6 +4,7 @@ import {
   TextField,
   TextFieldProps,
 } from "@mui/material";
+import Image from "next/image";
 import React, { useState } from "react";
 import { IconType } from "react-icons";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -17,6 +18,7 @@ interface SpecialInputProps {
   iconClass?: string;
   maxLength?: number;
   onEnter?: () => void;
+  imageSrc?: string; // New prop for the image source
 }
 
 export type Props = TextFieldProps & SpecialInputProps;
@@ -45,6 +47,7 @@ const Input = ({
   value,
   endIcon,
   startIcon,
+  imageSrc, // New prop for the image source
   ...props
 }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -94,12 +97,27 @@ const Input = ({
           maxLength: maxLength,
         }}
         InputProps={{
-          startAdornment: startIcon && (
-            <InputAdornment position="start">
-              {Icon && (
-                <Icon size="1.5em" className={iconClass} fill={iconColor} />
+          startAdornment: (
+            <>
+              {startIcon && (
+                <InputAdornment position="start">
+                  {Icon && (
+                    <Icon size="1.5em" className={iconClass} fill={iconColor} />
+                  )}
+                </InputAdornment>
               )}
-            </InputAdornment>
+              {imageSrc && (
+                <InputAdornment position="start">
+                  <Image
+                    src={imageSrc}
+                    width={20}
+                    height={20}
+                    alt="image icon"
+                    className="mr-2 md:w-6 md:h-6"
+                  />
+                </InputAdornment>
+              )}
+            </>
           ),
           endAdornment: endIcon && (
             <InputAdornment position="end">

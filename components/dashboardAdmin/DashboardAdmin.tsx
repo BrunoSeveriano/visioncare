@@ -37,6 +37,7 @@ import InputMask from "react-input-mask";
 import { VoucherListTableDashboard } from "@/helpers/VoucherListTableDashboard";
 import { TableMockupPartinerDashboard } from "@/helpers/TableMockupPartinerDashboard";
 import ExportToCSV from "../button/ExportToCSV";
+import useTalkModal from "@/hooks/useTalkModal";
 
 const DashboardAdmin = () => {
   const registerVoucher = useRegisterVoucher();
@@ -72,6 +73,7 @@ const DashboardAdmin = () => {
   const [showCustomTablePartiner, setShowCustomTablePartiner] = useState(false);
   const [patientList, setPatientList] = useState<any[]>([{}]);
   const [showCustomTablePatient, setShowCustomTablePatient] = useState(false);
+  const showHistoryPacient = useTalkModal();
 
   const filterValueRef = useRef<string>(filterValue);
   filterValueRef.current = filterValue;
@@ -135,12 +137,14 @@ const DashboardAdmin = () => {
       if (searchCpf.trim() === "" || searchCpf.length < 11) {
         setShowCustomTable(true);
         setShowSearchModal(false);
+        showHistoryPacient.onClose();
         return;
       }
       const clientData = await getListVoucherPatients({ cpf: searchCpf });
       setSearchModalData(clientData);
       setShowSearchModal(true);
       setShowCustomTable(false);
+      showHistoryPacient.onClose();
     } catch (error) {
       setSearchModalData(null);
     }
@@ -260,6 +264,7 @@ const DashboardAdmin = () => {
       status: "",
       deadlineInDays: "",
     });
+    showHistoryPacient.onClose();
   };
 
   const refreshTableData = () => {

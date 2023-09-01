@@ -26,8 +26,9 @@ interface IChangePasswordData {
 }
 
 interface IResetPasswordData {
-  email: string;
-  code: string;
+  userEmail: string;
+  templateName: string;
+  programCode: string;
 }
 
 interface IConfirmationRegisterSmsToken {
@@ -164,6 +165,17 @@ interface IUpdatePartiner {
   accountTypeStringMapFlag: string;
 }
 
+interface IUpdatePartinerData {
+  name: string;
+  mobilePhone: string;
+  emailAddress: string;
+  addressName: string;
+  cnpj: string;
+  mainContact: string;
+  password: string;
+  ProgramCode: string;
+}
+
 interface IPurchaseAdd {
   ProgramCode: string;
   Items: [
@@ -190,4 +202,45 @@ interface IVoucherUse {
 interface IRescueVoucher {
   programCode: string;
   voucherId: string;
+}
+
+interface ICalenderAdd {
+  calendarType: string;
+  periodMorning: string;
+  periodAfternoon: string;
+  periodNocturnal: string;
+  sunday: boolean;
+  monday: boolean;
+  tuesday: boolean;
+  wednesday: boolean;
+  thursday: boolean;
+  friday: boolean;
+  saturday: boolean;
+  serviceDuration: number;
+  valityStart: string;
+  valityEnd: string;
+  programCode: string;
+  accountId: string;
+}
+
+interface ICalenderUpdate {
+  calendarType: string;
+  day: string;
+  month: string;
+  year: string;
+  periodMorning: string;
+  periodAfternoon: string;
+  periodNocturnal: string;
+  sunday: boolean;
+  monday: boolean;
+  tuesday: boolean;
+  wednesday: boolean;
+  thursday: boolean;
+  friday: boolean;
+  saturday: boolean;
+  serviceDuration: number;
+  valityStart: string;
+  valityEnd: string;
+  programCode: string;
+  accountId: string;
 }

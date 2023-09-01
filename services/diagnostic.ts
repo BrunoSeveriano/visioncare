@@ -1,4 +1,3 @@
-import { vi } from "date-fns/locale";
 import { api } from "./api";
 
 export const schedulevisittoclinic = async (data: any) => {

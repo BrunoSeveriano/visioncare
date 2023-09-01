@@ -6,7 +6,7 @@ import { IconType } from "react-icons";
 
 interface ISelectProps {
   placeholder?: string;
-  name: string;
+  name?: string;
   label?: string;
   customClass?: string;
   disabled?: boolean;

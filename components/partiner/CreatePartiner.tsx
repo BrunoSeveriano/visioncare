@@ -11,7 +11,7 @@ import {
 } from "react-icons/md";
 import { FaEye, FaEyeSlash, FaRegAddressCard } from "react-icons/fa";
 import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
-import { BsTelephone } from "react-icons/bs";
+import { BsChatSquareDots, BsTelephone } from "react-icons/bs";
 import { addPartiner } from "@/services/partiner";
 import { ToastContainer, toast } from "react-toastify";
 import InputMask from "react-input-mask";
@@ -196,6 +196,17 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
         <div className="mt-2">
           <div className="sm:grid grid-caols-1 mb-8 md:mb-0 md:grid grid-cols-3 gap-6">
             <div>
+              <span className="text-careLightBlue">Forneça o Código SAP</span>
+              <Input
+                maxLength={20}
+                name=""
+                onChange={handleChange}
+                startIcon
+                iconStart={BsChatSquareDots}
+                placeholder="Digíte o código SAP"
+              />
+            </div>
+            <div>
               <span className="text-careLightBlue">Tipo</span>
               <CustomSelect
                 value={registerPartiner.accountTypeStringMapFlag}
@@ -256,18 +267,6 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 startIcon
                 iconStart={MdOutlineLocationOn}
                 placeholder="Digite seu bairro"
-              />
-            </div>
-            <div className="md:grid md:grid-cols-1">
-              <span className="text-careLightBlue">Pais</span>
-              <Input
-                value={registerPartiner.addressCountry}
-                maxLength={160}
-                name="addressCountry"
-                onChange={handleChange}
-                startIcon
-                iconStart={MdOutlineLocationOn}
-                placeholder="Digite seu país"
               />
             </div>
             <div className="col-span-1 ">

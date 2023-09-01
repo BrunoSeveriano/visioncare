@@ -10,7 +10,7 @@ import {
 } from "react-icons/md";
 import { FaEye, FaEyeSlash, FaRegAddressCard } from "react-icons/fa";
 import { AiOutlineLock, AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
-import { BsTelephone } from "react-icons/bs";
+import { BsChatSquareDots, BsTelephone } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import InputMask from "react-input-mask";
 import {
@@ -231,6 +231,18 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
         <div className="mt-2">
           <div className="sm:grid grid-caols-1 mb-8 md:mb-0 md:grid grid-cols-3 gap-6">
             <div>
+              <span className="text-careLightBlue">Forneça o Código SAP</span>
+              <Input
+                disabled
+                maxLength={20}
+                name=""
+                onChange={handleChange}
+                startIcon
+                iconStart={BsChatSquareDots}
+                placeholder="Digíte o código SAP"
+              />
+            </div>
+            <div>
               <span className="text-careLightBlue">Tipo</span>
               <CustomSelect
                 disabled={!editMode}
@@ -296,7 +308,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 placeholder="Digite seu bairro"
               />
             </div>
-            <div className="md:grid md:grid-cols-1">
+            {/* <div className="md:grid md:grid-cols-1">
               <span className="text-careLightBlue">Pais</span>
               <Input
                 disabled={!editMode}
@@ -308,7 +320,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 iconStart={MdOutlineLocationOn}
                 placeholder="Digite seu país"
               />
-            </div>
+            </div> */}
             <div className="col-span-1 ">
               <span className="text-careLightBlue">Endereço</span>
               <Input

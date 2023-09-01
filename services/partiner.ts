@@ -3,6 +3,7 @@ import { api } from "./api";
 export const listPartiner = async (filters?: any) => {
   const response = await api.get(`/account/list`, {
     params: {
+      isSelf: true,
       programCode: "073",
       pageSize: 1000000000,
       ...filters,
@@ -17,6 +18,11 @@ export const addPartiner = async (data: IRegisterPartiner) => {
 };
 
 export const updatePartiner = async (data: IUpdatePartiner) => {
+  const response = await api.post(`/account/update`, data);
+  return response.data.value;
+};
+
+export const updateDataPartiner = async (data: IUpdatePartinerData) => {
   const response = await api.post(`/account/update`, data);
   return response.data.value;
 };
