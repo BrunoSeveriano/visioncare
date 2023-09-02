@@ -3,6 +3,7 @@ import Select, { SelectProps } from "@mui/material/Select";
 import { InputLabel, MenuItem } from "@mui/material";
 import useClientConfiguration from "@/hooks/useClientConfiguration";
 import { IconType } from "react-icons";
+import Image from "next/image";
 
 interface ISelectProps {
   placeholder?: string;
@@ -19,6 +20,7 @@ interface ISelectProps {
   startIcon?: boolean;
   iconClass?: string;
   iconColor?: string;
+  imageSrc?: string; // New prop for the image source
 }
 
 export type Props<T> = SelectProps<T> & ISelectProps;
@@ -38,6 +40,7 @@ const CustomSelect = <T extends unknown>({
   value,
   fullWidth,
   startIcon,
+  imageSrc,
   ...props
 }: Props<T>) => {
   const { colors } = useClientConfiguration();
@@ -49,15 +52,24 @@ const CustomSelect = <T extends unknown>({
       </InputLabel>
       <Select
         startAdornment={
-          startIcon
-            ? Icon && (
-                <Icon
-                  size="2em"
-                  className={`${iconClass} ml-1 mr-3`}
-                  fill={iconColor}
-                />
-              )
-            : undefined
+          <>
+            {startIcon && Icon && (
+              <Icon
+                size="2em"
+                className={`${iconClass} ml-1 mr-3`}
+                fill={iconColor}
+              />
+            )}
+            {imageSrc && (
+              <Image
+                src={imageSrc}
+                width={20}
+                height={20}
+                alt="image icon"
+                className="mr-3 md:w-6 md:h-6"
+              />
+            )}
+          </>
         }
         displayEmpty
         placeholder={placeholder ? placeholder : "escreva aqui..."}

@@ -2,7 +2,7 @@ import MenuOptions from "@/components/Menu/MenuOptions";
 import Modal from "@/components/modals/Modal";
 import ContentCard from "@/components/card/ContentCard";
 import Image from "next/image";
-import { BsCalendar2Week, BsThreeDotsVertical, BsTrash3 } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import {
   IoArrowBackCircleOutline,
@@ -12,21 +12,9 @@ import {
 import React, { useEffect, useState } from "react";
 import useOnboardModal from "@/hooks/useOnboardModal";
 import useLogin from "@/hooks/useLogin";
-import {
-  MdCalendarMonth,
-  MdClose,
-  MdOutlineLock,
-  MdOutlineMail,
-  MdOutlinePerson,
-} from "react-icons/md";
+import { MdClose } from "react-icons/md";
 import Input from "@/components/input/Input";
 import InputMask from "react-input-mask";
-import {
-  AiOutlineClockCircle,
-  AiOutlineInfoCircle,
-  AiOutlinePhone,
-} from "react-icons/ai";
-import { FaRegAddressCard } from "react-icons/fa";
 import Switch from "@mui/material/Switch";
 import { alpha, styled } from "@mui/material/styles";
 import Button from "@/components/button/Button";
@@ -36,7 +24,6 @@ import {
   getAdmData,
   getClientData,
 } from "@/services/login";
-import Loading from "@/components/loading/Loading";
 import dayjs from "dayjs";
 import { ToastContainer, toast } from "react-toastify";
 import { homeMenuPacient } from "@/constants/homeMenuPacient";
@@ -44,14 +31,8 @@ import { homeMenuAdmin } from "@/constants/homeMenuAdmin";
 import { useRouter } from "next/router";
 import useDataStorage from "@/hooks/useDataStorage";
 import HuggyChat from "../specialist/HuggyChat";
-
 import { homeMenuPdv } from "@/constants/homeMenuPdv";
 import { homeMenuEcp } from "@/constants/homeMenuEcp";
-import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
-import { Checkbox } from "@mui/material";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import CustomSelect from "../select/Select";
-import { BiTransfer } from "react-icons/bi";
 import { updateDataPartiner, updatePartiner } from "@/services/partiner";
 import CalendarEcp from "../calendar/CalendarEcp";
 
@@ -148,7 +129,7 @@ const Dashboard = ({ children }: DashboardProps) => {
     emailAddress: auth.userData.emailAddress,
     password: auth.userData.password,
     ProgramCode: "073",
-    accountTypeStringMapFlag: "",
+    accountTypeStringMapFlag: auth.userData.profileCode,
   });
 
   useEffect(() => {
@@ -196,7 +177,7 @@ const Dashboard = ({ children }: DashboardProps) => {
     if (isEcpUser || isPdvUser) {
       setIsLoading(true);
       setUserDataPartiner({
-        accountTypeStringMapFlag: "",
+        accountTypeStringMapFlag: auth.userData.profileCode,
         mainContact: auth.userData.mainContact,
         name: auth.userData.name,
         cnpj: auth.userData.cnpj,
@@ -419,7 +400,7 @@ const Dashboard = ({ children }: DashboardProps) => {
           placeholder="Telefone"
           startIcon
           iconClass="scale-x-[-1]"
-          iconStart={AiOutlinePhone}
+          imageSrc="/communication-call.png"
         />
       </InputMask>
     );
@@ -436,7 +417,7 @@ const Dashboard = ({ children }: DashboardProps) => {
         alwaysShowMask
         maskPlaceholder={null}
       >
-        <Input placeholder="CPF" startIcon iconStart={FaRegAddressCard} />
+        <Input placeholder="CPF" startIcon imageSrc="/education-teacher.png" />
       </InputMask>
     );
   };
@@ -579,6 +560,65 @@ const Dashboard = ({ children }: DashboardProps) => {
               }
             })()}
           </div>
+          {!isAdminUser && !isEcpUser && !isPdvUser && (
+            <>
+              {sideBarOpen ? (
+                <div className="hidden md:flex ml-5 gap-5 mt-10 cursor-pointer ">
+                  <div
+                    onClick={() => {
+                      router.push("https://www.instagram.com/jnjbrasil/");
+                    }}
+                  >
+                    <Image
+                      src="/icon-instagram.png"
+                      width={20}
+                      height={20}
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    onClick={() => {
+                      router.push("https://www.facebook.com/jnj/?locale=pt_BR");
+                    }}
+                  >
+                    <Image
+                      src="/icon-facebook.png"
+                      width={15}
+                      height={20}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="hidden md:flex md:flex-col ml-6 gap-7 mt-10 cursor-pointer">
+                  <div
+                    onClick={() => {
+                      router.push("https://www.instagram.com/jnjbrasil/");
+                    }}
+                  >
+                    <Image
+                      src="/icon-instagram.png"
+                      width={20}
+                      height={20}
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    onClick={() => {
+                      router.push("https://www.facebook.com/jnj/?locale=pt_BR");
+                    }}
+                  >
+                    <Image
+                      src="/icon-facebook.png"
+                      width={15}
+                      height={20}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              )}
+            </>
+          )}
         </div>
         <div className="flex flex-col justify-end h-full mb-10 hover:opacity-70 md:mt-10 lg:mt-0 md:ml-8 xl:ml-12 2xl:ml-20">
           <div
@@ -752,7 +792,11 @@ const Dashboard = ({ children }: DashboardProps) => {
                         <Input
                           name="cnpj"
                           onChange={handleChangePartiner}
-                          value={userDataPartiner.cnpj}
+                          value={
+                            !isEditing
+                              ? userDataPartiner.cnpj
+                              : updatedPartiner.cnpj
+                          }
                           required
                           startIcon
                           fullWidth
@@ -810,6 +854,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                           }
                           fullWidth
                           startIcon
+                          imageSrc="/communication-mail.png"
                           disabled={!isEditing}
                         />
                       </div>
@@ -827,7 +872,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                           disabled={!isEditing}
                           placeholder="Senha"
                           startIcon
-                          className=""
+                          imageSrc="/house-lock.png"
                           endIcon
                           type="password"
                           onChange={handleChangePartiner}
@@ -842,6 +887,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                           disabled={!isEditing}
                           placeholder="Confirmar senha"
                           startIcon
+                          imageSrc="/house-lock.png"
                           endIcon
                           type="password"
                         />
@@ -885,7 +931,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                         placeholder="Seu nome"
                         fullWidth
                         startIcon
-                        iconStart={MdOutlinePerson}
+                        imageSrc="/user-user.png"
                         disabled={!isEditing}
                       />
                     </div>
@@ -903,7 +949,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                           placeholder="Email"
                           required
                           startIcon
-                          iconStart={MdOutlineMail}
+                          imageSrc="/communication-mail.png"
                           disabled={!isEditing}
                         />
                       </div>
@@ -925,7 +971,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                           onFocus={onFocus}
                           placeholder="Data de nascimento"
                           startIcon
-                          iconStart={MdCalendarMonth}
+                          imageSrc="/calendar-data.png"
                           onChange={(e) => {
                             handleChange(e);
                             if (e.target.value) setHasValue(true);
@@ -961,7 +1007,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                           placeholder="Senha"
                           startIcon
                           className=""
-                          iconStart={MdOutlineLock}
+                          imageSrc="/house-lock.png"
                           endIcon
                           type="password"
                           onChange={handleChange}
@@ -976,7 +1022,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                           disabled={!isEditing}
                           placeholder="Confirmar senha"
                           startIcon
-                          iconStart={MdOutlineLock}
+                          imageSrc="/house-lock.png"
                           endIcon
                           type="password"
                           onChange={handleChange}
@@ -1006,13 +1052,12 @@ const Dashboard = ({ children }: DashboardProps) => {
                   </div>
                 </>
               )}
-
               {isEcpUser && <CalendarEcp />}
             </div>
           )}
         </div>
         {menuLeftMobile && (
-          <div className="flex md:hidden bg-white h-full gap-3 ">
+          <div className="flex md:hidden bg-careDarkBlue h-full gap-3 ">
             <div className="flex flex-col gap-3 ml-14 mt-10 w-72">
               {(() => {
                 if (isAdminUser) {
@@ -1021,7 +1066,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                       spanClassname={`${
                         option.active
                           ? "bg-careLightBlue w-full text-white"
-                          : "text-careMenuGrey"
+                          : "bg-white w-full text-careMenuGrey"
                       } p-5 rounded-lg last:mb-6 ${
                         !sideBarOpen ? "flex items-center justify-center" : ""
                       } `}
@@ -1040,7 +1085,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                       spanClassname={`${
                         option.active
                           ? "bg-careLightBlue w-full text-white"
-                          : "text-careMenuGrey"
+                          : "bg-white w-full text-careMenuGrey"
                       } p-5 rounded-lg last:mb-6 ${
                         !sideBarOpen ? "flex items-center justify-center" : ""
                       } `}
@@ -1059,7 +1104,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                       spanClassname={`${
                         option.active
                           ? "bg-careLightBlue w-full text-white"
-                          : "text-careMenuGrey"
+                          : "bg-white w-full text-careMenuGrey"
                       } p-5 rounded-lg last:mb-6 ${
                         !sideBarOpen ? "flex items-center justify-center" : ""
                       } `}
@@ -1078,7 +1123,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                       spanClassname={`${
                         option.active
                           ? "bg-careLightBlue w-full text-white"
-                          : "text-careMenuGrey"
+                          : "bg-white w-full text-careMenuGrey"
                       } p-5 rounded-lg last:mb-6 ${
                         !sideBarOpen ? "flex items-center justify-center" : ""
                       } `}

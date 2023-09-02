@@ -103,7 +103,7 @@ export const VoucherListTableDashboard: TableData = {
             <Button
               disableHover
               label="Utilizado"
-              customClass="bg-carePlaceholder border-carePlaceholder w-full py-2 text-sm"
+              customClass="bg-careRedButton border-careRedButton w-full py-2 text-sm"
             />
           )}
         </div>

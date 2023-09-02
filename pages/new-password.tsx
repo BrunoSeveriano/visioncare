@@ -117,7 +117,7 @@ const NewPassword = () => {
             name="email"
             className="fill-careDarkBlue h-12 md:h-16"
             startIcon
-            iconStart={BsChatSquareDots}
+            imageSrc="/icon-sap.png"
             fullWidth
             placeholder="Código enviado no e-mail"
             type="email"
@@ -127,7 +127,7 @@ const NewPassword = () => {
           <Input
             className="fill-careDarkBlue h-12 md:h-16"
             startIcon
-            iconStart={MdOutlineLock}
+            imageSrc="/house-lock.png"
             fullWidth
             placeholder="Nova senha"
             endIcon
@@ -145,7 +145,7 @@ const NewPassword = () => {
           <Input
             className="fill-careDarkBlue h-12 md:h-16"
             startIcon
-            iconStart={MdOutlineLock}
+            imageSrc="/house-lock.png"
             fullWidth
             placeholder="Confirmar senha"
             endIcon

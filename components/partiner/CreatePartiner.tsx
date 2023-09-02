@@ -85,7 +85,11 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
         mask="99.999.999/9999-99"
         maskChar={null}
       >
-        <Input placeholder="CNPJ" startIcon iconStart={FaRegAddressCard} />
+        <Input
+          placeholder="000.000.000-00"
+          startIcon
+          imageSrc="/education-teacher.png"
+        />
       </InputMask>
     );
   };
@@ -101,7 +105,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
         <Input
           placeholder="(DDD) XXXX-XXXX"
           startIcon
-          iconStart={BsTelephone}
+          imageSrc="/communication-call.png"
         />
       </InputMask>
     );
@@ -120,7 +124,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
           maxLength={160}
           placeholder="Digite seu CEP"
           startIcon
-          iconStart={MdOutlineLocationOn}
+          imageSrc="/navigation-maps.png"
         />
       </InputMask>
     );
@@ -137,7 +141,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
         <Input
           placeholder="(DDD) XXXX-XXXX"
           startIcon
-          iconStart={BsTelephone}
+          imageSrc="/communication-call.png"
         />
       </InputMask>
     );
@@ -170,8 +174,8 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 name="mainContact"
                 onChange={handleChange}
                 startIcon
-                iconStart={BiUser}
-                placeholder="Digite o nome"
+                imageSrc="/user-user.png"
+                placeholder="Nome do usuário responsável"
               />
             </div>
             <div>
@@ -181,8 +185,8 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 name="name"
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineApartment}
-                placeholder="Regra"
+                imageSrc="/health-hospital.png"
+                placeholder="Nome da empresa"
               />
             </div>
             <div>
@@ -202,8 +206,8 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 name=""
                 onChange={handleChange}
                 startIcon
-                iconStart={BsChatSquareDots}
-                placeholder="Digíte o código SAP"
+                imageSrc="/icon-sap.png"
+                placeholder="O Parceiro deverá estar cadastrado"
               />
             </div>
             <div>
@@ -211,7 +215,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               <CustomSelect
                 value={registerPartiner.accountTypeStringMapFlag}
                 startIcon
-                iconStart={FaEye}
+                imageSrc="/eyes-icon.png"
                 fullWidth
                 name="accountTypeStringMapFlag"
                 onChange={handleChange}
@@ -241,7 +245,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 name="addressState"
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineLocationOn}
+                imageSrc="/navigation-maps.png"
                 placeholder="Digite seu estado"
               />
             </div>
@@ -253,7 +257,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 name="addressCity"
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineLocationOn}
+                imageSrc="/navigation-maps.png"
                 placeholder="Digite sua cidade"
               />
             </div>
@@ -265,7 +269,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 name="addressDistrict"
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineLocationOn}
+                imageSrc="/navigation-maps.png"
                 placeholder="Digite seu bairro"
               />
             </div>
@@ -277,7 +281,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 name="addressName"
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineLocationOn}
+                imageSrc="/navigation-maps.png"
                 placeholder="Digite o endereço"
               />
             </div>
@@ -289,7 +293,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 name="addressNumber"
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineLocationOn}
+                imageSrc="/navigation-maps.png"
                 placeholder="Digite seu número"
               />
             </div>
@@ -300,7 +304,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 name="addressComplement"
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineLocationOn}
+                imageSrc="/navigation-maps.png"
                 placeholder="Complemento"
               />
             </div>
@@ -327,7 +331,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 name="emailAddress"
                 onChange={handleChange}
                 startIcon
-                iconStart={AiOutlineMail}
+                imageSrc="/communication-mail.png"
                 placeholder="emailusuario@mail.com"
               />
             </div>
@@ -340,7 +344,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 name="emailAddress2"
                 onChange={handleChange}
                 startIcon
-                iconStart={AiOutlineMail}
+                imageSrc="/communication-mail.png"
                 placeholder="emailusuario@mail.com"
               />
             </div>
@@ -351,7 +355,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 name="password"
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineLock}
+                imageSrc="/house-lock.png"
                 placeholder="No minimo 8 dígitos"
               />
             </div>

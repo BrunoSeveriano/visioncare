@@ -144,7 +144,7 @@ const Login = () => {
           <Input
             className="fill-careBlue h-12 md:h-16"
             startIcon
-            iconStart={MdOutlineEmail}
+            imageSrc="/communication-mail.png"
             fullWidth
             placeholder="E-mail"
             type="email"
@@ -158,7 +158,7 @@ const Login = () => {
             className="fill-careBlue h-12 md:h-16"
             startIcon
             endIcon
-            iconStart={MdOutlineLock}
+            imageSrc="/house-lock.png"
             fullWidth
             placeholder="Senha"
             type="password"

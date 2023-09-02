@@ -6,7 +6,7 @@ import Image from "next/image";
 
 interface MenuOptionsProps {
   icon?: IconType | undefined | null;
-  image?:  any;
+  image?: any;
   path?: string | any;
   text: string;
   route: string;
@@ -43,11 +43,7 @@ const MenuOptions = ({
       ${spanClassname} hover:opacity-50 transition-all`}
     >
       {Icon && <Icon className={iconClassname} size="1.5em" />}
-      {
-        image && (
-          <Image alt='icon' width={24} height={24} src={path||''}/>
-        )
-      }
+      {image && <Image alt="icon" width={26} height={26} src={path || ""} />}
       <span
         onClick={() => {
           handleClick();

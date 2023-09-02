@@ -174,6 +174,7 @@ interface IUpdatePartinerData {
   mainContact: string;
   password: string;
   ProgramCode: string;
+  accountTypeStringMapFlag: string;
 }
 
 interface IPurchaseAdd {
@@ -205,7 +206,6 @@ interface IRescueVoucher {
 }
 
 interface ICalenderAdd {
-  calendarType: string;
   periodMorning: string;
   periodAfternoon: string;
   periodNocturnal: string;
@@ -223,24 +223,8 @@ interface ICalenderAdd {
   accountId: string;
 }
 
-interface ICalenderUpdate {
-  calendarType: string;
-  day: string;
-  month: string;
-  year: string;
-  periodMorning: string;
-  periodAfternoon: string;
-  periodNocturnal: string;
-  sunday: boolean;
-  monday: boolean;
-  tuesday: boolean;
-  wednesday: boolean;
-  thursday: boolean;
-  friday: boolean;
-  saturday: boolean;
-  serviceDuration: number;
-  valityStart: string;
-  valityEnd: string;
+interface ICalenderDelete {
   programCode: string;
   accountId: string;
+  id: string;
 }

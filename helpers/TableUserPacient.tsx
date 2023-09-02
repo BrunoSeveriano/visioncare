@@ -76,7 +76,7 @@ export const TableUserPacient: TableData = {
               params={params.row.id}
               disableHover
               label="Expirado"
-              customClass="bg-careOrange border-careOrange w-full py-2 text-sm"
+              customClass="bg-careMenuGrey border-careMenuGrey w-full py-2 text-sm"
             />
           )}
           {params.value === "6b820a03-0da0-4e09-8948-452e4eadac1c" && (
@@ -92,7 +92,7 @@ export const TableUserPacient: TableData = {
               params={params.row.id}
               disableHover
               label="Utilizado"
-              customClass="bg-carePurple border-carePurple w-full py-2 text-sm"
+              customClass="bg-careRedButton border-careRedButton w-full py-2 text-sm"
             />
           )}
         </div>

@@ -285,7 +285,7 @@ const DashboardAdmin = () => {
         <Input
           placeholder="Buscar cliente pelo CPF"
           startIcon
-          iconStart={BsSearch}
+          imageSrc="/search-icon.png"
           onEnter={handleSearchClient}
         />
       </InputMask>
@@ -320,6 +320,7 @@ const DashboardAdmin = () => {
             <div className="sm:grid-cols-1 md:grid md:grid-cols-4 gap-6">
               <CustomSelect
                 fullWidth
+                imageSrc="/voucher-icon.png"
                 value={filters.voucherTypes}
                 name="voucherTypes"
                 options={[{ id: "", value: "Todos" }, ...voucherTypesOptions]}
@@ -330,6 +331,7 @@ const DashboardAdmin = () => {
               />
               <CustomSelect
                 fullWidth
+                imageSrc="/status-voucher-icon.png"
                 value={filters.status}
                 name="status"
                 placeholder="Selecione status do Voucher"
@@ -340,6 +342,7 @@ const DashboardAdmin = () => {
               />
               <CustomSelect
                 fullWidth
+                imageSrc="/time-voucher.png"
                 value={filters.deadlineInDays}
                 name="deadlineInDays"
                 placeholder="Período do Voucher"
@@ -382,7 +385,7 @@ const DashboardAdmin = () => {
                   ]}
                   value={selectedStatus}
                   onChange={(e) => setSelectedStatus(e.target.value)}
-                  iconStart={MdOutlinePerson}
+                  imageSrc="/user-user.png"
                   startIcon
                   fullWidth
                   placeholder="Selecione status do Voucher Cliente"
@@ -418,7 +421,7 @@ const DashboardAdmin = () => {
                   value={filterValue}
                   onChange={(e) => setFilterValue(e.target.value)}
                   placeholder="Buscar parceiro pelo Nome / ID"
-                  iconStart={BsSearch}
+                  imageSrc="/search-icon.png"
                   startIcon
                 />
               </div>

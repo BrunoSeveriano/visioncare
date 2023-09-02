@@ -5,8 +5,6 @@ import {
   patientNotAttended,
 } from "@/services/diagnostic";
 import { IconType } from "react-icons";
-import { toast } from "react-toastify";
-import useCancelAttendance from "@/hooks/useCancelAttendance";
 
 interface ButtonProps {
   label: string;

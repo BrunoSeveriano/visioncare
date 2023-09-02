@@ -5,7 +5,24 @@ export const calenderPartinerAdd = async (data: ICalenderAdd) => {
   return response.data.value;
 };
 
-export const calenderPartinerUpdate = async (data: ICalenderUpdate) => {
-  const response = await api.post(`/resourceworksetting/update`, data);
+export const calenderPartinerDelete = async (data: ICalenderDelete) => {
+  const response = await api.post(`/resourceworksetting/delete`, data);
+  return response.data.value;
+};
+
+export const getListMonthlyCalendaraVailabilities = async (
+  accountId: string = "",
+  month: string = ""
+) => {
+  const response = await api.get(
+    `/resourceworksetting/listmonthlycalendaravailabilities`,
+    {
+      params: {
+        accountId: accountId,
+        month: month,
+        programCode: "073",
+      },
+    }
+  );
   return response.data.value;
 };

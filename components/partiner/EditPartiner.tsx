@@ -117,7 +117,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
         mask="99.999.999/9999-99"
         maskChar={null}
       >
-        <Input placeholder="CNPJ" startIcon iconStart={FaRegAddressCard} />
+        <Input startIcon imageSrc="/education-teacher.png" />
       </InputMask>
     );
   };
@@ -135,7 +135,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
         <Input
           placeholder="(DDD) XXXX-XXXX"
           startIcon
-          iconStart={BsTelephone}
+          imageSrc="/communication-call.png"
         />
       </InputMask>
     );
@@ -154,7 +154,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
         <Input
           placeholder="(DDD) XXXX-XXXX"
           startIcon
-          iconStart={BsTelephone}
+          imageSrc="/communication-call.png"
         />
       </InputMask>
     );
@@ -171,7 +171,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
         maskChar={null}
         onBlur={handleAddress}
       >
-        <Input maxLength={10} startIcon iconStart={MdOutlineLocationOn} />
+        <Input maxLength={10} startIcon imageSrc="/navigation-maps.png" />
       </InputMask>
     );
   };
@@ -205,8 +205,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 value={updatedPartiner.mainContact}
                 onChange={handleChange}
                 startIcon
-                iconStart={BiUser}
-                placeholder="Digite o nome"
+                imageSrc="/user-user.png"
               />
             </div>
             <div>
@@ -216,8 +215,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 value={updatedPartiner.name}
                 disabled
                 startIcon
-                iconStart={MdOutlineApartment}
-                placeholder="Regra"
+                imageSrc="/health-hospital.png"
               />
             </div>
             <div>
@@ -238,8 +236,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 name=""
                 onChange={handleChange}
                 startIcon
-                iconStart={BsChatSquareDots}
-                placeholder="Digíte o código SAP"
+                imageSrc="/icon-sap.png"
               />
             </div>
             <div>
@@ -250,7 +247,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 value={updatedPartiner.accountTypeStringMapFlag}
                 onChange={handleChange}
                 startIcon
-                iconStart={FaEye}
+                imageSrc="/eyes-icon.png"
                 fullWidth
                 placeholder="Especifique"
                 options={[
@@ -278,8 +275,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 value={updatedPartiner.addressState}
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineLocationOn}
-                placeholder="Digite seu estado"
+                imageSrc="/navigation-maps.png"
               />
             </div>
             <div className="md:grid md:grid-cols-1">
@@ -291,8 +287,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 value={updatedPartiner.addressCity}
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineLocationOn}
-                placeholder="Digite sua cidade"
+                imageSrc="/navigation-maps.png"
               />
             </div>
             <div className="md:grid md:grid-cols-1">
@@ -304,23 +299,9 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 value={updatedPartiner.addressDistrict}
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineLocationOn}
-                placeholder="Digite seu bairro"
+                imageSrc="/navigation-maps.png"
               />
             </div>
-            {/* <div className="md:grid md:grid-cols-1">
-              <span className="text-careLightBlue">Pais</span>
-              <Input
-                disabled={!editMode}
-                maxLength={160}
-                name="addressCountry"
-                value={updatedPartiner.addressCountry}
-                onChange={handleChange}
-                startIcon
-                iconStart={MdOutlineLocationOn}
-                placeholder="Digite seu país"
-              />
-            </div> */}
             <div className="col-span-1 ">
               <span className="text-careLightBlue">Endereço</span>
               <Input
@@ -330,8 +311,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 value={updatedPartiner.addressName}
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineLocationOn}
-                placeholder="Digite o endereço"
+                imageSrc="/navigation-maps.png"
               />
             </div>
             <div className="md:grid md:grid-cols-1">
@@ -343,8 +323,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 value={updatedPartiner.addressNumber}
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineLocationOn}
-                placeholder="Digite seu número"
+                imageSrc="/navigation-maps.png"
               />
             </div>
             <div className="md:grid md:grid-cols-1">
@@ -356,8 +335,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 value={updatedPartiner.addressComplement}
                 onChange={handleChange}
                 startIcon
-                iconStart={MdOutlineLocationOn}
-                placeholder="Complemento"
+                imageSrc="/navigation-maps.png"
               />
             </div>
           </div>
@@ -384,7 +362,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 value={updatedPartiner.emailAddress}
                 onChange={handleChange}
                 startIcon
-                iconStart={AiOutlineMail}
+                imageSrc="/communication-mail.png"
                 placeholder="emailusuario@mail.com"
               />
             </div>
@@ -398,7 +376,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 value={updatedPartiner.emailAddress2}
                 onChange={handleChange}
                 startIcon
-                iconStart={AiOutlineMail}
+                imageSrc="/communication-mail.png"
                 placeholder="emailusuario@mail.com"
               />
             </div>
@@ -410,7 +388,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 onChange={handleChange}
                 disabled
                 startIcon
-                iconStart={AiOutlineLock}
+                imageSrc="/house-lock.png"
                 placeholder="No minimo 8 dígitos"
               />
             </div>

@@ -21,7 +21,7 @@ const CardEcp = () => {
         />
         <ContentCard
           onButtonClick={() => route.push("/dashboard/scheduling-ecp")}
-          svgIcon="/svg/v-card.svg"
+          svgIcon="/svg/calendar.svg"
           title="Agendamentos"
           subtitle="Acompanhe, confirme ou recuse solicitações de agendamento."
           buttonText="Agendar"

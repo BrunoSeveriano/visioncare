@@ -18,7 +18,7 @@ interface SpecialInputProps {
   iconClass?: string;
   maxLength?: number;
   onEnter?: () => void;
-  imageSrc?: string; // New prop for the image source
+  imageSrc?: string;
 }
 
 export type Props = TextFieldProps & SpecialInputProps;
@@ -47,7 +47,7 @@ const Input = ({
   value,
   endIcon,
   startIcon,
-  imageSrc, // New prop for the image source
+  imageSrc,
   ...props
 }: Props) => {
   const [showPassword, setShowPassword] = useState(false);

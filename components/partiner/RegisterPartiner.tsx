@@ -99,7 +99,7 @@ const RegisterPartiner = () => {
                 value={filterValue}
                 onChange={(e) => setFilterValue(e.target.value)}
                 placeholder="Buscar parceiro pelo Nome / ID"
-                iconStart={BsSearch}
+                imageSrc="/search-icon.png"
                 startIcon
               />
             </div>

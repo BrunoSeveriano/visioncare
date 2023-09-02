@@ -256,7 +256,7 @@ export default function Signup() {
           placeholder="Telefone"
           startIcon
           iconClass="scale-x-[-1]"
-          iconStart={AiOutlinePhone}
+          imageSrc="/communication-call.png"
         />
       </InputMask>
     );
@@ -276,7 +276,7 @@ export default function Signup() {
           disabled={loading}
           placeholder="CPF"
           startIcon
-          iconStart={FaRegAddressCard}
+          imageSrc="/education-teacher.png"
         />
       </InputMask>
     );
@@ -296,7 +296,7 @@ export default function Signup() {
         <Input
           placeholder="Data de nascimento"
           startIcon
-          iconStart={MdCalendarMonth}
+          imageSrc="/calendar-data.png"
         />
       </InputMask>
     );
@@ -414,7 +414,7 @@ export default function Signup() {
             fullWidth
             placeholder="Nome"
             startIcon
-            iconStart={MdOutlinePerson}
+            imageSrc="/user-user.png"
             onChange={handleChange}
             disabled={loading}
             maxLength={50}
@@ -428,7 +428,7 @@ export default function Signup() {
                 required
                 startIcon
                 maxLength={100}
-                iconStart={MdOutlineMail}
+                imageSrc="/communication-mail.png"
                 disabled={loading}
                 onChange={(e) => {
                   handleEmailChange(e);
@@ -437,7 +437,7 @@ export default function Signup() {
               />
               {showValidationMessage && (
                 <div className="mt-2">
-                  <span className="text-red-500">Email inválido</span>
+                  <span className="text-red-500 text-sm ">Email inválido</span>
                 </div>
               )}
             </div>
@@ -452,7 +452,7 @@ export default function Signup() {
               name="Password"
               placeholder="Senha"
               startIcon
-              iconStart={MdOutlineLock}
+              imageSrc="/house-lock.png"
               endIcon
               maxLength={20}
               type="password"
@@ -464,7 +464,7 @@ export default function Signup() {
               name="confirmedPassword"
               placeholder="Confirmar senha"
               startIcon
-              iconStart={MdOutlineLock}
+              imageSrc="/house-lock.png"
               endIcon
               maxLength={20}
               type="password"
@@ -473,7 +473,7 @@ export default function Signup() {
               onBlur={validatePassword}
             />
             {passwordError && (
-              <span className="text-red-500 ">{passwordError}</span>
+              <span className="text-red-500 text-sm ">{passwordError}</span>
             )}
           </div>
         </div>

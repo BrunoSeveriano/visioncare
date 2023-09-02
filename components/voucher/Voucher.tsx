@@ -2,10 +2,6 @@ import React, { useCallback } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import Button from "@/components/button/Button";
 import Input from "@/components/input/Input";
-import { FaRegAddressCard } from "react-icons/fa";
-import { BiTransfer } from "react-icons/bi";
-import { MdOutlineDateRange, MdOutlinePerson } from "react-icons/md";
-import { BsSearch } from "react-icons/bs";
 import CustomSelect from "../select/Select";
 import CustomTable from "../table/CustomTable";
 
@@ -152,7 +148,7 @@ const Voucher = () => {
         <Input
           placeholder="Digite o CPF do cliente"
           startIcon
-          iconStart={BsSearch}
+          imageSrc="/search-icon.png"
           onEnter={handleSearchClient}
         />
       </InputMask>
@@ -197,7 +193,7 @@ const Voucher = () => {
               <div className="sm:grid-cols-1 md:grid md:grid-cols-3 gap-6">
                 <CustomSelect
                   value={filters.voucherTypes}
-                  iconStart={FaRegAddressCard}
+                  imageSrc="/voucher-icon.png"
                   startIcon
                   fullWidth
                   name="voucherTypes"
@@ -209,7 +205,7 @@ const Voucher = () => {
                 />
                 <CustomSelect
                   value={filters.status}
-                  iconStart={BiTransfer}
+                  imageSrc="/status-voucher-icon.png"
                   startIcon
                   fullWidth
                   name="status"
@@ -224,7 +220,7 @@ const Voucher = () => {
                 />
                 <CustomSelect
                   value={filters.deadlineInDays}
-                  iconStart={MdOutlineDateRange}
+                  imageSrc="/time-voucher.png"
                   startIcon
                   fullWidth
                   name="deadlineInDays"
@@ -259,7 +255,7 @@ const Voucher = () => {
                     ]}
                     value={selectedStatus}
                     onChange={(e) => setSelectedStatus(e.target.value)}
-                    iconStart={MdOutlinePerson}
+                    imageSrc="/user-user.png"
                     startIcon
                     fullWidth
                     placeholder="Selecione status do Voucher Cliente"

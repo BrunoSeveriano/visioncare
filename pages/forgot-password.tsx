@@ -112,7 +112,7 @@ const Confirmation = () => {
             name="userEmail"
             className="fill-careBlue h-12 md:h-16"
             startIcon
-            iconStart={BsChatSquareDots}
+            imageSrc="/icon-sap.png"
             fullWidth
             placeholder="Seu e-mail"
             type="email"

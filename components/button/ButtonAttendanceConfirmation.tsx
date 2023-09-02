@@ -3,8 +3,7 @@ import useClientColors from "@/hooks/useClientConfiguration";
 import useDataStorage from "@/hooks/useDataStorage";
 import { confirmVisitAttendance } from "@/services/diagnostic";
 import { IconType } from "react-icons";
-import { toast } from "react-toastify";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface ButtonProps {
   label?: string;

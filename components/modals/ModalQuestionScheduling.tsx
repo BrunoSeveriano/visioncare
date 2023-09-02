@@ -376,7 +376,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
               onChange={handlePostalCodeChange}
               className="md:w-96 w-72"
               startIcon
-              iconStart={BiSearch}
+              imageSrc="/search-icon.png"
             />
             {isLoading ? (
               <Loading />
