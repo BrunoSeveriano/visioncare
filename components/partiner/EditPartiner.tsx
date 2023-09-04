@@ -1,23 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Input from "../input/Input";
 import CustomSelect from "../select/Select";
 import Button from "../button/Button";
-import { BiUser } from "react-icons/bi";
-import {
-  MdOutlineApartment,
-  MdOutlineLocationOn,
-  MdOutlineLock,
-} from "react-icons/md";
-import { FaEye, FaEyeSlash, FaRegAddressCard } from "react-icons/fa";
-import { AiOutlineLock, AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
-import { BsChatSquareDots, BsTelephone } from "react-icons/bs";
+
 import { ToastContainer, toast } from "react-toastify";
 import InputMask from "react-input-mask";
-import {
-  listPartiner,
-  deletePartiner,
-  updatePartiner,
-} from "@/services/partiner";
+import { deletePartiner, updatePartiner } from "@/services/partiner";
 import useEditPartiner from "@/hooks/useEditPartiner";
 import useDataStoragePartiner from "@/hooks/useDataStoragePartiner";
 import { getAddressByCep } from "@/services/cep";

@@ -23,19 +23,19 @@ export const homeMenuAdmin = [
   },
   {
     route: "register-partiner",
-    path: "/register-partiner-icon.png",
+    path: "/register-partner.png",
     text: "Cadastrar parceiros",
     active: false,
   },
   {
     route: "dashboard-admin",
-    path: "/dashboard-icon.png",
+    path: "/i-dashboard.png",
     text: "Dashborad",
     active: false,
   },
   {
     route: "order-purchase",
-    path: "/purchase-order.png",
+    path: "/p-requests.png",
     text: "Pedidos de compra",
     active: false,
   },

@@ -52,7 +52,7 @@ export const editAdminData = async (data: IEditAdminData) => {
 };
 
 export const getAdmData = async () => {
-  const response = await api.get<IDateAdm>("/user/getuserbyidaslistmodel", {
+  const response = await api.get("/user/getuserbyidaslistmodel", {
     params: {
       programCode: "073",
     },

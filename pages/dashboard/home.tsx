@@ -8,10 +8,10 @@ import CardPdv from "@/components/cards/CardPdv";
 
 const Home = () => {
   const auth = useLogin();
-  const userEmail = localStorage.getItem("email") || "";
-  const isAdminUser = userEmail.endsWith("@its.jnj.com");
   const isEcpUser = auth.role === "Partner ECP VisionCare";
   const isPdvUser = auth.role === "Partner POS VisionCare";
+  const isPatientUser = auth.role === "Patient VisionCare";
+  const isAdminUser = auth.role === "Admin JeJ - VisionCare";
 
   return (
     <div className="fade-in">
@@ -21,9 +21,9 @@ const Home = () => {
         <CardEcp />
       ) : isPdvUser ? (
         <CardPdv />
-      ) : (
+      ) : isPatientUser ? (
         <CardPacient />
-      )}
+      ) : null}
     </div>
   );
 };

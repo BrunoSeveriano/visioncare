@@ -118,7 +118,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                     Histórico de Vouchers do Cliente
                   </span>
                 </div>
-                <div>
+                <div className="md:w-full w-[21rem]">
                   <CustomTable
                     isLoading={isLoading}
                     rowId="id"

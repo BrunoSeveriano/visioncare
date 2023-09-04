@@ -294,7 +294,7 @@ const DashboardAdmin = () => {
 
   return (
     <>
-      <div className="w-3/5 md:w-full fade-in">
+      <div className="w-full fade-in">
         <div className=" md:grid md:grid-cols-4 rounded-lg">
           <div className="bg-careGrey col-span-3 rounded-md p-2 flex items-center">
             <div className="border-careDarkBlue border-r-[2px] text-careDarkBlue">
@@ -464,7 +464,7 @@ const DashboardAdmin = () => {
             )}
 
             {showCustomTablePartiner && (
-              <div className="mb-8 md:mb-0 fade-in">
+              <div className="mb-8 md:mb-0 fade-in md:w-full w-[22rem]">
                 <div>
                   <CustomTable
                     isLoading={isLoading}
@@ -476,7 +476,7 @@ const DashboardAdmin = () => {
               </div>
             )}
           </div>
-          <div className="mb-8 md:mb-0">
+          <div className="mb-8 md:mb-0 md:w-full w-[22rem]">
             {showSearchModal && (
               <SearchModal
                 refreshTable={refreshTableData}
@@ -486,7 +486,7 @@ const DashboardAdmin = () => {
             )}
           </div>
           {showCustomTable && showCustomTableVoucher && (
-            <div className="fade-in">
+            <div className="fade-in md:w-full w-[22rem]">
               <CustomTable
                 isLoading={isLoading}
                 rowId="id"
@@ -497,7 +497,7 @@ const DashboardAdmin = () => {
             </div>
           )}
           {showCustomTablePatient && (
-            <div className="fade-in mt-5">
+            <div className="fade-in mt-5 md:w-full w-[22rem]">
               <CustomTable
                 isLoading={isLoading}
                 rowId="id"

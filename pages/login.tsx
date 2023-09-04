@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Input from "@/components/input/Input";
 import { MdOutlineEmail, MdOutlineLock } from "react-icons/md";
 import Card from "@/components/card/Card";
-import { userLogin } from "@/services/login";
+import { getAdmData, getClientData, userLogin } from "@/services/login";
 import { ToastContainer, toast } from "react-toastify";
 import useLogin from "@/hooks/useLogin";
 import api from "@/services/api";
@@ -41,6 +41,26 @@ const Login = () => {
       });
   };
 
+  const handleGetAdmData = async () => {
+    getAdmData()
+      .then((res) => {
+        auth.setDataAdmin(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleGetUserData = () => {
+    getClientData()
+      .then((res) => {
+        auth.setDataPatient(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleLogin = async () => {
     setLoading(true);
     userLogin(userData)
@@ -53,6 +73,8 @@ const Login = () => {
         localStorage.setItem("email", userData.email);
         auth.onLogin();
         getPartinerData(res.cnpj);
+        handleGetAdmData();
+        handleGetUserData();
         return router.push("/dashboard/home");
       })
       .catch(() => {
@@ -91,7 +113,7 @@ const Login = () => {
         draggable
         pauseOnHover={false}
         theme="light"
-        style={{ width: "42%" }}
+        className="md:w-1/3"
       />
 
       <div className="hidden xl:block">
@@ -168,7 +190,7 @@ const Login = () => {
             disabled={loading}
           />
         </div>
-        <div className="flex justify-end text-sm md:text-base cursor-pointer hover:opacity-60 text-careLightBlue underline">
+        <div className="flex mt-3 justify-end text-sm md:text-base cursor-pointer hover:opacity-60 text-careLightBlue underline">
           <span onClick={() => router.push("/forgot-password")}>
             Esqueci minha senha
           </span>

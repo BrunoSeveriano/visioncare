@@ -51,15 +51,6 @@ interface IDateClient {
   ];
 }
 
-interface IDateAdm {
-  userName: string;
-  userEmail: string;
-  userBirthdate: string;
-  userMobilephone: string;
-  userCPF: string;
-  userPassword: string;
-}
-
 interface IEditClientData {
   User: {
     Email: string;
