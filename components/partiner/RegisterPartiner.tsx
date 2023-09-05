@@ -23,6 +23,29 @@ const RegisterPartiner = () => {
   const filterValueRef = useRef<string>(filterValue);
   filterValueRef.current = filterValue;
 
+  const getPartinerData = useCallback(() => {
+    setIsLoading(true);
+    const filters = {
+      friendlyCode: filterValueRef.current,
+      mainContact: filterValueRef.current,
+    };
+
+    listPartiner(filters)
+      .then((partiners) => {
+        setPartinerList(partiners);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar a lista de parceiros:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [dataScheduling.refresh]);
+
+  useEffect(() => {
+    getPartinerData();
+  }, [getPartinerData]);
+
   const filterPartiners = useCallback(
     (partinerList: any[], filterValue: string) => {
       if (!filterValue) {
@@ -41,32 +64,6 @@ const RegisterPartiner = () => {
     },
     []
   );
-
-  const getPartinerData = useCallback(() => {
-    setIsLoading(true);
-    const filters = {
-      friendlyCode: filterValueRef.current,
-      mainContact: filterValueRef.current,
-    };
-
-    listPartiner(filters)
-      .then((partiners) => {
-        setPartinerList(partiners);
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar a lista de parceiros:", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        if (refreshTable) {
-          setRefreshTable(false);
-        }
-      });
-  }, [refreshTable, dataScheduling.refresh]);
-
-  useEffect(() => {
-    getPartinerData();
-  }, [getPartinerData]);
 
   const filteredPartinerList = filterPartiners(partinerList, filterValue);
 

@@ -21,7 +21,6 @@ import { addPurchase } from "@/services/purchase";
 import { ToastContainer, toast } from "react-toastify";
 import useDataStorage from "@/hooks/useDataStorage";
 import useOpen from "@/hooks/useOpen";
-import { is } from "date-fns/locale";
 
 interface ClientData {
   name: string;
@@ -64,11 +63,11 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
   const options = [{ value: "4", id: "4" }];
 
   useEffect(() => {
+    setIsLoading(true);
     if (clientData && clientData.cpf) {
-      setIsLoading(true);
       getListRescueVoucherPatients({ cpf: clientData.cpf })
         .then((data) => {
-          setClientVouchers(data);
+          setClientVouchers(data.vouchers);
         })
         .catch((error) => {
           error;
@@ -137,9 +136,11 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
   }, [selectedCodeNumber, selectedProduct, selectedCylinder]);
 
   const handleSendProduct = () => {
+    setIsLoading(true);
     const statusVoucher = {
       programCode: "073",
       voucherId: useData.idVoucher,
+      productId: selectedAxies,
     };
 
     const sendProduct = {
@@ -156,24 +157,17 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
         return addPurchase(sendProduct as any);
       })
       .then((response) => {
-        handleClearFields();
         toast.success("Voucher e Produto resgatado enviado com sucesso!");
+        useData.setRefresh(!useData.refresh);
+        handleClearFields();
+        openProduct.onClose();
       })
       .catch((error) => {
         toast.error("Erro ao enviar voucher e produto resgatado!");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-  };
-
-  function getFilteredVouchers(vouchers: Voucher[], status: string) {
-    if (!status) {
-      return vouchers;
-    }
-
-    return vouchers.filter((voucher) => voucher.status === status);
-  }
-
-  const handleCloseHistory = () => {
-    showHistoryPacient.onClose();
   };
 
   const handleAddInputBlock = (currentIndex: any) => {
@@ -193,8 +187,6 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
     setSelectedCylinder("");
     setSelectedAxies("");
     setOptionsQuatity("");
-    openProduct.onClose();
-    handleCloseHistory();
   };
 
   const GreenSwitch = styled(Switch)(({ theme }) => ({
@@ -255,10 +247,7 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
                 <CustomTable
                   isLoading={isLoading}
                   rowId="id"
-                  rows={getFilteredVouchers(
-                    clientData.vouchers,
-                    selectedStatus
-                  )}
+                  rows={clientVouchers}
                   columns={TableMockupValidateVoucher.columns}
                 />
               </div>
@@ -353,14 +342,16 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
             </div>
           ))}
 
-          <div className="bg-careGrey col-span-3 rounded-md p-2 flex items-center mt-4">
-            <div className="border-careDarkPurple border-r-[2px] text-careDarkPurple">
-              <AiOutlineInfoCircle className="mr-3" size="2rem" />
+          <div className="bg-careGrey col-span-3 rounded-md p-2 md:flex md:flex-row md:justify-between lg:flex lg:flex-row lg:justify-between flex flex-col mt-4">
+            <div className="flex items-center">
+              <div className="border-careDarkPurple border-r-[2px] text-careDarkPurple">
+                <AiOutlineInfoCircle className="mr-3" size="2rem" />
+              </div>
+              <span className="pl-5 text-careDarkBlue">
+                Caso necessário, você poderá gerar um pedido de compra.
+              </span>
             </div>
-            <span className="pl-5 text-careDarkBlue">
-              Caso necessário, você poderá gerar um pedido de compra.
-            </span>
-            <div className="md:ml-64 flex items-center">
+            <div className="flex items-center lg:mt-0 md:mt-0 mt-2">
               <Switch {...label} defaultChecked />
               <span className="text-careDarkBlue font-bold">
                 Gerar pedido de compra

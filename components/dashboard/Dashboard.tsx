@@ -43,10 +43,8 @@ const Dashboard = ({ children }: DashboardProps) => {
   const sidebarRightClasses = sideBarOpen ? "" : "w-1/4 md:flex ";
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [showMyData, setShowMyData] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
   const [dashboardText, setDashboardText] = useState("");
   const [navbarSpanText, setNavbarSpanText] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [isAdminUser, setIsAdminUser] = useState(false);
   const [isEcpUser, setIsEcpUser] = useState(false);
   const [isPdvUser, setIsPdvUser] = useState(false);
@@ -74,13 +72,9 @@ const Dashboard = ({ children }: DashboardProps) => {
 
     const userPatient = auth.role === "Patient VisionCare";
     if (userPatient) {
-      // onBoardModal.onOpen();
+      onBoardModal.onOpen();
       setIsPatientUser(true);
     }
-
-    // if (localStorage.getItem("finalized") !== "true") {
-    //   onBoardModal.onOpen();
-    // }
 
     setNavbarSpanText("Início");
   }, []);

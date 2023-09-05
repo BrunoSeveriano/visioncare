@@ -65,6 +65,10 @@ const CardQuestions = ({
     }
     setQuestionNumber((prevQuestionNumber) => prevQuestionNumber + 1);
     console.log(dataStorage.surveyData);
+
+    if (totalQuestions === questionNumber) {
+      handleSubmit();
+    }
   };
 
   const handleBack = () => {
@@ -98,7 +102,7 @@ const CardQuestions = ({
                     sx={{
                       color: "#0A7CC1",
                       "&.Mui-checked": {
-                        color: "#A51890",
+                        color: "#051F4A",
                       },
                     }}
                     onChange={handleSurvey}
@@ -137,14 +141,14 @@ const CardQuestions = ({
           )}
           {totalQuestions === questionNumber ? (
             <Button
-              className="bg-carePurple border-carePurple rounded-lg py-2 w-56 h-12 text-white lg:w-64 lg:h-12"
+              className="bg-careLightBlue border-careLightBlue rounded-lg py-2 w-56 h-12 text-white lg:w-64 lg:h-12"
               onClick={handleNext}
             >
               FINALIZAR
             </Button>
           ) : (
             <Button
-              className="bg-carePurple border-carePurple rounded-lg py-2 w-56 h-12 text-white lg:w-64 lg:h-12"
+              className="bg-careLightBlue border-careLightBlue rounded-lg py-2 w-56 h-12 text-white lg:w-64 lg:h-12"
               onClick={handleNext}
             >
               PRÓXIMO

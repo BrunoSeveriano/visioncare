@@ -17,9 +17,11 @@ import { ToastContainer, toast } from "react-toastify";
 import InputMask from "react-input-mask";
 import useRegisterPartiner from "@/hooks/useRegisterPartiner";
 import { getAddressByCep } from "@/services/cep";
+import useDataStorage from "@/hooks/useDataStorage";
 
 const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const partiner = useRegisterPartiner();
+  const dataScheduling = useDataStorage();
   const [isLoadingAddress, setIsLoadingAddress] = useState(false);
   const [registerPartiner, setRegisterPartiner] = useState({
     accountTypeStringMapFlag: "",
@@ -40,12 +42,14 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
     mainContact: "",
     password: "",
     ProgramCode: "073",
+    sapCode: "",
   });
 
   const handleRegisterPartiner = () => {
     addPartiner(registerPartiner)
       .then((res) => {
         toast.success("Parceiro cadastrado com sucesso!");
+        dataScheduling.setRefresh(!dataScheduling.refresh);
         partiner.onClose();
         refreshTable();
       })
@@ -203,7 +207,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               <span className="text-careLightBlue">Forneça o Código SAP</span>
               <Input
                 maxLength={20}
-                name=""
+                name="sapCode"
                 onChange={handleChange}
                 startIcon
                 imageSrc="/icon-sap.png"

@@ -55,7 +55,7 @@ const DataAdmin = () => {
           ...prevData,
           userName: res.userName,
           userEmail: res.userEmail,
-          userBirthdate: dayjs(res.userBirthdate).format("DD/MM/YYYY"),
+          userBirthdate: dayjs(res.userBirthdate).format("YYYY-MM-DD"),
           userCPF: res.userCPF,
           userMobilephone: res.userMobilephone,
           userPassword: res.userPassword,

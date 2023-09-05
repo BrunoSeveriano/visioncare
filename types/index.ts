@@ -133,6 +133,7 @@ interface IRegisterPartiner {
   mainContact: string;
   password: string;
   ProgramCode: string;
+  sapCode: string;
 }
 
 interface IUpdatePartiner {
@@ -190,6 +191,7 @@ interface IRepayment {
 interface IVoucherUse {
   programCode: string;
   voucherId: string;
+  productId: string;
 }
 interface IRescueVoucher {
   programCode: string;

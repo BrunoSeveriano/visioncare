@@ -1,15 +1,16 @@
+import { format } from "date-fns";
 export interface Rows {
-  data: string;
-  number: string;
+  date: string;
+  voucher: string;
   product: string;
-  promotion: string;
-  quantity: string;
+  type: string;
+  amount: string;
 }
 
 export const TableDataProduct: TableData = {
   columns: [
     {
-      field: "data",
+      field: "date",
       headerName: "Data",
       minWidth: 95,
       headerAlign: "center",
@@ -17,9 +18,21 @@ export const TableDataProduct: TableData = {
       headerClassName: "columnTitle",
       sortable: false,
       flex: 1,
+      renderCell: (params: any) => {
+        const formattedDate = format(new Date(params.value), "dd/MM/yyyy");
+        return (
+          <div
+            style={{
+              paddingLeft: "5px",
+            }}
+          >
+            {formattedDate}
+          </div>
+        );
+      },
     },
     {
-      field: "number",
+      field: "voucher",
       headerName: "N / Voucher",
       minWidth: 95,
       headerAlign: "center",
@@ -39,7 +52,7 @@ export const TableDataProduct: TableData = {
       flex: 1,
     },
     {
-      field: "promotion",
+      field: "type",
       headerName: "Tipo de promoção",
       minWidth: 95,
       headerAlign: "center",
@@ -49,7 +62,7 @@ export const TableDataProduct: TableData = {
       flex: 1,
     },
     {
-      field: "quantity",
+      field: "amount",
       headerName: "Quand. de cx bonificadas",
       minWidth: 95,
       headerAlign: "center",
@@ -61,39 +74,11 @@ export const TableDataProduct: TableData = {
   ],
   rows: [
     {
-      data: "10/10/2021",
-      number: Math.random().toString(36),
-      product: "Maria da Silva",
-      promotion: "Maria da Silva",
-      quantity: "Maria da Silva",
-    },
-    {
-      data: "10/10/2021",
-      number: Math.random().toString(36),
-      product: "Maria da Silva",
-      promotion: "Maria da Silva",
-      quantity: "Maria da Silva",
-    },
-    {
-      data: "10/10/2021",
-      number: Math.random().toString(36),
-      product: "Maria da Silva",
-      promotion: "Maria da Silva",
-      quantity: "Maria da Silva",
-    },
-    {
-      data: "10/10/2021",
-      number: Math.random().toString(36),
-      product: "Maria da Silva",
-      promotion: "Maria da Silva",
-      quantity: "Maria da Silva",
-    },
-    {
-      data: "10/10/2021",
-      number: Math.random().toString(36),
-      product: "Maria da Silva",
-      promotion: "Maria da Silva",
-      quantity: "Maria da Silva",
+      date: "01/01/2021",
+      voucher: "00000000",
+      product: "Produto 1",
+      type: "Tipo 1",
+      amount: "1",
     },
   ],
 };

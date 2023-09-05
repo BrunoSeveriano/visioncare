@@ -45,12 +45,12 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
   const useData = useDataStorage();
 
   useEffect(() => {
+    setIsLoading(true);
     if (clientData && clientData.cpf) {
-      setIsLoading(true);
       getListVoucherPatients({ cpf: clientData.cpf })
         .then((data) => {
           voucherHistory.setVoucherUserHistory(data);
-          setClientVouchers(data);
+          setClientVouchers(data.vouchers);
           setUtilizedHistory(data.utilizedHistory);
         })
         .catch((error) => {
@@ -61,18 +61,6 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
         });
     }
   }, [clientData, useData.refresh]);
-
-  function getFilteredVouchers(vouchers: Voucher[], status: string) {
-    if (!status) {
-      return vouchers;
-    }
-
-    return vouchers.filter((voucher) => voucher.status === status);
-  }
-
-  const handleShowHistory = () => {
-    setShowHistory(!showHistory);
-  };
 
   return (
     <>
@@ -85,7 +73,6 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
           textColor="text-careDarkBlue"
           bgColor="bg-careDarkBlue"
           hasIcon
-          onButtonClick={handleShowHistory}
           hideButton
         />
       </div>
@@ -96,8 +83,8 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
             <div>
               <CustomTable
                 isLoading={isLoading}
-                rowId="id"
-                rows={getFilteredVouchers(clientData.vouchers, selectedStatus)}
+                rowId="number"
+                rows={clientVouchers}
                 columns={TableUserPacient.columns}
               />
             </div>

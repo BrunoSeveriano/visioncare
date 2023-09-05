@@ -13,8 +13,13 @@ import {
   getListRescueVoucherPatients,
 } from "@/services/voucher";
 import CustomSelect from "../select/Select";
-import { addRepayment, listPurchase } from "@/services/purchase";
+import {
+  addRepayment,
+  listPurchase,
+  listReimbursementData,
+} from "@/services/purchase";
 import { toast } from "react-toastify";
+import useDataStorage from "@/hooks/useDataStorage";
 
 const Reimbursement = () => {
   const [productOptions, setProductOptions] = useState([]);
@@ -28,6 +33,9 @@ const Reimbursement = () => {
   const [optionsQuatity, setOptionsQuatity] = useState("");
   const [inputBlocks, setInputBlocks] = useState([{ id: 1 }]);
   const [purchaseList, setPurchaseList] = useState([]);
+  const [reimbursementList, setReimbursementList] = useState([]);
+  const [refreshTable, setRefreshTable] = useState(false);
+  const useData = useDataStorage();
   const options = Array.from({ length: 100 }, (_, index) => ({
     value: (index + 1).toString(),
     id: (index + 1).toString(),
@@ -51,11 +59,26 @@ const Reimbursement = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [refreshTable, useData.refresh]);
+
+  const getReimbursementData = useCallback(() => {
+    setIsLoading(true);
+    listReimbursementData()
+      .then((response) => {
+        setReimbursementList(response.value);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [refreshTable, useData.refresh]);
 
   useEffect(() => {
     getVisitiData();
-  }, [getVisitiData]);
+    getReimbursementData();
+  }, [getVisitiData, getReimbursementData, refreshTable, useData.refresh]);
 
   useEffect(() => {
     getCodeNumber()
@@ -115,6 +138,7 @@ const Reimbursement = () => {
   }, [selectedCodeNumber, selectedProduct, selectedCylinder]);
 
   const handleClick = () => {
+    setIsLoading(true);
     const dataSelected = {
       ProgramCode: "073",
       Items: [
@@ -124,12 +148,17 @@ const Reimbursement = () => {
         },
       ],
     };
+    setRefreshTable(false);
     addRepayment(dataSelected as any)
       .then((response) => {
         toast.success("Reembolso realizado com sucesso");
+        setRefreshTable(true);
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -195,8 +224,8 @@ const Reimbursement = () => {
               <div className="mt-3">
                 <CustomTable
                   isLoading={isLoading}
-                  rowId="number"
-                  rows={TableDataProduct.rows}
+                  rowId="voucher"
+                  rows={reimbursementList}
                   columns={TableDataProduct.columns}
                 />
               </div>

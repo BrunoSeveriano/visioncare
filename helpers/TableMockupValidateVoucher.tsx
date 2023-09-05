@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ButtonEcpVoucher from "@/components/button/ButtonEcpVoucher";
 import useDataStorage from "@/hooks/useDataStorage";
+import ButtonValidateVoucherEcp from "@/components/button/ButtonValidateVoucherEcp";
 
 export interface Rows {
   id: string;
@@ -86,33 +87,12 @@ export const TableMockupValidateVoucher: TableData = {
       sortable: false,
       flex: 1,
       renderCell: (params: any) => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [buttonState, setButtonState] = useState({
-          clicked: false,
-          label: "Utilizar",
-        });
-
-        const handleButtonClick = () => {
-          if (!buttonState.clicked) {
-            setButtonState({
-              clicked: true,
-              label: "Selecionado",
-            });
-          }
-        };
-
         return (
           <div className={`w-full`}>
-            <ButtonEcpVoucher
+            <ButtonValidateVoucherEcp
               disableHover
               params={params.row.id}
-              label={buttonState.label}
-              customClass={`${
-                buttonState.clicked ? "bg-carePurple" : "bg-careGreen"
-              } border ${
-                buttonState.clicked ? "border-carePurple" : "border-careGreen"
-              } w-full py-2 text-sm`}
-              onClick={handleButtonClick}
+              label="Utilizar"
             />
           </div>
         );

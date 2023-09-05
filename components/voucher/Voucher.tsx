@@ -89,11 +89,11 @@ const Voucher = () => {
         setListVoucher(response);
       }
     );
-  }, [refreshTable, filters, useData.refresh]);
+  }, [filters]);
 
   useEffect(() => {
     getVoucherData();
-  }, [getVoucherData]);
+  }, [getVoucherData, useData.refresh, filters]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -116,7 +116,7 @@ const Voucher = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [refreshTable, useData.refresh]);
+  }, [useData.refresh]);
 
   const formatCpf = (value: any) => {
     const cleanedValue = value.replace(/\D/g, "");

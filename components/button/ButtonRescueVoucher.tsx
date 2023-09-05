@@ -39,8 +39,13 @@ const ButtonRescueVoucher = ({
     };
     rescueVoucher(statusVoucher)
       .then((response) => {
+        if (!response.isValidData) {
+          toast.error(response.message);
+          return;
+        }
         toast.success("Voucher resgatado com sucesso!");
         dataScheduling.setRefresh(!dataScheduling.refresh);
+        console.log(statusVoucher);
       })
       .catch((error) => {
         toast.error("Erro ao resgatar voucher!");

@@ -18,3 +18,12 @@ export const listPurchase = async () => {
   });
   return response.data;
 };
+
+export const listReimbursementData = async () => {
+  const response = await api.get(`/voucher/resumeusedvoucher`, {
+    params: {
+      programCode: "073",
+    },
+  });
+  return response.data;
+};

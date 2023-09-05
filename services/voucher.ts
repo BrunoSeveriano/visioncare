@@ -5,6 +5,7 @@ export const useVoucher = async (data: IVoucherUse) => {
     params: {
       programCode: "073",
       voucherId: data.voucherId,
+      productId: data.productId,
     },
   });
   return response.data;

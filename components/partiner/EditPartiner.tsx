@@ -10,9 +10,11 @@ import useEditPartiner from "@/hooks/useEditPartiner";
 import useDataStoragePartiner from "@/hooks/useDataStoragePartiner";
 import { getAddressByCep } from "@/services/cep";
 import { useRouter } from "next/router";
+import useDataStorage from "@/hooks/useDataStorage";
 
 const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const dataStoragePartiner = useDataStoragePartiner();
+  const dataScheduling = useDataStorage();
   const editPartiner = useEditPartiner();
   const router = useRouter();
   const [editMode, setEditMode] = useState(false);
@@ -46,6 +48,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
     deletePartiner(friendlyCode, programCodeToDelete)
       .then((res) => {
         toast.success("Parceiro deletado com sucesso!");
+        dataScheduling.setRefresh(!dataScheduling.refresh);
         editPartiner.onClose();
         refreshTable();
       })
@@ -58,6 +61,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
     updatePartiner(updatedPartiner)
       .then((res) => {
         toast.success("Dados do Parceiro atualizado com sucesso!");
+        dataScheduling.setRefresh(!dataScheduling.refresh);
         editPartiner.onClose();
         refreshTable();
       })

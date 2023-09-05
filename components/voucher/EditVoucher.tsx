@@ -66,8 +66,8 @@ const EditVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
     updateVoucher(voucher)
       .then((res) => {
         toast.success("Voucher editado com sucesso!");
+        dataStorage.setRefresh(!dataStorage.refresh);
         editVoucher.onClose();
-        refreshTable();
       })
       .catch((err) => {
         toast.error("Erro ao editar voucher.");

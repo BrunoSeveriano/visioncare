@@ -11,6 +11,7 @@ import SearchModalEcp from "../modals/SearchModalEcp";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import Button from "../button/Button";
 import useTalkModal from "@/hooks/useTalkModal";
+import useOpen from "@/hooks/useOpen";
 
 const VoucherPartinerEcp = () => {
   const [searchCpf, setSearchCpf] = useState("");
@@ -19,6 +20,7 @@ const VoucherPartinerEcp = () => {
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [searchModalData, setSearchModalData] = useState(null);
   const showHistoryPacient = useTalkModal();
+  const openProduct = useOpen();
 
   const handleSearchClient = async () => {
     try {
@@ -45,6 +47,7 @@ const VoucherPartinerEcp = () => {
     setSearchCpf("");
     setShowCustomTable(true);
     setShowSearchModal(false);
+    openProduct.onClose();
     showHistoryPacient.onClose();
   };
 

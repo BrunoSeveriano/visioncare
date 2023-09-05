@@ -34,6 +34,7 @@ const RegisterVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
     })
       .then(() => {
         toast.success("Voucher cadastrado com sucesso!");
+        dataStorage.setRefresh(!dataStorage.refresh);
         registerVoucher.onClose();
         refreshTable();
       })
