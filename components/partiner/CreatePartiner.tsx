@@ -18,6 +18,7 @@ import InputMask from "react-input-mask";
 import useRegisterPartiner from "@/hooks/useRegisterPartiner";
 import { getAddressByCep } from "@/services/cep";
 import useDataStorage from "@/hooks/useDataStorage";
+import { add } from "date-fns";
 
 const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const partiner = useRegisterPartiner();
@@ -48,6 +49,10 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const handleRegisterPartiner = () => {
     addPartiner(registerPartiner)
       .then((res) => {
+        if (res) {
+          toast.error(res);
+          return;
+        }
         toast.success("Parceiro cadastrado com sucesso!");
         dataScheduling.setRefresh(!dataScheduling.refresh);
         partiner.onClose();

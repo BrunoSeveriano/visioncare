@@ -38,6 +38,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
     password: dataStoragePartiner.partnerData.password,
     accountTypeStringMapFlag:
       dataStoragePartiner.partnerData.accountTypeStringMapFlag,
+    codeSap: dataStoragePartiner.partnerData.codeSap,
     ProgramCode: "073",
   });
 
@@ -225,7 +226,8 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               <Input
                 disabled
                 maxLength={20}
-                name=""
+                name="codeSap"
+                value={updatedPartiner.codeSap}
                 onChange={handleChange}
                 startIcon
                 imageSrc="/icon-sap.png"

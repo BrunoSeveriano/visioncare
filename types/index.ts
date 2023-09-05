@@ -155,6 +155,7 @@ interface IUpdatePartiner {
   password: string;
   ProgramCode: string;
   accountTypeStringMapFlag: string;
+  codeSap: string;
 }
 
 interface IUpdatePartinerData {

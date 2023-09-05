@@ -24,12 +24,14 @@ import CalendarEcp from "../calendar/CalendarEcp";
 import DataPatient from "../myData/DataPatient";
 import DataPartiner from "../myData/DataPartiner";
 import DataAdmin from "../myData/DataAdmin";
+import useOnboardModalPartiner from "@/hooks/useOnboardModalPartiner";
 
 interface DashboardProps {
   children?: React.ReactNode;
 }
 const Dashboard = ({ children }: DashboardProps) => {
   const onBoardModal = useOnboardModal();
+  const onboardModalPartiner = useOnboardModalPartiner();
   const auth = useLogin();
   const router = useRouter();
   const dataStorage = useDataStorage();
@@ -57,23 +59,25 @@ const Dashboard = ({ children }: DashboardProps) => {
 
     const userRoleEcp = auth.role === "Partner ECP VisionCare";
     if (userRoleEcp) {
-      setIsEcpUser(true);
+      // onboardModalPartiner.onOpen();
+      return setIsEcpUser(true);
     }
 
     const userRolePdv = auth.role === "Partner POS VisionCare";
     if (userRolePdv) {
-      setIsPdvUser(true);
+      // onboardModalPartiner.onOpen();
+      return setIsPdvUser(true);
     }
 
     const userRoleAdmin = auth.role === "Admin JeJ - VisionCare";
     if (userRoleAdmin) {
-      setIsAdminUser(true);
+      return setIsAdminUser(true);
     }
 
     const userPatient = auth.role === "Patient VisionCare";
     if (userPatient) {
       onBoardModal.onOpen();
-      setIsPatientUser(true);
+      return setIsPatientUser(true);
     }
 
     setNavbarSpanText("Início");
@@ -183,8 +187,8 @@ const Dashboard = ({ children }: DashboardProps) => {
             />
           </div>
         </div>
-        <div className="flex flex-col md:px-3 lg:px-3 xl:px-7 2xl:px-14 w-">
-          <div className="border-b-2 ">
+        <div className="flex flex-col md:px-3 lg:px-3 xl:px-7 2xl:px-14">
+          <div className="border-b-2">
             {(() => {
               if (isAdminUser) {
                 return adminOptions.map((option, i) => (
@@ -267,7 +271,7 @@ const Dashboard = ({ children }: DashboardProps) => {
           </div>
 
           {sideBarOpen ? (
-            <div className="hidden md:flex ml-5 gap-5 mt-10 cursor-pointer ">
+            <div className="hidden md:flex ml-5 gap-5 mt-10 cursor-pointer">
               <div
                 onClick={() => {
                   router.push("https://www.instagram.com/jnjbrasil/");
@@ -406,12 +410,12 @@ const Dashboard = ({ children }: DashboardProps) => {
             </div>
           </div>
           {menuRightMobile && (
-            <div className=" block md:hidden h-full w-full mt-5">
+            <div className=" block md:hidden h-full w-full mt-5 fade-in">
               <div
                 onClick={handleOpenMyData}
-                className=" mt-8 pl-5 pr-5 border-b-[1px] pb-2 lg:pb-[27px]"
+                className=" mt-8 pl-5 pr-5 border-b-[1px] pb-2 lg:pb-[27px] "
               >
-                <div className="border-careDarkBlue border-[1px] rounded-lg p-3 flex items-center">
+                <div className="border-careDarkBlue border-[1px] rounded-lg p-3 flex items-center ">
                   <div className="bg-careDarkBlue rounded-full mr-4 p-2">
                     <IoPersonOutline size="1.5em" className=" text-white" />
                   </div>
@@ -452,7 +456,7 @@ const Dashboard = ({ children }: DashboardProps) => {
           )}
         </div>
         {menuLeftMobile && (
-          <div className="flex md:hidden bg-careDarkBlue h-full gap-3 ">
+          <div className="flex md:hidden bg-careDarkBlue h-full gap-3 fade-in ">
             <div className="flex flex-col gap-3 ml-14 mt-10 w-72">
               {(() => {
                 if (isAdminUser) {
@@ -541,7 +545,7 @@ const Dashboard = ({ children }: DashboardProps) => {
         <>
           {router.pathname !== "/dashboard/patient-voucher" ? (
             <div
-              className={`w-1/3 hidden md:flex border-r-[0.5px] h-screen flex-col border-careGrey ${sidebarRightClasses}`}
+              className={`w-1/3 hidden md:flex border-r-[0.5px] h-screen flex-col border-careGrey fade-in ${sidebarRightClasses}`}
             >
               <div className="w-full mt-5">
                 <div
@@ -567,7 +571,7 @@ const Dashboard = ({ children }: DashboardProps) => {
               </div>
             </div>
           ) : (
-            <div className="hidden md:block mt-5 md:w-1/3  md:right-0 bg-white">
+            <div className="hidden md:block mt-5 md:w-1/3  md:right-0 bg-white fade-in">
               <div className="py-[30px] px-5 border-b-2 border-gray-200 flex flex-col">
                 <span className="text-2xl text-careLightBlue">
                   Histórico de utilização

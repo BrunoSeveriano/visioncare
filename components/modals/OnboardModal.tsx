@@ -12,7 +12,6 @@ import {
 import useDataStorage from "@/hooks/useDataStorage";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { on } from "events";
 
 const OnboardModal = () => {
   const onboardModal = useOnboardModal();
@@ -37,6 +36,7 @@ const OnboardModal = () => {
     setFinalMessage(true);
   };
 
+  if (!auth.isLogged) return null;
   return (
     <div>
       <Modal

@@ -1,16 +1,19 @@
 import Button from "@/components/button/Button";
 import Input from "@/components/input/Input";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { BsChatSquareDots } from "react-icons/bs";
 import { MdOutlineLock } from "react-icons/md";
 import Card from "@/components/card/Card";
 import { toast } from "react-toastify";
+import useLogin from "@/hooks/useLogin";
+import useOnboardModalPartiner from "@/hooks/useOnboardModalPartiner";
 
 const NewPassword = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const auth = useLogin();
 
   const [userPassword, setUserPassword] = useState({
     email: "",
@@ -27,7 +30,7 @@ const NewPassword = () => {
         throw new Error("Senhas não compatíveis");
       }
       toast.success("Troca de senha realizada");
-      router.push("/login");
+      router.push("/");
     } catch (error) {
       setLoading(false);
       toast.error("Troca de senha falhou");

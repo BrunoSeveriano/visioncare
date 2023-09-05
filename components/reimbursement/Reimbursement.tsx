@@ -20,6 +20,7 @@ import {
 } from "@/services/purchase";
 import { toast } from "react-toastify";
 import useDataStorage from "@/hooks/useDataStorage";
+import "animate.css";
 
 const Reimbursement = () => {
   const [productOptions, setProductOptions] = useState([]);
@@ -203,7 +204,7 @@ const Reimbursement = () => {
       </div>
       {hideTable ? (
         <>
-          <div className="flex flex-col md:flex md:flex-row gap-2 mt-10 mb-5">
+          <div className="flex flex-col md:flex md:flex-row gap-2 mt-10 mb-5 fade-in">
             <div className="md:w-96 w-[21.5rem]">
               <span className="text-3xl text-careLightBlue">
                 Extrato total:
