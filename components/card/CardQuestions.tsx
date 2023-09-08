@@ -83,7 +83,7 @@ const CardQuestions = ({
   return (
     <div className="w-full">
       <div className="my-5">
-        <span className="text-careLightBlue font-bold text-lg ml-7 lg:text-2xl">
+        <span className="text-careLightBlue flex font-bold text-lg ml-7 lg:text-2xl">
           {question}
         </span>
         <div className="ml-5 mt-3">
@@ -139,15 +139,25 @@ const CardQuestions = ({
           )}
           {totalQuestions === questionNumber ? (
             <Button
-              className="bg-careLightBlue border-careLightBlue rounded-lg py-2 w-56 h-12 text-white lg:w-64 lg:h-12"
+              className={`bg-${
+                isCkecked === undefined ? "careMenuGrey" : "careLightBlue"
+              } border-${
+                isCkecked === undefined ? "careMenuGrey" : "careLightBlue"
+              } rounded-lg py-2 w-56 h-12 text-white lg:w-64 lg:h-12`}
               onClick={handleNext}
+              disabled={isCkecked === undefined}
             >
               FINALIZAR
             </Button>
           ) : (
             <Button
-              className="bg-careLightBlue border-careLightBlue rounded-lg py-2 w-56 h-12 text-white lg:w-64 lg:h-12"
+              className={`bg-${
+                isCkecked === undefined ? "careMenuGrey" : "careLightBlue"
+              } border-${
+                isCkecked === undefined ? "careMenuGrey" : "careLightBlue"
+              } rounded-lg py-2 w-56 h-12 text-white lg:w-64 lg:h-12`}
               onClick={handleNext}
+              disabled={isCkecked === undefined}
             >
               PRÓXIMO
             </Button>
