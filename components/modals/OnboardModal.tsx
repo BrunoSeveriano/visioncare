@@ -107,13 +107,7 @@ const OnboardModal = () => {
           </>
         )}
 
-        <div
-          className={`my-5 z-40 flex flex-col pb-2 ${
-            questionNumber !== 4 && questionNumber !== 3
-              ? "border-b-[0.1rem] border-[#051F4A]"
-              : null
-          } lg:pb-5`}
-        >
+        <div className={`my-5 z-40 flex flex-col pb-2 lg:pb-5`}>
           {!isNext && (
             <>
               <div className="flex flex-col justify-start text-careLightBlue text-3xl mb-2 lg:text-4xl lg:ml-4">
@@ -122,7 +116,7 @@ const OnboardModal = () => {
                   {auth?.userDataPatient[0]?.namePatient}
                 </span>
               </div>
-              <div className="flex flex-col justify-start text-careLightBlue text-3xl lg:text-4xl mb-5 lg:ml-4">
+              <div className="flex flex-col justify-start text-careLightBlue text-3xl lg:text-4xl lg:ml-4 ">
                 <span>Vamos começar ?</span>
               </div>
             </>
@@ -131,15 +125,15 @@ const OnboardModal = () => {
           {isNext &&
             questionNumber < 4 &&
             !(questionNumber === 3 && answer === "Não") && (
-              <div className="flex flex-col justify-start font-bold text-careBlue text-2xl mb-3 ml-4 lg:text-3xl lg:ml-6">
+              <div className="flex flex-col justify-start font-bold text-careBlue text-2xl  ml-4 lg:text-3xl lg:ml-6">
                 <span>MyACUVUE® quer saber:</span>
               </div>
             )}
         </div>
 
         {!isNext ? (
-          <div className="ml-4 flex flex-col gap-4">
-            <div className="text-careBlue  text-base md:text-xl lg:text-xl">
+          <div className="ml-4 flex flex-col gap-4 border-t-[0.1rem] border-[#051F4A] ">
+            <div className="text-careBlue  text-base md:text-xl lg:text-xl mt-5">
               <span>
                 Queremos que você tenha uma experiência única e personalizada
                 com nossas lentes de contato, então gostaríamos de te conhecer

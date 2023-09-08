@@ -1,11 +1,13 @@
-import useDataStorage from "@/hooks/useDataStorage";
+import useOpenSeeMoreVouchers from "@/hooks/useOpenSeeMoreVouchers";
 import { getResumeVoucher } from "@/services/voucher";
 import React, { useCallback, useEffect } from "react";
 import { AiOutlineCheckCircle, AiOutlinePoweroff } from "react-icons/ai";
 import { FaHandHolding, FaHandHoldingUsd } from "react-icons/fa";
 import { GiCardPlay } from "react-icons/gi";
+import ModalSeeMoreVoucher from "../modals/ModalSeeMoreVoucher";
 
 const CardsDashboardAdmin = () => {
+  const openModalSeeMoreVouchers = useOpenSeeMoreVouchers();
   const [resumeVocuher, setResumeVoucher] = React.useState<any>([]);
 
   const getResume = useCallback(() => {
@@ -31,7 +33,10 @@ const CardsDashboardAdmin = () => {
           <span className="text-5xl text-careGreen pr-10">
             {resumeVocuher.ransomed}
           </span>
-          <span className="text-xs text-careLightBlue underline mt-6 cursor-pointer">
+          <span
+            onClick={openModalSeeMoreVouchers.onOpen}
+            className="text-xs text-careLightBlue underline mt-6 cursor-pointer"
+          >
             Ver detalhes
           </span>
         </div>

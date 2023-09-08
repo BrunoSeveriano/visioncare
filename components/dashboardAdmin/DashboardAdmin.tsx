@@ -38,8 +38,11 @@ import { VoucherListTableDashboard } from "@/helpers/VoucherListTableDashboard";
 import { TableMockupPartinerDashboard } from "@/helpers/TableMockupPartinerDashboard";
 import ExportToCSV from "../button/ExportToCSV";
 import useTalkModal from "@/hooks/useTalkModal";
+import ModalSeeMoreVoucher from "../modals/ModalSeeMoreVoucher";
+import useOpenSeeMoreVouchers from "@/hooks/useOpenSeeMoreVouchers";
 
 const DashboardAdmin = () => {
+  const openModalSeeMoreVouchers = useOpenSeeMoreVouchers();
   const registerVoucher = useRegisterVoucher();
   const editVoucher = useEditVoucher();
   const useData = useDataStorage();
@@ -462,7 +465,6 @@ const DashboardAdmin = () => {
                 <CardsDashboardAdmin />
               </div>
             )}
-
             {showCustomTablePartiner && (
               <div className="mb-8 md:mb-0 fade-in md:w-full w-[22rem]">
                 <div>
@@ -508,6 +510,11 @@ const DashboardAdmin = () => {
           )}
         </div>
       </div>
+      {openModalSeeMoreVouchers.isOpen && (
+        <>
+          <ModalSeeMoreVoucher />
+        </>
+      )}
     </>
   );
 };

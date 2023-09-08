@@ -82,8 +82,8 @@ const CardQuestions = ({
 
   return (
     <div className="w-full">
-      <div className="my-5">
-        <span className="text-careLightBlue flex font-bold text-lg ml-7 lg:text-2xl">
+      <div className=" border-t-[0.1rem] border-[#051F4A]">
+        <span className="text-careLightBlue flex font-bold text-lg ml-7 lg:text-2xl mt-5">
           {question}
         </span>
         <div className="ml-5 mt-3">
