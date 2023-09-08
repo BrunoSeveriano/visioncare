@@ -57,7 +57,7 @@ const Dashboard = ({ children }: DashboardProps) => {
       router.push("/login");
     }
 
-    // onBoardModal.onOpen();
+    onBoardModal.onOpen();
 
     setNavbarSpanText("Início");
 
@@ -82,13 +82,13 @@ const Dashboard = ({ children }: DashboardProps) => {
       return setIsAdminUser(true);
     }
 
-    const userPatient = auth.role === "Patient VisionCare";
-    if (userPatient) {
-      if (auth.firstLogin === true) {
-        onBoardModal.onOpen();
-      }
-      return setIsPatientUser(true);
-    }
+    // const userPatient = auth.role === "Patient VisionCare";
+    // if (userPatient) {
+    //   if (auth.firstLogin === true) {
+    //     onBoardModal.onOpen();
+    //   }
+    //   return setIsPatientUser(true);
+    // }
   }, []);
 
   const menuOptions = homeMenuPacient.map((option) => {

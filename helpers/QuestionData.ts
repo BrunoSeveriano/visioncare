@@ -5,11 +5,11 @@ export const firstQuestionData = [
     questionOptions: [
       {
         questionResponse: "Não",
-        questionId: "EDE29D5A-F8DA-42B3-8EB4-6B6F5A07CFC3",
+        questionId: "1",
       },
       {
         questionResponse: "Sim",
-        questionId: "EDE29D5A-F8DA-42B3-8EB4-6B6F5A07CFC3",
+        questionId: "2",
       },
     ],
   },
@@ -22,11 +22,11 @@ export const noQuestionData = [
     questionOptions: [
       {
         questionResponse: "Não",
-        questionId: "5E60E41F-86FE-48E2-9751-767B26B81ABE",
+        questionId: "1",
       },
       {
         questionResponse: "Sim",
-        questionId: "5E60E41F-86FE-48E2-9751-767B26B81ABE",
+        questionId: "2",
       },
     ],
   },
@@ -37,11 +37,11 @@ export const noQuestionData = [
     questionOptions: [
       {
         questionResponse: "Não",
-        questionId: "C9600C92-0637-4328-969E-27FC0F4ABF0A",
+        questionId: "1",
       },
       {
         questionResponse: "Sim",
-        questionId: "C9600C92-0637-4328-969E-27FC0F4ABF0A",
+        questionId: "2",
       },
     ],
   },
@@ -54,20 +54,20 @@ export const yesQuestionData = [
     questionOptions: [
       {
         questionResponse: "até 3 meses",
-        questionId: "D6FD3E29-BB10-469C-BC6A-21710818669F",
+        questionId: "1",
       },
 
       {
         questionResponse: "até 6 meses",
-        questionId: "D6FD3E29-BB10-469C-BC6A-21710818669F",
+        questionId: "2",
       },
       {
         questionResponse: "até 1 ano",
-        questionId: "D6FD3E29-BB10-469C-BC6A-21710818669F",
+        questionId: "3",
       },
       {
         questionResponse: "mais de 1 ano",
-        questionId: "D6FD3E29-BB10-469C-BC6A-21710818669F",
+        questionId: "4",
       },
     ],
   },
@@ -77,11 +77,11 @@ export const yesQuestionData = [
     questionOptions: [
       {
         questionResponse: "ACUVUE®",
-        questionId: "E0818ED9-6FE3-4BFA-B3A1-8F7D97F3DA5C",
+        questionId: "1",
       },
       {
         questionResponse: "outras marcas",
-        questionId: "E0818ED9-6FE3-4BFA-B3A1-8F7D97F3DA5C",
+        questionId: "2",
       },
     ],
   },
@@ -92,11 +92,11 @@ export const yesQuestionData = [
     questionOptions: [
       {
         questionResponse: "Não",
-        questionId: "C9600C92-0637-4328-969E-27FC0F4ABF0A",
+        questionId: "1",
       },
       {
         questionResponse: "Sim",
-        questionId: "C9600C92-0637-4328-969E-27FC0F4ABF0A",
+        questionId: "2",
       },
     ],
   },

@@ -67,7 +67,7 @@ const CardQuestions = ({
     console.log(dataStorage.surveyData);
 
     if (totalQuestions === questionNumber) {
-      handleSubmit();
+      // handleSubmit();
     }
   };
 
