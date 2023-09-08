@@ -1,21 +1,23 @@
 import ButtonEditPacient from "@/components/button/ButtonEditPacient";
+import ButtonSwiftPartiner from "@/components/button/ButtonSwiftPartiner";
+import ExportToTxt from "@/components/button/ExportToTxt";
 import { format } from "date-fns";
 
 export interface Rows {
   id: string;
-  data: string;
-  sap: string;
-  client: string;
-  cnpj: string;
-  email: string;
+  solicitationDate: string;
+  codeSap: string;
+  partnerName: string;
+  partnerCnpj: string;
+  partnerEmail: string;
   orderPurchase: string;
-  confirm: string;
+  isConfirmed: string;
 }
 
 export const TableMockupOrderPurchase: TableData = {
   columns: [
     {
-      field: "data",
+      field: "solicitationDate",
       headerName: "Data/Solicitação",
       minWidth: 95,
       headerAlign: "center",
@@ -23,6 +25,10 @@ export const TableMockupOrderPurchase: TableData = {
       headerClassName: "columnTitle",
       sortable: false,
       flex: 1,
+      renderCell: (params: any) => {
+        const formattedDate = format(new Date(params.value), "dd/MM/yyyy");
+        return <div>{formattedDate}</div>;
+      },
     },
     {
       field: "id",
@@ -35,7 +41,7 @@ export const TableMockupOrderPurchase: TableData = {
       flex: 1,
     },
     {
-      field: "sap",
+      field: "codeSap",
       headerName: "SAP",
       headerAlign: "center",
       minWidth: 95,
@@ -45,7 +51,7 @@ export const TableMockupOrderPurchase: TableData = {
       flex: 1,
     },
     {
-      field: "client",
+      field: "partnerName",
       headerName: "Cliente",
       headerAlign: "center",
       minWidth: 95,
@@ -55,7 +61,7 @@ export const TableMockupOrderPurchase: TableData = {
       flex: 1,
     },
     {
-      field: "cnpj",
+      field: "partnerCnpj",
       headerName: "CNPJ",
       headerAlign: "center",
       minWidth: 95,
@@ -65,7 +71,7 @@ export const TableMockupOrderPurchase: TableData = {
       flex: 1,
     },
     {
-      field: "email",
+      field: "partnerEmail",
       headerName: "E-mail",
       headerAlign: "center",
       minWidth: 95,
@@ -85,15 +91,17 @@ export const TableMockupOrderPurchase: TableData = {
       flex: 1,
       renderCell: (params: any) => (
         <div className={`w-full`}>
-          <ButtonEditPacient
+          <ExportToTxt
+            params={params}
             label="Baixar"
-            customClass="bg-careDarkBlue border-careDarkBlue w-full py-2 text-sm"
+            fileName="arquivo.txt"
+            className="w-full bg-careDarkBlue border-careBlue p-2 py-2"
           />
         </div>
       ),
     },
     {
-      field: "confirm",
+      field: "isConfirmed",
       headerName: "Confirmar",
       headerAlign: "center",
       minWidth: 95,
@@ -101,49 +109,24 @@ export const TableMockupOrderPurchase: TableData = {
       headerClassName: "columnTitle",
       sortable: false,
       flex: 1,
+      renderCell: (params: any) => (
+        <div className={`w-full`}>
+          <ButtonSwiftPartiner params={params} />
+        </div>
+      ),
     },
   ],
 
   rows: [
     {
-      id: "string;",
-      data: "string;",
-      sap: "string;",
-      client: "string;",
-      cnpj: "string;",
-      email: "string;",
-      orderPurchase: "string;",
-      confirm: "string;",
-    },
-    {
-      id: "string;",
-      data: "string;",
-      sap: "string;",
-      client: "string;",
-      cnpj: "string;",
-      email: "string;",
-      orderPurchase: "string;",
-      confirm: "string;",
-    },
-    {
-      id: "string;",
-      data: "string;",
-      sap: "string;",
-      client: "string;",
-      cnpj: "string;",
-      email: "string;",
-      orderPurchase: "string;",
-      confirm: "string;",
-    },
-    {
-      id: "string;",
-      data: "string;",
-      sap: "string;",
-      client: "string;",
-      cnpj: "string;",
-      email: "string;",
-      orderPurchase: "string;",
-      confirm: "string;",
+      id: "1",
+      solicitationDate: format(new Date(), "dd/MM/yyyy"),
+      codeSap: "123456",
+      partnerName: "João da Silva",
+      partnerCnpj: "123.456.789-10",
+      partnerEmail: "",
+      orderPurchase: "",
+      isConfirmed: "",
     },
   ],
 };

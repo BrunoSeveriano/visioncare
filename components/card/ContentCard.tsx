@@ -24,7 +24,7 @@ const ContentCard = ({
   bgColor,
   textColor,
   buttonColor,
-  buttonBorderColor, // Passamos a cor da borda do botão como prop
+  buttonBorderColor,
   title,
   subtitle,
   textemail,

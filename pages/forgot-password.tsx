@@ -9,10 +9,12 @@ import Card from "@/components/card/Card";
 import { resetPassword } from "@/services/login";
 import { ToastContainer, toast } from "react-toastify";
 import { BsChatSquareDots } from "react-icons/bs";
+import useLogin from "@/hooks/useLogin";
 
 const Confirmation = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const auth = useLogin();
 
   const [forgetPassword, setForgetPassword] = useState({
     userEmail: "",
@@ -32,6 +34,7 @@ const Confirmation = () => {
     setLoading(true);
     resetPassword(forgetPassword)
       .then(() => {
+        auth.setLoginNewPassword(forgetPassword.userEmail);
         toast.success("Email enviado com sucesso!");
         router.push("/new-password");
       })
@@ -112,7 +115,7 @@ const Confirmation = () => {
             name="userEmail"
             className="fill-careBlue h-12 md:h-16"
             startIcon
-            imageSrc="/icon-sap.png"
+            imageSrc="/communication-mail.png"
             fullWidth
             placeholder="Seu e-mail"
             type="email"

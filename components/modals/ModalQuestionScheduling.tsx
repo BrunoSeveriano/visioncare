@@ -5,7 +5,6 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import Button from "../button/Button";
 import { useEffect, useState } from "react";
 import Input from "../input/Input";
-import { BiSearch, BiTrash } from "react-icons/bi";
 import { BsCalendar2Week } from "react-icons/bs";
 import { MdAlarm, MdOutlineLocationOn } from "react-icons/md";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
@@ -297,7 +296,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
 
       {currentQuestion === 0 && (
         <div className="mt-8 ml-9 md:ml-14">
-          <span className="text-xl text-careLightBlue">
+          <span className="text-xl font-bold text-careLightBlue">
             1. Quando foi a última vez que você consultou um oftalmologista?
           </span>
         </div>
@@ -305,7 +304,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
 
       {currentQuestion === 1 && (
         <div className="mt-8 ml-9 md:ml-14">
-          <span className="text-xl text-careLightBlue">
+          <span className="text-xl font-bold text-careLightBlue">
             2. Você tem uma prescrição de óculos válida feita nos últimos 12
             meses?
           </span>
@@ -379,7 +378,11 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
               imageSrc="/search-icon.png"
             />
             {isLoading ? (
-              <Loading />
+                     <div className="spinner">
+                     <div className="dot1"></div>
+                     <div className="dot2"></div>
+                   </div>
+      
             ) : (
               <>
                 {locationData.map((location: any, index: number) => (

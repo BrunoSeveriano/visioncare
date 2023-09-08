@@ -57,15 +57,23 @@ const Dashboard = ({ children }: DashboardProps) => {
       router.push("/login");
     }
 
+    // onBoardModal.onOpen();
+
+    setNavbarSpanText("Início");
+
     const userRoleEcp = auth.role === "Partner ECP VisionCare";
     if (userRoleEcp) {
-      // onboardModalPartiner.onOpen();
+      if (auth.firstLogin === true) {
+        onboardModalPartiner.onOpen();
+      }
       return setIsEcpUser(true);
     }
 
     const userRolePdv = auth.role === "Partner POS VisionCare";
     if (userRolePdv) {
-      // onboardModalPartiner.onOpen();
+      if (auth.firstLogin === true) {
+        onboardModalPartiner.onOpen();
+      }
       return setIsPdvUser(true);
     }
 
@@ -76,11 +84,11 @@ const Dashboard = ({ children }: DashboardProps) => {
 
     const userPatient = auth.role === "Patient VisionCare";
     if (userPatient) {
-      onBoardModal.onOpen();
+      if (auth.firstLogin === true) {
+        onBoardModal.onOpen();
+      }
       return setIsPatientUser(true);
     }
-
-    setNavbarSpanText("Início");
   }, []);
 
   const menuOptions = homeMenuPacient.map((option) => {

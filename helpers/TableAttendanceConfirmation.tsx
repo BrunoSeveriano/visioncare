@@ -88,7 +88,7 @@ export const TableAttendanceConfirmation: TableData = {
       field: "confirmation",
       headerName: "Confirmar comparecimento",
       headerAlign: "",
-      minWidth: 95,
+      minWidth: 250,
       align: "center",
       headerClassName: "columnTitle",
       sortable: false,

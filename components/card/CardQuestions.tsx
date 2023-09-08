@@ -43,8 +43,8 @@ const CardQuestions = ({
   const handleSurvey = (e: any) => {
     const { name, value } = e.target;
     setCurrentOptions({
-      optionDescription: value,
-      optionId: name,
+      questionResponse: value,
+      questionId: name,
     });
     setIsChecked((prevIsChecked) =>
       prevIsChecked === name ? undefined : name
@@ -56,12 +56,12 @@ const CardQuestions = ({
       ...prevSurvey,
       {
         surveyId: "02bc4ffe-7f5a-492e-b894-c6b817afef02",
-        optionDescription: currentOptions.optionDescription,
-        optionId: currentOptions.optionId,
+        questionResponse: currentOptions.questionResponse,
+        questionId: currentOptions.questionId,
       },
     ]);
     if (questionNumber === 0) {
-      setAnswer(currentOptions.optionDescription);
+      setAnswer(currentOptions.questionResponse);
     }
     setQuestionNumber((prevQuestionNumber) => prevQuestionNumber + 1);
     console.log(dataStorage.surveyData);
@@ -77,18 +77,16 @@ const CardQuestions = ({
   };
 
   const handleSubmit = async () => {
-    await responseSurvey(dataStorage.surveyData).then(() => {
-      console.log("resposta enviada");
-    });
+    await responseSurvey(dataStorage.surveyData).then(() => {});
   };
 
   return (
     <div className="w-full">
-      <div className="my-5 z-40 flex flex-col ">
-        <span className="text-careLightBlue font-bold text-lg ml-2 lg:text-2xl">
+      <div className="my-5">
+        <span className="text-careLightBlue font-bold text-lg ml-7 lg:text-2xl">
           {question}
         </span>
-        <div className="flex flex-col items-start ml-5 mt-3  sm:flex-row sm:items-center">
+        <div className="ml-5 mt-3">
           {customAnswer ? (
             customAnswer
           ) : (
@@ -97,8 +95,8 @@ const CardQuestions = ({
                 <>
                   <Checkbox
                     key={index}
-                    name={option.optionId}
-                    value={option.optionDescription}
+                    name={option.questionId}
+                    value={option.questionResponse}
                     sx={{
                       color: "#0A7CC1",
                       "&.Mui-checked": {
@@ -108,10 +106,10 @@ const CardQuestions = ({
                     onChange={handleSurvey}
                     icon={<RadioButtonUncheckedIcon />}
                     checkedIcon={<RadioButtonCheckedIcon />}
-                    checked={isCkecked === option.optionId}
+                    checked={isCkecked === option.questionId}
                   />
-                  <span className="text-careBlue opacity-70 xl:text-lg 2xl:text-xl lg:mt-1">
-                    {option.optionDescription}
+                  <span className="text-careBlue opacity-70 text-lg">
+                    {option.questionResponse}
                   </span>
                 </>
               ))}

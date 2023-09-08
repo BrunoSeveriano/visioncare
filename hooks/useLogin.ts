@@ -7,6 +7,10 @@ interface LoginStore {
   role: string;
   name?: string;
   token: string;
+  loginNewPassword?: any;
+  firstLogin?: boolean;
+  setFirstLogin: (firstLogin: boolean) => void;
+  setLoginNewPassword: (loginNewPassword: any) => void;
   userDataPatient?: any;
   setDataPatient: (userDataPatient: any) => void;
   userDataAdmin?: any;
@@ -28,6 +32,11 @@ const useLogin = create(
       email: "",
       role: "",
       name: "",
+      firstLogin: false,
+      setFirstLogin: (firstLogin) => set({ firstLogin: firstLogin }),
+      loginNewPassword: [],
+      setLoginNewPassword: (loginNewPassword) =>
+        set({ loginNewPassword: loginNewPassword }),
       userDataPatient: [],
       setDataPatient: (userDataPatient) =>
         set({ userDataPatient: userDataPatient }),
@@ -39,6 +48,7 @@ const useLogin = create(
       setRole: (role) => set({ role: role }),
       onLogin: () => set({ isLogged: true }),
       onLogout: () => set({ isLogged: false, token: "", name: "", email: "" }),
+
       setToken: (token) => set({ token: token }),
     }),
     {

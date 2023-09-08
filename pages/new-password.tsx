@@ -9,6 +9,7 @@ import Card from "@/components/card/Card";
 import { toast } from "react-toastify";
 import useLogin from "@/hooks/useLogin";
 import useOnboardModalPartiner from "@/hooks/useOnboardModalPartiner";
+import { newPassword, resetPassword } from "@/services/login";
 
 const NewPassword = () => {
   const router = useRouter();
@@ -16,49 +17,32 @@ const NewPassword = () => {
   const auth = useLogin();
 
   const [userPassword, setUserPassword] = useState({
-    email: "",
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-    programCode: "073",
+    email: auth.loginNewPassword && auth.userData.emailAddress,
+    password: "",
+    Token: "",
+    ProgramCode: "073",
+    Name: "#ForgotPasswordToken",
   });
 
   const handlePassword = async () => {
-    try {
-      setLoading(true);
-      if (userPassword.newPassword !== userPassword.confirmPassword) {
-        throw new Error("Senhas não compatíveis");
-      }
-      toast.success("Troca de senha realizada");
-      router.push("/");
-    } catch (error) {
-      setLoading(false);
-      toast.error("Troca de senha falhou");
-    }
+    newPassword(userPassword)
+      .then((res) => {
+        if (!res.isValidData) {
+          toast.error("Token é inválido.");
+          return;
+        }
+        toast.success("Senha alterada com sucesso!");
+        router.push("/");
+      })
+      .catch((err) => {
+        toast.error("Erro ao alterar senha!");
+        setLoading(false);
+      });
   };
 
-  const changeUserData = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserPassword((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const [errors, setErrors] = useState({
-    newPasswordError: "",
-    confirmPasswordError: "",
-  });
-
-  const validatePassword = () => {
-    if (userPassword.newPassword !== userPassword.confirmPassword) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        confirmPasswordError: "Senhas não compatíveis",
-      }));
-    } else {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        confirmPasswordError: "",
-      }));
-    }
   };
 
   return (
@@ -117,7 +101,8 @@ const NewPassword = () => {
         </div>
         <div className="w-full flex flex-col gap-2 xl:gap-2 justify-end md:my-7 md:mb-0">
           <Input
-            name="email"
+            name="Token"
+            onChange={handleChange}
             className="fill-careDarkBlue h-12 md:h-16"
             startIcon
             imageSrc="/icon-sap.png"
@@ -136,14 +121,9 @@ const NewPassword = () => {
             endIcon
             type="password"
             autoComplete="off"
-            name="newPassword"
-            value={userPassword.newPassword}
-            onChange={changeUserData}
-            onBlur={validatePassword}
+            name="password"
+            onChange={handleChange}
           />
-          {errors.newPasswordError && (
-            <span className="text-red-500">{errors.newPasswordError}</span>
-          )}
 
           <Input
             className="fill-careDarkBlue h-12 md:h-16"
@@ -154,14 +134,9 @@ const NewPassword = () => {
             endIcon
             type="password"
             autoComplete="off"
-            name="confirmPassword"
-            value={userPassword.confirmPassword}
-            onChange={changeUserData}
-            onBlur={validatePassword}
+            name="password"
+            onChange={handleChange}
           />
-          {errors.confirmPasswordError && (
-            <span className="text-red-500">{errors.confirmPasswordError}</span>
-          )}
         </div>
         <div className="w-full flex flex-col mt-8 gap-2 xl:gap-4 justify-end">
           <Button

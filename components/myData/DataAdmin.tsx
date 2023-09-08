@@ -129,7 +129,14 @@ const DataAdmin = () => {
 
   return (
     <div className="bg-careGrey rounded-2xl p-8 fill-careBlue fade-in">
-      <div className="flex flex-col">
+      {isLoading ? (
+       <div className="spinner">
+       <div className="dot1"></div>
+       <div className="dot2"></div>
+     </div>
+      ) :(
+        <>
+         <div className="flex flex-col">
         <span className="text-neutral-400">Nome</span>
         <Input
           onChange={handleChange}
@@ -231,6 +238,9 @@ const DataAdmin = () => {
           onClick={editDataAdmin}
         />
       </div>
+        </>
+      )
+      }
     </div>
   );
 };

@@ -31,6 +31,14 @@ interface IResetPasswordData {
   programCode: string;
 }
 
+interface INewPasswordData {
+  email: string;
+  password: string;
+  Token: string;
+  ProgramCode: string;
+  Name: string;
+}
+
 interface IConfirmationRegisterSmsToken {
   name: string;
   token: string;

@@ -119,7 +119,7 @@ const OnboardModal = () => {
               <div className="flex flex-col justify-start text-careLightBlue text-3xl mb-2 lg:text-4xl lg:ml-4">
                 <span>
                   Que legal ver você por aqui,{" "}
-                  {auth.userDataPatient[0].namePatient}
+                  {auth?.userDataPatient[0]?.namePatient}
                 </span>
               </div>
               <div className="flex flex-col justify-start text-careLightBlue text-3xl lg:text-4xl mb-5 lg:ml-4">
@@ -131,7 +131,7 @@ const OnboardModal = () => {
           {isNext &&
             questionNumber < 4 &&
             !(questionNumber === 3 && answer === "Não") && (
-              <div className="flex flex-col justify-start text-careBlue text-2xl mb-3 ml-4 lg:text-3xl lg:ml-4">
+              <div className="flex flex-col justify-start font-bold text-careBlue text-2xl mb-3 ml-4 lg:text-3xl lg:ml-6">
                 <span>MyACUVUE® quer saber:</span>
               </div>
             )}
@@ -146,7 +146,7 @@ const OnboardModal = () => {
                 melhor.
               </span>
             </div>
-            <div className="text-careDarkBlue text-base md:text-xl lg:text-xl">
+            <div className="text-careDarkBlue text-base font-bold md:text-xl lg:text-xl">
               <span>
                 ​Preencha as informações a seguir e resgate seu voucher para
                 começar!
@@ -172,7 +172,7 @@ const OnboardModal = () => {
                   label="AGENDAR ATENDIMENTO"
                   onClick={() => {
                     onboardModal.onClose();
-                    router.push("/schedule-appointment");
+                    router.push("/dashboard/scheduling");
                   }}
                 />
               </div>
@@ -182,7 +182,7 @@ const OnboardModal = () => {
                   label="FALAR PELO CHAT"
                   onClick={() => {
                     onboardModal.onClose();
-                    router.push("/talk-to-specialist");
+                    router.push("/dashboard/talk-to-specialist");
                   }}
                 />
               </div>

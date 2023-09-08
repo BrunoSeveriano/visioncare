@@ -95,7 +95,7 @@ const DataPartiner = () => {
         onChange={handleChangePartiner}
         value={userDataPartiner.cnpj}
         required
-        disabled={!isEditing}
+        disabled
         mask="99.999.999/9999-99"
         alwaysShowMask
         maskPlaceholder={null}
@@ -120,7 +120,10 @@ const DataPartiner = () => {
   return (
     <div className="bg-careGrey rounded-2xl p-8 fill-careBlue">
       {isLoading ? (
-        <Loading />
+        <div className="spinner">
+          <div className="dot1"></div>
+          <div className="dot2"></div>
+        </div>
       ) : (
         <>
           <div className="md:grid md:grid-cols-2 gap-8 md:my-5">
@@ -183,7 +186,7 @@ const DataPartiner = () => {
                 fullWidth
                 startIcon
                 imageSrc="/communication-mail.png"
-                disabled={!isEditing}
+                disabled
               />
             </div>
           </div>

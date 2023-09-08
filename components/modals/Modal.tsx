@@ -44,6 +44,11 @@ const Modal = ({
 
   return (
     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-blue-950/70">
+      <div className="hidden xl:block">
+        <div className="fixed  w-1/3 h-[7%] right-0 bottom-[45%] bg-[#007cc4]"></div>
+        <div className="fixed  w-1/3 h-[7%] right-0 bottom-[35%] bg-[#007cc4]"></div>
+        <div className="fixed  w-1/3 h-[7%] right-0 bottom-[25%] bg-[#007cc4]"></div>
+      </div>
       <div className={`${customClass ? customClass : "w-700 mx-auto h-475"}`}>
         <div
           className={`translate duration-300 h-full 

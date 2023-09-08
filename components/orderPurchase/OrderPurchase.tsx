@@ -6,8 +6,85 @@ import CustomSelect from "../select/Select";
 import CustomTable from "../table/CustomTable";
 import { TableMockupOrderPurchase } from "@/helpers/TableMockupOrderPurchase";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { useState, useEffect } from "react";
+import { listPartinerAdmin } from "@/services/partiner";
+import useDataStorage from "@/hooks/useDataStorage";
 
 const OrderPurchase = () => {
+  const dataScheduling = useDataStorage();
+  const [clientTable, setClientTable] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [openTable, setOpenTable] = useState(false);
+  const [startDate, setStartDate] = useState("");
+  const [status, setStatus] = useState("");
+  const [partnerQuery, setPartnerQuery] = useState("");
+  const [type, setType] = useState("");
+
+  useEffect(() => {
+    handleClientTable();
+  }, [dataScheduling.refresh, startDate, status, partnerQuery, type]);
+
+  const handleClientTable = () => {
+    setIsLoading(true);
+    listPartinerAdmin()
+      .then((res) => {
+        let filteredData = res.value;
+
+        if (startDate) {
+          filteredData = filteredData.filter((item: any) => {
+            return item.solicitationDate.includes(
+              startDate.toLocaleLowerCase()
+            );
+          });
+        }
+
+        if (status !== null && status !== "") {
+          filteredData = filteredData.filter((item: any) => {
+            return item.isConfirmed === status;
+          });
+        }
+
+        if (partnerQuery) {
+          filteredData = filteredData.filter((item: any) => {
+            return (
+              item.partnerName
+                .toLowerCase()
+                .includes(partnerQuery.toLowerCase()) ||
+              item.partnerCnpj
+                .toLowerCase()
+                .includes(partnerQuery.toLowerCase()) ||
+              item.id.toLowerCase().includes(partnerQuery.toLowerCase())
+            );
+          });
+        }
+
+        if (type) {
+          filteredData = filteredData.filter((item: any) => {
+            return item.type === type;
+          });
+        }
+
+        setClientTable(filteredData);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const handleClear = () => {
+    setStartDate("");
+    setStatus("");
+    setPartnerQuery("");
+    setType("");
+  };
+
+  const handleOpenTable = () => {
+    setOpenTable(!openTable);
+  };
+
   return (
     <div className="fade-in mb-5">
       <div className="bg-careGrey col-span-3 rounded-md p-2 flex items-center">
@@ -21,15 +98,23 @@ const OrderPurchase = () => {
       <div className="w-full mt-10 md:grid md:grid-cols-4 flex flex-col gap-5">
         <div className="flex flex-col">
           <span className="text-2xl text-careLightBlue">Localizar Por:</span>
-          <Input type="date" placeholder="Período" />
+          <Input
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            type="date"
+            placeholder="Período"
+          />
         </div>
         <div className="flex flex-col">
           <span className="text-2xl text-careLightBlue">Localizar Status:</span>
           <CustomSelect
             options={[
-              { value: "Confirmado", label: "Confirmado" },
-              { value: "Cancelado", label: "Cancelado" },
+              { id: true, value: "Confirmado" },
+              { id: false, value: "Não Confirmado" },
             ]}
+            name="status"
+            value={status}
+            onChange={(e: any) => setStatus(e.target.value)}
             fullWidth
             placeholder="Selecionar Status"
           />
@@ -42,6 +127,8 @@ const OrderPurchase = () => {
             imageSrc="/search-icon.png"
             startIcon
             placeholder="Buscar por Nome / CNPJ / ID"
+            value={partnerQuery}
+            onChange={(e) => setPartnerQuery(e.target.value)}
           />
         </div>
         <div className="flex flex-col">
@@ -50,11 +137,14 @@ const OrderPurchase = () => {
           </span>
           <CustomSelect
             options={[
-              { value: "Pedido de Compra", label: "Pedido de Compra" },
-              { value: "Pedido de Reembolso", label: "Pedido de Reembolso" },
+              { id: "#SALES_ORDER", value: "Pedido de Compra" },
+              { id: "#REPAYMENT", value: "Pedido de Reembolso" },
             ]}
             fullWidth
             placeholder="Selecione o tipo"
+            name="type"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
           />
         </div>
       </div>
@@ -63,36 +153,43 @@ const OrderPurchase = () => {
           <Button
             customClass="w-full border-careBlue text-careBlue p-10 py-2"
             label="Limpar"
+            onClick={handleClear}
           />
         </div>
         <div>
           <Button
+            onClick={handleOpenTable}
             customClass="w-full bg-careGreen border-careGreen p-10 py-2"
             label="Iniciar"
           />
         </div>
       </div>
-      <div className="mt-14 lg:w-full md:w-full w-[22rem]">
-        <CustomTable
-          rowId="id"
-          rows={TableMockupOrderPurchase.rows}
-          columns={TableMockupOrderPurchase.columns}
-        />
-      </div>
-      <div className="md:flex md:justify-end lg:flex lg:justify-end flex justify-center mt-5 gap-2">
-        <div>
-          <Button
-            customClass="w-full bg-careDarkBlue border-careBlue p-10 py-2"
-            label="Baixar Todos"
-          />
-        </div>
-        <div className="p-1 rounded-lg bg-careGrey">
-          <BsThreeDotsVertical
-            size="1.7em"
-            className="fill-careLightBlue cursor-pointer mt-1"
-          />
-        </div>
-      </div>
+      {openTable && (
+        <>
+          <div className="mt-14 lg:w-full md:w-full w-[22rem] fade-in">
+            <CustomTable
+              isLoading={isLoading}
+              rowId="id"
+              rows={clientTable}
+              columns={TableMockupOrderPurchase.columns}
+            />
+          </div>
+          <div className="md:flex md:justify-end lg:flex lg:justify-end flex justify-center mt-5 gap-2 fade-in">
+            <div>
+              <Button
+                customClass="w-full bg-careDarkBlue border-careBlue p-10 py-2"
+                label="Baixar Todos"
+              />
+            </div>
+            <div className="p-1 rounded-lg bg-careGrey">
+              <BsThreeDotsVertical
+                size="1.7em"
+                className="fill-careLightBlue cursor-pointer mt-1"
+              />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

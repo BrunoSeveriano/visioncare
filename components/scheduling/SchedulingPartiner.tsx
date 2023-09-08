@@ -82,7 +82,7 @@ const SchedulingPartiner = () => {
         </div>
       </div>
       <div className="mt-5">
-        <span className="md:text-3xl text-[1.3rem] text-careLightBlue mb-10">
+        <span className="md:text-3xl text-[1.4rem] text-careLightBlue mb-10">
           Confirmação de Comparecimento
         </span>
         <div className="md:w-full w-[21.5rem] mt-3 mb-5">

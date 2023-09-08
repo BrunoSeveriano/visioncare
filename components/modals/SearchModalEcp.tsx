@@ -206,18 +206,6 @@ const SearchModalEcp: React.FC<SearchModalProps> = ({
     <div>
       {clientData ? (
         <div>
-          <ToastContainer
-            position="top-right"
-            autoClose={2000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable
-            pauseOnHover={false}
-            theme="light"
-          />
           <div className=" flex flex-row md:flex md:flex-col fade-in">
             <div className="rounded-l-xl w-40 pl-5 grid grid-cols-1 md:w-full bg-careLightGreen md:flex md:justify-around items-center md:rounded-t-xl pt-4 pb-4 text-xl text-white  ">
               <span>Cliente</span>

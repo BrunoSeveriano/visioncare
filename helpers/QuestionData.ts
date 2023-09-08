@@ -4,12 +4,12 @@ export const firstQuestionData = [
     questionNumber: 0,
     questionOptions: [
       {
-        optionDescription: "Não",
-        optionId: "bfdedca3-5323-4548-aebf-762b730c7219",
+        questionResponse: "Não",
+        questionId: "EDE29D5A-F8DA-42B3-8EB4-6B6F5A07CFC3",
       },
       {
-        optionDescription: "Sim",
-        optionId: "1a7527bf-edd9-4743-83c6-d7e9f4fb70d4",
+        questionResponse: "Sim",
+        questionId: "EDE29D5A-F8DA-42B3-8EB4-6B6F5A07CFC3",
       },
     ],
   },
@@ -21,12 +21,12 @@ export const noQuestionData = [
     questionNumber: 1,
     questionOptions: [
       {
-        optionDescription: "Não",
-        optionId: "f3f9506b-3e1c-473b-9c56-e20c78ec9fdc",
+        questionResponse: "Não",
+        questionId: "5E60E41F-86FE-48E2-9751-767B26B81ABE",
       },
       {
-        optionDescription: "Sim",
-        optionId: "67a228a9-c2be-428c-9829-f5837257019d",
+        questionResponse: "Sim",
+        questionId: "5E60E41F-86FE-48E2-9751-767B26B81ABE",
       },
     ],
   },
@@ -36,12 +36,12 @@ export const noQuestionData = [
     questionNumber: 2,
     questionOptions: [
       {
-        optionDescription: "Não",
-        optionId: "670e144f-b56a-40b0-8fb4-4d52b08f9c33",
+        questionResponse: "Não",
+        questionId: "C9600C92-0637-4328-969E-27FC0F4ABF0A",
       },
       {
-        optionDescription: "Sim",
-        optionId: "fd1f9562-7a2b-43f1-8c8b-e5e22b7e28a6",
+        questionResponse: "Sim",
+        questionId: "C9600C92-0637-4328-969E-27FC0F4ABF0A",
       },
     ],
   },
@@ -53,20 +53,21 @@ export const yesQuestionData = [
     questionNumber: 1,
     questionOptions: [
       {
-        optionDescription: "até 1 ano",
-        optionId: "f846f3ad-238f-4130-9a29-4f1eeb73b47d",
+        questionResponse: "até 3 meses",
+        questionId: "D6FD3E29-BB10-469C-BC6A-21710818669F",
+      },
+
+      {
+        questionResponse: "até 6 meses",
+        questionId: "D6FD3E29-BB10-469C-BC6A-21710818669F",
       },
       {
-        optionDescription: "até 3 meses",
-        optionId: "0f3cb18b-b125-4c00-99a4-7052436e3a29",
+        questionResponse: "até 1 ano",
+        questionId: "D6FD3E29-BB10-469C-BC6A-21710818669F",
       },
       {
-        optionDescription: "até 6 meses",
-        optionId: "4711902c-f498-41f6-b6d9-a0b1502e674a",
-      },
-      {
-        optionDescription: "mais de 1 ano",
-        optionId: "371e6a47-52f8-4e7c-8cb2-a48f522e0fdd",
+        questionResponse: "mais de 1 ano",
+        questionId: "D6FD3E29-BB10-469C-BC6A-21710818669F",
       },
     ],
   },
@@ -75,12 +76,12 @@ export const yesQuestionData = [
     questionNumber: 2,
     questionOptions: [
       {
-        optionDescription: "ACUVUE®",
-        optionId: "786828bb-2f61-471d-810e-37823b9c306a",
+        questionResponse: "ACUVUE®",
+        questionId: "E0818ED9-6FE3-4BFA-B3A1-8F7D97F3DA5C",
       },
       {
-        optionDescription: "outras marcas",
-        optionId: "eac2b241-d892-482d-9214-c069953b06c3",
+        questionResponse: "outras marcas",
+        questionId: "E0818ED9-6FE3-4BFA-B3A1-8F7D97F3DA5C",
       },
     ],
   },
@@ -90,12 +91,12 @@ export const yesQuestionData = [
     questionNumber: 3,
     questionOptions: [
       {
-        optionDescription: "Não",
-        optionId: "670e144f-b56a-40b0-8fb4-4d52b08f9c33",
+        questionResponse: "Não",
+        questionId: "C9600C92-0637-4328-969E-27FC0F4ABF0A",
       },
       {
-        optionDescription: "Sim",
-        optionId: "fd1f9562-7a2b-43f1-8c8b-e5e22b7e28a6",
+        questionResponse: "Sim",
+        questionId: "C9600C92-0637-4328-969E-27FC0F4ABF0A",
       },
     ],
   },

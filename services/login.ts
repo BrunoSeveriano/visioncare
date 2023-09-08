@@ -25,6 +25,11 @@ export const resetPassword = async (data: IResetPasswordData) => {
   return response.data;
 };
 
+export const newPassword = async (data: INewPasswordData) => {
+  const response = await api.post("/validatechangepasswordtoken", data);
+  return response.data;
+};
+
 export const confirmationRegisterSmsToken = async (
   data: IConfirmationRegisterSmsToken
 ) => {

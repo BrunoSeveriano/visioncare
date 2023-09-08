@@ -15,6 +15,8 @@ interface DataStore {
   setSurveyData: (surveyData: any) => void;
   idVoucher: string;
   setIdVoucher: (idVoucher: string) => void;
+  idSchedulePurchase: string;
+  setIdSchedulePurchase: (idSchedulePurchase: string) => void;
   idSchedule: string;
   setIdSchedule: (idSchedule: string) => void;
   Idconfirmation: boolean;
@@ -28,6 +30,9 @@ interface DataStore {
 const useDataStorage = create(
   persist<DataStore>(
     (set) => ({
+      idSchedulePurchase: "",
+      setIdSchedulePurchase: (idSchedulePurchase) =>
+        set({ idSchedulePurchase }),
       Idconfirmation: false,
       setIdConfirmation: (confirmation) =>
         set({ Idconfirmation: confirmation }),

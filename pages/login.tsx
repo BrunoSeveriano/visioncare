@@ -68,9 +68,9 @@ const Login = () => {
         auth.setName(res.name);
         auth.setToken(res.token);
         auth.setRole(res.role);
+        auth.setFirstLogin(res.firstLogin);
         api.defaults.headers.Authorization = `Bearer ${res.token}`;
         toast.success("Login realizado com sucesso");
-        localStorage.setItem("email", userData.email);
         auth.onLogin();
         getPartinerData(res.cnpj);
         handleGetAdmData();

@@ -174,7 +174,10 @@ const DataPatient = () => {
   return (
     <div className="bg-careGrey rounded-2xl p-8 fill-careBlue fade-in">
       {isLoading ? (
-        <Loading />
+       <div className="spinner">
+       <div className="dot1"></div>
+       <div className="dot2"></div>
+     </div>
       ) : (
         <>
           <div className="flex flex-col">

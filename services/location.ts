@@ -5,7 +5,7 @@ export const getLocation = async (filters?: any) => {
     params: {
       postalCode: "",
       programCode: "073",
-      pageSize: 1000000000,
+      pageSize: 5,
       ...filters,
     },
   });
