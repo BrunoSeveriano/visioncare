@@ -2,8 +2,6 @@ import React, { useCallback, useRef } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import Button from "@/components/button/Button";
 import Input from "@/components/input/Input";
-import { MdOutlinePerson } from "react-icons/md";
-import { BsSearch } from "react-icons/bs";
 import CustomSelect from "../select/Select";
 import CustomTable from "../table/CustomTable";
 import SearchModal from "../modals/SearchModal";
@@ -24,13 +22,10 @@ import { VoucherFiltersStatusPacient } from "@/helpers/FiltersDataPacient";
 import Checkbox from "@mui/material/Checkbox";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import { TableMockupPartiner } from "@/helpers/TableMockupPartiner";
 import useRegisterPartiner from "@/hooks/useRegisterPartiner";
 import { listPartiner } from "@/services/partiner";
-import useEditPartiner from "@/hooks/useEditPartiner";
 import useDataStoragePartiner from "@/hooks/useDataStoragePartiner";
 import { TableMockupAllPacient } from "@/helpers/TableMockupAllPacient";
-import ExportToExcel from "../button/ExportToExcel";
 import CardsDashboardAdmin from "../cards/CardsDashboardAdmin";
 import useDataStorage from "@/hooks/useDataStorage";
 import InputMask from "react-input-mask";
@@ -38,8 +33,8 @@ import { VoucherListTableDashboard } from "@/helpers/VoucherListTableDashboard";
 import { TableMockupPartinerDashboard } from "@/helpers/TableMockupPartinerDashboard";
 import ExportToCSV from "../button/ExportToCSV";
 import useTalkModal from "@/hooks/useTalkModal";
-import ModalSeeMoreVoucher from "../modals/ModalSeeMoreVoucher";
 import useOpenSeeMoreVouchers from "@/hooks/useOpenSeeMoreVouchers";
+import ModalSeeMoreRescued from "../modals/ModalSeeMoreRescued";
 
 const DashboardAdmin = () => {
   const openModalSeeMoreVouchers = useOpenSeeMoreVouchers();
@@ -68,9 +63,6 @@ const DashboardAdmin = () => {
     deadlineInDays: "",
   });
 
-  const editPartiner = useEditPartiner();
-  const partiner = useRegisterPartiner();
-  const dataStoragePartiner = useDataStoragePartiner();
   const [partinerList, setPartinerList] = useState<any[]>([]);
   const [filterValue, setFilterValue] = useState("");
   const [showCustomTablePartiner, setShowCustomTablePartiner] = useState(false);
@@ -512,7 +504,7 @@ const DashboardAdmin = () => {
       </div>
       {openModalSeeMoreVouchers.isOpen && (
         <>
-          <ModalSeeMoreVoucher />
+          <ModalSeeMoreRescued />
         </>
       )}
     </>

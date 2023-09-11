@@ -2,9 +2,8 @@ import useOpenSeeMoreVouchers from "@/hooks/useOpenSeeMoreVouchers";
 import { getResumeVoucher } from "@/services/voucher";
 import React, { useCallback, useEffect } from "react";
 import { AiOutlineCheckCircle, AiOutlinePoweroff } from "react-icons/ai";
-import { FaHandHolding, FaHandHoldingUsd } from "react-icons/fa";
+import { FaHandHoldingUsd } from "react-icons/fa";
 import { GiCardPlay } from "react-icons/gi";
-import ModalSeeMoreVoucher from "../modals/ModalSeeMoreVoucher";
 
 const CardsDashboardAdmin = () => {
   const openModalSeeMoreVouchers = useOpenSeeMoreVouchers();
@@ -52,7 +51,10 @@ const CardsDashboardAdmin = () => {
           <span className="text-5xl text-careOrange pr-10">
             {resumeVocuher.used}
           </span>
-          <span className="text-xs text-careLightBlue underline mt-6 cursor-pointer">
+          <span
+            onClick={openModalSeeMoreVouchers.onOpen}
+            className="text-xs text-careLightBlue underline mt-6 cursor-pointer"
+          >
             Ver detalhes
           </span>
         </div>
@@ -68,7 +70,10 @@ const CardsDashboardAdmin = () => {
           <span className="text-5xl text-careYellow pr-10">
             {resumeVocuher.toRescue}
           </span>
-          <span className="text-xs text-careLightBlue underline mt-6 cursor-pointer">
+          <span
+            onClick={openModalSeeMoreVouchers.onOpen}
+            className="text-xs text-careLightBlue underline mt-6 cursor-pointer"
+          >
             Ver detalhes
           </span>
         </div>
@@ -84,7 +89,10 @@ const CardsDashboardAdmin = () => {
           <span className="text-5xl text-carePurple pr-10">
             {resumeVocuher.expired}
           </span>
-          <span className="text-xs text-careLightBlue underline mt-6 cursor-pointer">
+          <span
+            onClick={openModalSeeMoreVouchers.onOpen}
+            className="text-xs text-careLightBlue underline mt-6 cursor-pointer"
+          >
             Ver detalhes
           </span>
         </div>
