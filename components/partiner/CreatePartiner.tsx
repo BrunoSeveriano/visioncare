@@ -1,24 +1,14 @@
 import React from "react";
-import { useEffect, useState, useCallback } from "react";
+import { useState } from "react";
 import Input from "../input/Input";
 import CustomSelect from "../select/Select";
 import Button from "../button/Button";
-import { BiUser } from "react-icons/bi";
-import {
-  MdOutlineApartment,
-  MdOutlineLocationOn,
-  MdOutlineLock,
-} from "react-icons/md";
-import { FaEye, FaEyeSlash, FaRegAddressCard } from "react-icons/fa";
-import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
-import { BsChatSquareDots, BsTelephone } from "react-icons/bs";
 import { addPartiner } from "@/services/partiner";
 import { ToastContainer, toast } from "react-toastify";
 import InputMask from "react-input-mask";
 import useRegisterPartiner from "@/hooks/useRegisterPartiner";
 import { getAddressByCep } from "@/services/cep";
 import useDataStorage from "@/hooks/useDataStorage";
-import { add } from "date-fns";
 
 const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const partiner = useRegisterPartiner();
@@ -49,10 +39,6 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const handleRegisterPartiner = () => {
     addPartiner(registerPartiner)
       .then((res) => {
-        if (res) {
-          toast.error(res);
-          return;
-        }
         toast.success("Parceiro cadastrado com sucesso!");
         dataScheduling.setRefresh(!dataScheduling.refresh);
         partiner.onClose();

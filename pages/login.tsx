@@ -102,20 +102,6 @@ const Login = () => {
 
   return (
     <div className="h-screen bg-careDarkBlue">
-      <ToastContainer
-        position="top-right"
-        autoClose={10000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover={false}
-        theme="light"
-        className="md:w-1/3"
-      />
-
       <div className="hidden xl:block">
         <div className="fixed z-20 w-60 h-[7%] right-0 bottom-[40%] bg-[#007cc4]"></div>
         <div className="fixed z-20 w-60 h-[7%] right-0 bottom-[30%] bg-[#007cc4]"></div>
