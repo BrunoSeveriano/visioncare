@@ -11,6 +11,7 @@ import useDataStoragePartiner from "@/hooks/useDataStoragePartiner";
 import { getAddressByCep } from "@/services/cep";
 import { useRouter } from "next/router";
 import useDataStorage from "@/hooks/useDataStorage";
+import InputLoading from "../loading/InputLoading";
 
 const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const dataStoragePartiner = useDataStoragePartiner();
@@ -36,8 +37,7 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
     cnpj: dataStoragePartiner.partnerData.cnpj,
     mainContact: dataStoragePartiner.partnerData.mainContact,
     password: dataStoragePartiner.partnerData.password,
-    accountTypeStringMapFlag:
-      dataStoragePartiner.partnerData.accountTypeStringMapFlag,
+    accountTypeStringMapFlag: dataStoragePartiner.partnerData.profileCode,
     codeSap: dataStoragePartiner.partnerData.codeSap,
     ProgramCode: "073",
   });
@@ -84,7 +84,6 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
           addressState: res.state,
           addressCountry: "Brasil",
         });
-        console.log(updatedPartiner);
         setIsLoadingAddress(false);
       })
       .catch((err) => {
@@ -260,54 +259,87 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               <span className="text-careLightBlue">CEP</span>
               {maskedCep()}
             </div>
-            <div className="md:grid md:grid-cols-1">
-              <span className="text-careLightBlue">Estado</span>
-              <Input
-                disabled={!editMode}
-                maxLength={160}
-                name="addressState"
-                value={updatedPartiner.addressState}
-                onChange={handleChange}
-                startIcon
-                imageSrc="/navigation-maps.png"
-              />
-            </div>
-            <div className="md:grid md:grid-cols-1">
-              <span className="text-careLightBlue">Cidade</span>
-              <Input
-                disabled={!editMode}
-                maxLength={160}
-                name="addressCity"
-                value={updatedPartiner.addressCity}
-                onChange={handleChange}
-                startIcon
-                imageSrc="/navigation-maps.png"
-              />
-            </div>
-            <div className="md:grid md:grid-cols-1">
-              <span className="text-careLightBlue">Bairro</span>
-              <Input
-                disabled={!editMode}
-                maxLength={160}
-                name="addressDistrict"
-                value={updatedPartiner.addressDistrict}
-                onChange={handleChange}
-                startIcon
-                imageSrc="/navigation-maps.png"
-              />
-            </div>
-            <div className="col-span-1 ">
-              <span className="text-careLightBlue">Endereço</span>
-              <Input
-                disabled={!editMode}
-                maxLength={160}
-                name="addressName"
-                value={updatedPartiner.addressName}
-                onChange={handleChange}
-                startIcon
-                imageSrc="/navigation-maps.png"
-              />
-            </div>
+            {isLoadingAddress ? (
+              <>
+                <InputLoading />
+              </>
+            ) : (
+              <>
+                <div className="md:grid md:grid-cols-1">
+                  <span className="text-careLightBlue">Estado</span>
+                  <Input
+                    disabled={!editMode}
+                    maxLength={160}
+                    name="addressState"
+                    value={updatedPartiner.addressState}
+                    onChange={handleChange}
+                    startIcon
+                    imageSrc="/navigation-maps.png"
+                  />
+                </div>
+              </>
+            )}
+            {isLoadingAddress ? (
+              <>
+                <InputLoading />
+              </>
+            ) : (
+              <>
+                <div className="md:grid md:grid-cols-1">
+                  <span className="text-careLightBlue">Cidade</span>
+                  <Input
+                    disabled={!editMode}
+                    maxLength={160}
+                    name="addressCity"
+                    value={updatedPartiner.addressCity}
+                    onChange={handleChange}
+                    startIcon
+                    imageSrc="/navigation-maps.png"
+                  />
+                </div>
+              </>
+            )}
+            {isLoadingAddress ? (
+              <>
+                <InputLoading />
+              </>
+            ) : (
+              <>
+                <div className="md:grid md:grid-cols-1">
+                  <span className="text-careLightBlue">Bairro</span>
+                  <Input
+                    disabled={!editMode}
+                    maxLength={160}
+                    name="addressDistrict"
+                    value={updatedPartiner.addressDistrict}
+                    onChange={handleChange}
+                    startIcon
+                    imageSrc="/navigation-maps.png"
+                  />
+                </div>
+              </>
+            )}
+            {isLoadingAddress ? (
+              <>
+                <InputLoading />
+              </>
+            ) : (
+              <>
+                <div className="col-span-1 ">
+                  <span className="text-careLightBlue">Endereço</span>
+                  <Input
+                    disabled={!editMode}
+                    maxLength={160}
+                    name="addressName"
+                    value={updatedPartiner.addressName}
+                    onChange={handleChange}
+                    startIcon
+                    imageSrc="/navigation-maps.png"
+                  />
+                </div>
+              </>
+            )}
+
             <div className="md:grid md:grid-cols-1">
               <span className="text-careLightBlue">Número</span>
               <Input

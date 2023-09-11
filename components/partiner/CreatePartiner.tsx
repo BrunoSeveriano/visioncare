@@ -9,6 +9,7 @@ import InputMask from "react-input-mask";
 import useRegisterPartiner from "@/hooks/useRegisterPartiner";
 import { getAddressByCep } from "@/services/cep";
 import useDataStorage from "@/hooks/useDataStorage";
+import InputLoading from "../loading/InputLoading";
 
 const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const partiner = useRegisterPartiner();
@@ -39,6 +40,10 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const handleRegisterPartiner = () => {
     addPartiner(registerPartiner)
       .then((res) => {
+        if (!res.isValidData) {
+          toast.error(res);
+          return;
+        }
         toast.success("Parceiro cadastrado com sucesso!");
         dataScheduling.setRefresh(!dataScheduling.refresh);
         partiner.onClose();
@@ -66,6 +71,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
           addressState: res.state,
           addressCountry: "Brasil",
         });
+        setIsLoadingAddress(false);
       })
       .catch((err) => {
         setIsLoadingAddress(false);
@@ -231,55 +237,86 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               <span className="text-careLightBlue">CEP</span>
               {maskedCep()}
             </div>
-
-            <div className="md:grid md:grid-cols-1">
-              <span className="text-careLightBlue">Estado</span>
-              <Input
-                value={registerPartiner.addressState}
-                maxLength={160}
-                name="addressState"
-                onChange={handleChange}
-                startIcon
-                imageSrc="/navigation-maps.png"
-                placeholder="Digite seu estado"
-              />
-            </div>
-            <div className="md:grid md:grid-cols-1">
-              <span className="text-careLightBlue">Cidade</span>
-              <Input
-                value={registerPartiner.addressCity}
-                maxLength={160}
-                name="addressCity"
-                onChange={handleChange}
-                startIcon
-                imageSrc="/navigation-maps.png"
-                placeholder="Digite sua cidade"
-              />
-            </div>
-            <div className="md:grid md:grid-cols-1">
-              <span className="text-careLightBlue">Bairro</span>
-              <Input
-                value={registerPartiner.addressDistrict}
-                maxLength={160}
-                name="addressDistrict"
-                onChange={handleChange}
-                startIcon
-                imageSrc="/navigation-maps.png"
-                placeholder="Digite seu bairro"
-              />
-            </div>
-            <div className="col-span-1 ">
-              <span className="text-careLightBlue">Endereço</span>
-              <Input
-                value={registerPartiner.addressName}
-                maxLength={160}
-                name="addressName"
-                onChange={handleChange}
-                startIcon
-                imageSrc="/navigation-maps.png"
-                placeholder="Digite o endereço"
-              />
-            </div>
+            {isLoadingAddress ? (
+              <>
+                <InputLoading />
+              </>
+            ) : (
+              <>
+                <div className="md:grid md:grid-cols-1">
+                  <span className="text-careLightBlue">Estado</span>
+                  <Input
+                    value={registerPartiner.addressState}
+                    maxLength={160}
+                    name="addressState"
+                    onChange={handleChange}
+                    startIcon
+                    imageSrc="/navigation-maps.png"
+                    placeholder="Digite seu estado"
+                  />
+                </div>
+              </>
+            )}
+            {isLoadingAddress ? (
+              <>
+                <InputLoading />
+              </>
+            ) : (
+              <>
+                <div className="md:grid md:grid-cols-1">
+                  <span className="text-careLightBlue">Cidade</span>
+                  <Input
+                    value={registerPartiner.addressCity}
+                    maxLength={160}
+                    name="addressCity"
+                    onChange={handleChange}
+                    startIcon
+                    imageSrc="/navigation-maps.png"
+                    placeholder="Digite sua cidade"
+                  />
+                </div>
+              </>
+            )}
+            {isLoadingAddress ? (
+              <>
+                <InputLoading />
+              </>
+            ) : (
+              <>
+                <div className="md:grid md:grid-cols-1">
+                  <span className="text-careLightBlue">Bairro</span>
+                  <Input
+                    value={registerPartiner.addressDistrict}
+                    maxLength={160}
+                    name="addressDistrict"
+                    onChange={handleChange}
+                    startIcon
+                    imageSrc="/navigation-maps.png"
+                    placeholder="Digite seu bairro"
+                  />
+                </div>
+              </>
+            )}
+            {isLoadingAddress ? (
+              <>
+                <InputLoading />
+              </>
+            ) : (
+              <>
+                <div className="col-span-1 ">
+                  <span className="text-careLightBlue">Endereço</span>
+                  <Input
+                    value={registerPartiner.addressName}
+                    maxLength={160}
+                    name="addressName"
+                    onChange={handleChange}
+                    startIcon
+                    imageSrc="/navigation-maps.png"
+                    placeholder="Digite o endereço"
+                  />
+                </div>
+              </>
+            )}
 
             <div className="md:grid md:grid-cols-1">
               <span className="text-careLightBlue">Número</span>
