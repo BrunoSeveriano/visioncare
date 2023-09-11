@@ -59,21 +59,21 @@ const Dashboard = ({ children }: DashboardProps) => {
 
     setNavbarSpanText("Início");
 
-    const userRoleEcp = auth.role === "Partner ECP VisionCare";
-    if (userRoleEcp) {
-      if (auth.firstLogin === true) {
-        onboardModalPartiner.onOpen();
-      }
-      return setIsEcpUser(true);
-    }
+    // const userRoleEcp = auth.role === "Partner ECP VisionCare";
+    // if (userRoleEcp) {
+    //   if (auth.firstLogin === true) {
+    //     onboardModalPartiner.onOpen();
+    //   }
+    //   return setIsEcpUser(true);
+    // }
 
-    const userRolePdv = auth.role === "Partner POS VisionCare";
-    if (userRolePdv) {
-      if (auth.firstLogin === true) {
-        onboardModalPartiner.onOpen();
-      }
-      return setIsPdvUser(true);
-    }
+    // const userRolePdv = auth.role === "Partner POS VisionCare";
+    // if (userRolePdv) {
+    //   if (auth.firstLogin === true) {
+    //     onboardModalPartiner.onOpen();
+    //   }
+    //   return setIsPdvUser(true);
+    // }
 
     const userRoleAdmin = auth.role === "Admin JeJ - VisionCare";
     if (userRoleAdmin) {
