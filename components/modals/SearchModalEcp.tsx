@@ -45,8 +45,10 @@ interface SearchModalProps {
 
 const SearchModalEcp = ({ clientData, selectedStatus }: SearchModalProps) => {
   const [clientVouchers, setClientVouchers] = useState<Voucher[]>([]);
-  const [inputBlocks, setInputBlocks] = useState([{ id: 1 }]);
+  const [inputBlocks, setInputBlocks] = useState([1]);
+  const [isChecked, setIsChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const showHistoryPacient = useTalkModal();
   const useData = useDataStorage();
   const openProduct = useOpen();
@@ -69,20 +71,20 @@ const SearchModalEcp = ({ clientData, selectedStatus }: SearchModalProps) => {
 
   const handleSendProduct = () => {
     setIsLoading(true);
-    const statusVoucher = {
-      programCode: "073",
+
+    const adddescountVoucher = {
       voucherId: useData.idVoucher,
-      productId: useData.AxiesId,
+      programCode: "073",
+      items: useData.AxiesId,
+      isUseVoucher: isChecked,
     };
 
-    useVoucher(statusVoucher)
-      .then(() => {
-        return addPurchase(useData.AxiesId);
-      })
+    addPurchase(adddescountVoucher as any)
       .then((response) => {
         toast.success("Voucher e Produto resgatado enviado com sucesso!");
         useData.setRefresh(!useData.refresh);
         openProduct.onClose();
+        useData.setAxiesId([]);
       })
       .catch((error) => {
         toast.error("Erro ao enviar voucher e produto resgatado!");
@@ -96,30 +98,6 @@ const SearchModalEcp = ({ clientData, selectedStatus }: SearchModalProps) => {
     openProduct.onClose();
     showHistoryPacient.onClose();
   };
-
-  const handleAddInputBlock = (currentIndex: any) => {
-    if (inputBlocks.length < 4) {
-      const newBlock = { id: inputBlocks.length + 1 };
-      setInputBlocks((prevBlocks) => [
-        ...prevBlocks.slice(0, currentIndex + 1),
-        newBlock,
-        ...prevBlocks.slice(currentIndex + 1),
-      ]);
-    }
-  };
-
-  const GreenSwitch = styled(Switch)(({ theme }) => ({
-    "& .MuiSwitch-switchBase.Mui-checked": {
-      color: green[600],
-      "&:hover": {
-        backgroundColor: alpha(green[600], theme.palette.action.hoverOpacity),
-      },
-    },
-    "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-      backgroundColor: green[600],
-    },
-  }));
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   return (
     <div>
@@ -170,11 +148,22 @@ const SearchModalEcp = ({ clientData, selectedStatus }: SearchModalProps) => {
       ) : null}
       {openProduct.isOpen ? (
         <>
-          {inputBlocks.map((block, index) => (
-            <>
-              <Selected clientData={clientData} key={index} />
-              <Selected clientData={clientData} key={index} />
-            </>
+          {inputBlocks.map((item, index) => (
+            <div key={index} className="md:flex md:flex-row flex flex-col">
+              <Selected clientData={clientData} />
+              {inputBlocks.length < 4 ? (
+                <div className="bg-careMenuGrey rounded-full p-4 h-5 w-5 relative md:top-11 md:left-3 cursor-pointer mt-3 md:mt-20">
+                  <span
+                    onClick={() =>
+                      setInputBlocks([...inputBlocks, inputBlocks.length + 1])
+                    }
+                    className="relative right-2 bottom-2"
+                  >
+                    <AiOutlinePlus className="text-white" />
+                  </span>
+                </div>
+              ) : null}
+            </div>
           ))}
 
           <div className="bg-careGrey col-span-3 rounded-md p-2 md:flex md:flex-row md:justify-between lg:flex lg:flex-row lg:justify-between flex flex-col mt-4">
@@ -187,7 +176,11 @@ const SearchModalEcp = ({ clientData, selectedStatus }: SearchModalProps) => {
               </span>
             </div>
             <div className="flex items-center lg:mt-0 md:mt-0 mt-2">
-              <Switch {...label} disabled />
+              <Switch
+                {...label}
+                checked={isChecked}
+                onChange={(e) => setIsChecked(e.target.checked)}
+              />
               <span className="text-careDarkBlue font-bold">
                 Gerar pedido de compra
               </span>

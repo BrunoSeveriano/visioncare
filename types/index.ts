@@ -179,11 +179,11 @@ interface IUpdatePartinerData {
 }
 
 interface IPurchaseAdd {
-  ProgramCode: string;
-  Items: [
+  programCode: string;
+  items: [
     {
-      ProductId: string;
-      Amount: number;
+      productId: string;
+      amount: number;
     }
   ];
 }

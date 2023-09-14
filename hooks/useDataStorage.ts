@@ -32,11 +32,7 @@ interface DataStore {
 const useDataStorage = create(
   persist<DataStore>(
     (set) => ({
-      AxiesId: [
-        {
-          Items: [{}],
-        },
-      ],
+      AxiesId: [],
       setAxiesId: (AxiesId) => set({ AxiesId }),
       idSchedulePurchase: "",
       setIdSchedulePurchase: (idSchedulePurchase) =>

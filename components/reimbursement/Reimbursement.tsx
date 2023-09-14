@@ -22,24 +22,39 @@ import { toast } from "react-toastify";
 import useDataStorage from "@/hooks/useDataStorage";
 import "animate.css";
 import { useRouter } from "next/router";
+import Selected from "../selectedProducted/Selected";
 
-const Reimbursement = () => {
-  const [productOptions, setProductOptions] = useState([]);
-  const [degreeOptions, setDegreeOptions] = useState([]);
-  const [cylinderOptions, setCylinderOptions] = useState([]);
-  const [axiesOptions, setAxiesOptions] = useState([]);
+interface ClientData {
+  name: string;
+  cpf: string;
+  email: string;
+  vouchers: Voucher[];
+}
+
+interface Voucher {
+  discountType: string;
+  deadlineInDays: number;
+  discountValue: number;
+  status: string;
+}
+
+interface SearchModalProps {
+  clientData: ClientData | null;
+  selectedStatus: string;
+}
+
+const Reimbursement = ({ clientData, selectedStatus }: SearchModalProps) => {
   const [selectedProduct, setSelectedProduct] = useState("");
   const [selectedCylinder, setSelectedCylinder] = useState("");
   const [selectedAxies, setSelectedAxies] = useState("");
   const [selectedCodeNumber, setSelectedCodeNumber] = useState("");
   const [optionsQuatity, setOptionsQuatity] = useState("");
-  const [inputBlocks, setInputBlocks] = useState([{ id: 1 }]);
+  const [inputBlocks, setInputBlocks] = useState([1]);
   const [purchaseList, setPurchaseList] = useState([]);
   const [reimbursementList, setReimbursementList] = useState([]);
   const [refreshTable, setRefreshTable] = useState(false);
   const useData = useDataStorage();
   const router = useRouter();
-  // const options = [{ value: "4", id: "4" }];
   const [isLoading, setIsLoading] = useState(false);
   const [hideTable, setHideTable] = useState(false);
 
@@ -80,73 +95,11 @@ const Reimbursement = () => {
     getReimbursementData();
   }, [getVisitiData, getReimbursementData, refreshTable, useData.refresh]);
 
-  useEffect(() => {
-    getCodeNumber()
-      .then((response) => {
-        const codeNumberOptions = response.value.map((item: any) => ({
-          value: item.value,
-          id: item.label,
-        }));
-        setProductOptions(codeNumberOptions);
-      })
-      .catch((error) => {});
-  }, []);
-
-  useEffect(() => {
-    if (selectedCodeNumber) {
-      getDegree(selectedCodeNumber)
-        .then((response) => {
-          const degreeOptions = response.value.map((item: any) => ({
-            value: item.value,
-            id: item.label,
-          }));
-
-          setDegreeOptions(degreeOptions);
-        })
-        .catch((error) => {});
-    }
-  }, [selectedCodeNumber]);
-
-  useEffect(() => {
-    if (selectedCodeNumber && selectedProduct) {
-      getCylinder(selectedCodeNumber, selectedProduct)
-        .then((response) => {
-          const cylinderOptions = response.value.map((item: any) => ({
-            value: item.value,
-            id: item.label,
-          }));
-
-          setCylinderOptions(cylinderOptions);
-        })
-        .catch((error) => {});
-    }
-  }, [selectedCodeNumber, selectedProduct]);
-
-  useEffect(() => {
-    if (selectedCodeNumber && selectedProduct && selectedCylinder) {
-      getAxle(selectedCodeNumber, selectedProduct, selectedCylinder)
-        .then((response) => {
-          const axiesOptions = response.value.map((item: any) => ({
-            value: item.label,
-            id: item.value,
-          }));
-
-          setAxiesOptions(axiesOptions);
-        })
-        .catch((error) => {});
-    }
-  }, [selectedCodeNumber, selectedProduct, selectedCylinder]);
-
   const handleClick = () => {
     setIsLoading(true);
     const dataSelected = {
-      ProgramCode: "073",
-      Items: [
-        {
-          ProductId: selectedAxies,
-          Amount: parseInt(optionsQuatity),
-        },
-      ],
+      programCode: "073",
+      items: useData.AxiesId,
     };
     setRefreshTable(false);
     addRepayment(dataSelected as any)
@@ -154,6 +107,7 @@ const Reimbursement = () => {
         router.push("/dashboard/home");
         toast.success("Reembolso realizado com sucesso");
         setRefreshTable(true);
+        useData.setAxiesId([]);
       })
       .catch((error) => {
         console.log(error);
@@ -164,22 +118,7 @@ const Reimbursement = () => {
   };
 
   const handleClearFields = () => {
-    setSelectedCodeNumber("");
-    setSelectedProduct("");
-    setSelectedCylinder("");
-    setSelectedAxies("");
-    setOptionsQuatity("");
-  };
-
-  const handleAddInputBlock = (currentIndex: any) => {
-    if (inputBlocks.length < 4) {
-      const newBlock = { id: inputBlocks.length + 1 };
-      setInputBlocks((prevBlocks) => [
-        ...prevBlocks.slice(0, currentIndex + 1),
-        newBlock,
-        ...prevBlocks.slice(currentIndex + 1),
-      ]);
-    }
+    useData.setAxiesId([]);
   };
 
   const quantityOptions = Array.from({ length: 30 }, (_, i) => ({
@@ -238,88 +177,21 @@ const Reimbursement = () => {
             </div>
           </div>
           <div>
-            {inputBlocks.map((block, index) => (
-              <div
-                key={block.id}
-                className="bg-careGrey rounded-xl mt-5 mb-5 p-5 fade-in"
-              >
-                <div className="flex flex-col md:flex md:flex-row mt-3 gap-2">
-                  <div className="md:w-80 w-80 text-careDarkBlue font-bold">
-                    <span>Produto Vendido</span>
-                    <CustomSelect
-                      options={productOptions}
-                      value={selectedCodeNumber}
-                      onChange={(e) => setSelectedCodeNumber(e.target.value)}
-                      startIcon
-                      fullWidth
-                      name=""
-                      placeholder="Selecione o tipo de produto"
-                    />
-                  </div>
-
-                  <div className="md:w-40 w-80 text-careDarkBlue font-bold">
-                    <span>Dioptria</span>
-                    <CustomSelect
-                      options={degreeOptions}
-                      value={selectedProduct}
-                      onChange={(e) => setSelectedProduct(e.target.value)}
-                      startIcon
-                      fullWidth
-                      name=""
-                      placeholder="Selecione o tipo de produto"
-                    />
-                  </div>
-                  <div className="md:w-40 w-80 text-careDarkBlue font-bold">
-                    <span>Cilíndrico</span>
-                    <CustomSelect
-                      options={cylinderOptions}
-                      value={selectedCylinder}
-                      onChange={(e) => setSelectedCylinder(e.target.value)}
-                      startIcon
-                      fullWidth
-                      name=""
-                      placeholder="Selecione o tipo de produto"
-                    />
-                  </div>
-                  <div className="md:w-40 w-80 text-careDarkBlue font-bold">
-                    <span>Eixo</span>
-                    <CustomSelect
-                      options={axiesOptions}
-                      value={selectedAxies}
-                      onChange={(e) => {
-                        setSelectedAxies(e.target.value);
-                      }}
-                      startIcon
-                      fullWidth
-                      name=""
-                      placeholder="Selecione o tipo de produto"
-                    />
-                  </div>
-                  <div className="md:w-40 w-80 text-careDarkBlue font-bold">
-                    <span>Quantidade</span>
-                    <CustomSelect
-                      options={quantityOptions}
-                      value={optionsQuatity}
-                      onChange={(e) => {
-                        setOptionsQuatity(e.target.value);
-                      }}
-                      startIcon
-                      fullWidth
-                      name=""
-                      placeholder="Selecione o tipo de produto"
-                    />
-                  </div>
-                  {inputBlocks.length < 4 ? (
-                    <div
-                      onClick={() => handleAddInputBlock(index)}
-                      className="bg-careMenuGrey rounded-full p-4 h-5 w-5 relative md:top-11 md:left-3 cursor-pointer "
+            {inputBlocks.map((item, index) => (
+              <div key={index} className="md:flex md:flex-row flex flex-col">
+                <Selected clientData={clientData} />
+                {inputBlocks.length < 4 ? (
+                  <div className="bg-careMenuGrey rounded-full p-4 h-5 w-5 relative md:top-11 md:left-3 cursor-pointer mt-3 md:mt-20">
+                    <span
+                      onClick={() =>
+                        setInputBlocks([...inputBlocks, inputBlocks.length + 1])
+                      }
+                      className="relative right-2 bottom-2"
                     >
-                      <span className="relative right-2 bottom-2">
-                        <AiOutlinePlus className="text-white" />
-                      </span>
-                    </div>
-                  ) : null}
-                </div>
+                      <AiOutlinePlus className="text-white" />
+                    </span>
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>

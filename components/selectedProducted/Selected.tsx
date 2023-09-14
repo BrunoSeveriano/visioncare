@@ -28,7 +28,6 @@ interface SearchModalProps {
 }
 
 const Selected = ({ clientData }: SearchModalProps) => {
-  const [clientVouchers, setClientVouchers] = useState<Voucher[]>([]);
   const [productOptions, setProductOptions] = useState([]);
   const [degreeOptions, setDegreeOptions] = useState([]);
   const [cylinderOptions, setCylinderOptions] = useState([]);
@@ -38,10 +37,27 @@ const Selected = ({ clientData }: SearchModalProps) => {
   const [selectedAxies, setSelectedAxies] = useState("");
   const [selectedCodeNumber, setSelectedCodeNumber] = useState("");
   const [optionsQuatity, setOptionsQuatity] = useState("");
-  const [inputBlocks, setInputBlocks] = useState([{ id: 1 }]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [axiesObject, setAxiesObject] = useState<any[]>([]);
   const options = [{ value: "4", id: "4" }];
   const dataStorage = useDataStorage();
+
+  useEffect(() => {
+    dataStorage.setAxiesId(axiesObject);
+    console.log(axiesObject);
+  }, [axiesObject]);
+
+  useEffect(() => {
+    if (selectedAxies && optionsQuatity) {
+      setAxiesObject([
+        ...dataStorage.AxiesId,
+        {
+          productId: selectedAxies,
+          amount: optionsQuatity,
+        },
+      ]);
+    }
+    console.log(axiesObject);
+  }, [optionsQuatity, selectedAxies]);
 
   useEffect(() => {
     getCodeNumber()
@@ -101,9 +117,9 @@ const Selected = ({ clientData }: SearchModalProps) => {
   }, [selectedCodeNumber, selectedProduct, selectedCylinder]);
 
   return (
-    <div>
+    <div className="w-full">
       <div className="bg-careGrey rounded-xl mt-5 p-5 fade-in">
-        <div className="flex flex-col md:flex md:flex-row mt-3 gap-2">
+        <div className="flex flex-col md:flex md:flex-row mt-3 gap-2 w-full">
           <div className="md:w-80 w-80 text-careDarkBlue font-bold">
             <span>Produto Vendido</span>
             <CustomSelect
@@ -163,27 +179,12 @@ const Selected = ({ clientData }: SearchModalProps) => {
               onChange={(e) => {
                 setOptionsQuatity(e.target.value);
               }}
-              onBlur={() => {
-                dataStorage.setAxiesId({
-                  ...dataStorage.AxiesId.Items,
-                  productId: selectedAxies,
-                });
-              }}
               startIcon
               fullWidth
               name=""
               placeholder="Selecione o tipo de produto"
             />
           </div>
-          {/* {inputBlocks.length < 4 ? (
-            <div className="bg-careMenuGrey rounded-full p-4 h-5 w-5 relative md:top-11 md:left-3 cursor-pointer ">
-              <span                
-                className="relative right-2 bottom-2"
-              >
-                <AiOutlinePlus className="text-white" />
-              </span>
-            </div>
-          ) : null} */}
         </div>
       </div>
     </div>
