@@ -1,4 +1,3 @@
-import ButtonEditPacient from "@/components/button/ButtonEditPacient";
 import ButtonSwiftPartiner from "@/components/button/ButtonSwiftPartiner";
 import ExportToTxt from "@/components/button/ExportToTxt";
 import { format } from "date-fns";

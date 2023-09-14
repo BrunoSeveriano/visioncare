@@ -24,14 +24,14 @@ export const TableScheduleManagement: TableData = {
       sortable: false,
       flex: 1,
       renderCell: (params: any) => {
-        const formattedDate = format(new Date(params.value), "dd/MM/yyyy");
+        const date = new Date(params.value);
+        const formattedDate = format(date, "dd/MM/yyyy");
+        const formattedTime = format(date, "HH:mm");
         return (
-          <div
-            style={{
-              paddingLeft: "5px",
-            }}
-          >
+          <div className="flex flex-col items-center">
             {formattedDate}
+            <br />
+            <span className="text-sm">{formattedTime}</span>
           </div>
         );
       },

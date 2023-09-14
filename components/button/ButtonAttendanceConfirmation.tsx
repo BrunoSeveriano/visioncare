@@ -1,9 +1,12 @@
 import useCancelAttendance from "@/hooks/useCancelAttendance";
-import useClientColors from "@/hooks/useClientConfiguration";
 import useDataStorage from "@/hooks/useDataStorage";
-import { confirmVisitAttendance } from "@/services/diagnostic";
+import {
+  confirmVisitAttendance,
+  patientNotAttended,
+} from "@/services/diagnostic";
 import { IconType } from "react-icons";
 import React, { useEffect, useState } from "react";
+import Switch from "@mui/material/Switch";
 
 interface ButtonProps {
   label?: string;
@@ -31,6 +34,7 @@ const ButtonAttendanceConfirmation = ({
   isLoading,
   disableHover,
 }: ButtonProps) => {
+  const labelSwift = { inputProps: { "aria-label": "Switch demo" } };
   const dataScheduling = useDataStorage();
   const hideButtonHook = useCancelAttendance();
 
@@ -39,6 +43,15 @@ const ButtonAttendanceConfirmation = ({
       originEntityId: params.row.visitId,
     };
     confirmVisitAttendance(idVisit).then((response) => {
+      dataScheduling.setRefresh(!dataScheduling.refresh);
+    });
+  };
+
+  const handleCancelClick = () => {
+    const idVisit = {
+      originEntityId: params.row.visitId,
+    };
+    patientNotAttended(idVisit).then((response) => {
       dataScheduling.setRefresh(!dataScheduling.refresh);
     });
   };
@@ -56,12 +69,12 @@ const ButtonAttendanceConfirmation = ({
           className={`relative disabled:bg-gray-500 disabled:border-gray-500 disabled:opacity-70  border-2 z-0 text-md disabled:cursor-not-allowed rounded-lg  transition ${
             disableHover ? "" : "hover:opacity-80"
           }
-       ${
-         params?.row?.attendanceStatus === "Não compareceu"
-           ? "bg-careRedButton border-careRedButton w-full md:w-40 py-2 text-sm"
-           : "bg-careGreen border-careGreen w-full md:w-40 py-2 text-sm"
-       }
-     `}
+        ${
+          params?.row?.attendanceStatus === "Não compareceu"
+            ? "bg-careRedButton border-careRedButton w-36 md:w-40 py-2 text-sm"
+            : "bg-careGreen border-careGreen w-36 md:w-40 py-2 text-sm"
+        }
+      `}
           type={type}
         >
           {Icon && <Icon size={24} className="absolute left-4 top-3" />}
@@ -77,6 +90,17 @@ const ButtonAttendanceConfirmation = ({
             </div>
           )}
         </button>
+      ) : null}
+      {params?.row?.attendanceStatus !== "Comparecimento cancelado" ? (
+        <Switch
+          {...labelSwift}
+          checked={params?.row?.attendanceStatus !== "Não compareceu"}
+          onClick={() => {
+            onClick && onClick();
+            dataScheduling.setIdSchedule(params.row.visitId);
+            handleCancelClick();
+          }}
+        />
       ) : null}
     </>
   );

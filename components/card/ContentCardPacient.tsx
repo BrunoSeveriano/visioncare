@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../button/Button";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 interface ContentCardProps {
   isCustomBg?: boolean;
@@ -16,10 +17,10 @@ interface ContentCardProps {
   svgIcon: string;
   hasIcon?: boolean;
   hideButton?: boolean;
-  onButtonClick?: () => void;
+  cardLink?: string; // Nova propriedade para o link do card
 }
 
-const ContentCard = ({
+const ContentCardPacient = ({
   isCustomBg,
   bgColor,
   textColor,
@@ -33,8 +34,22 @@ const ContentCard = ({
   hasIcon,
   svgIcon,
   hideButton,
-  onButtonClick,
+  cardLink,
 }: ContentCardProps) => {
+  const router = useRouter();
+
+  const isHttpLink = (link: string) => {
+    return link.startsWith("http://") || link.startsWith("https://");
+  };
+
+  const handleButtonClick = () => {
+    if (cardLink && isHttpLink(cardLink)) {
+      window.open(cardLink, "_blank");
+    } else if (cardLink) {
+      router.push(cardLink);
+    }
+  };
+
   return (
     <div
       className={`w-full rounded-xl lg:h-52 2xl:h-60 ${
@@ -60,13 +75,13 @@ const ContentCard = ({
           {!hideButton && (
             <Button
               customClass={`px-14 py-2 ${
-                buttonColor || "bg-careLightBlue"
+                buttonColor || "bg-careDarkBlue"
               } border-1 ${
-                buttonBorderColor || "border-careLightBlue"
+                buttonBorderColor || "border-careDarkBlue"
               } font-bold`}
               label={buttonText}
               customColor={textColor}
-              onClick={onButtonClick}
+              onClick={handleButtonClick}
             />
           )}
           {hasIcon && (
@@ -84,4 +99,4 @@ const ContentCard = ({
   );
 };
 
-export default ContentCard;
+export default ContentCardPacient;

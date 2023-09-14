@@ -63,6 +63,11 @@ const OrderPurchase = () => {
             return item.type === type;
           });
         }
+        filteredData.sort((a: any, b: any) => {
+          const dateA = new Date(a.solicitationDate);
+          const dateB = new Date(b.solicitationDate);
+          return dateB.getTime() - dateA.getTime();
+        });
 
         setClientTable(filteredData);
       })

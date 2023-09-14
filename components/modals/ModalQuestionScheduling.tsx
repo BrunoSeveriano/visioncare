@@ -5,7 +5,7 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import Button from "../button/Button";
 import { useEffect, useState } from "react";
 import Input from "../input/Input";
-import { BsCalendar2Week } from "react-icons/bs";
+import { BsCalendar2Week, BsQuestionLg } from "react-icons/bs";
 import { MdAlarm, MdOutlineLocationOn } from "react-icons/md";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -15,10 +15,9 @@ import "dayjs/locale/pt-br";
 import useDataStorage from "@/hooks/useDataStorage";
 import { responseSurvey } from "@/services/questions";
 import { getLocation } from "@/services/location";
-import Loading from "@/components/loading/Loading";
 import { getCalendar } from "@/services/calendar";
 import { schedulevisittoclinic } from "@/services/diagnostic";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
 dayjs.extend(localizedFormat);
@@ -221,17 +220,14 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
     fetchCalendarData();
   }, [postData.accountId]);
 
-  const disableWeekend = (date: dayjs.Dayjs) => {
-    const dayOfWeek = dayjs(date).day();
-    return dayOfWeek === 0 || dayOfWeek === 6;
-  };
-
-  const disablePastDate = (date: dayjs.Dayjs) => {
-    return dayjs(date).isBefore(dayjs(), "day");
-  };
-
   const shouldDisableDate = (date: dayjs.Dayjs) => {
-    return disableWeekend(date) || disablePastDate(date);
+    const today = dayjs();
+    const maxSelectableDate = today.add(8, "day");
+    return (
+      date.day() === 0 ||
+      date.day() === 6 ||
+      date.isBefore(maxSelectableDate, "day")
+    );
   };
 
   const handleTimeSelected = (time: any) => {
@@ -240,18 +236,6 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
 
   return (
     <div className="w-full rounded-2xl bg-careGrey md:ml-10">
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
       {currentQuestion === 0 && (
         <div className="border-b-2 border-careLightGreen w-4/5 ml-5 md:ml-10 p-4">
           <span className="text-careBlue text-lg">
@@ -312,9 +296,15 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
       )}
 
       {currentQuestion === 4 && (
-        <div className="mt-6 ml-9 md:ml-14">
+        <div className="md:flex md:flex-row flex flex-col md:items-center gap-5 mt-6 ml-9 md:ml-14">
           <span className="text-xl text-careLightBlue font-bold">
-            Informe o seu tipo de refracao:
+            Informe o seu tipo de refração:
+          </span>
+          <span className="tooltip text-careDarkBlue">
+            <BsQuestionLg />
+            <span className="tooltiptext">
+              Saiba como preencher os campos, clicando aqui!
+            </span>
           </span>
         </div>
       )}
@@ -378,11 +368,10 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
               imageSrc="/search-icon.png"
             />
             {isLoading ? (
-                     <div className="spinner">
-                     <div className="dot1"></div>
-                     <div className="dot2"></div>
-                   </div>
-      
+              <div className="spinner">
+                <div className="dot1"></div>
+                <div className="dot2"></div>
+              </div>
             ) : (
               <>
                 {locationData.map((location: any, index: number) => (
@@ -703,91 +692,104 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
       )}
 
       {currentQuestion === 4 && (
-        <div className="flex flex-col">
-          <div className="flex flex-row mt-4 gap-5">
-            <span className="md:ml-56 text-sm ml-20 text-careBlue font-bold">
-              ESFERICO
-            </span>
-            <span className="md:ml-32 text-sm text-careBlue font-bold ">
-              CILINDRICO
-            </span>
-            <span className="md:ml-32 text-sm ml-3 text-careBlue font-bold">
-              EIXO
-            </span>
-          </div>
-          <div className="flex  gap-5 mr-2">
-            <div className="relative top-16 ml-1 md:ml-10 ">
-              <span className="text-careBlue">PARA LONGE</span>
+        <div className="flex flex-col mt-5">
+          <div className="flex flex-col gap-2 ">
+            <div className="flex gap-3 justify-start ml-3 mr-2">
+              <div className="relative md:top-24 top-16">
+                <span className="text-careBlue">PARA LONGE</span>
+              </div>
+              <div className="flex flex-col mt-1 ">
+                <span className=" text-sm md:ml-16 ml-3 text-careBlue font-bold">
+                  ESFERICO
+                </span>
+                <Input
+                  name="spheric"
+                  onChange={(e) => handleChange(e, "left", "far")}
+                  type="number"
+                />
+              </div>
+              <div className="flx flex-col">
+                <span className=" md:ml-16 text-sm text-careBlue font-bold ">
+                  CILINDRICO
+                </span>
+                <Input
+                  name="cilindric"
+                  onChange={(e) => handleChange(e, "left", "far")}
+                  type="number"
+                />
+              </div>
+              <div className="flx flex-col">
+                <span className=" md:ml-20 ml-7 text-sm  text-careBlue font-bold">
+                  EIXO
+                </span>
+                <Input
+                  name="axis"
+                  onChange={(e) => handleChange(e, "left", "far")}
+                  type="number"
+                />
+              </div>
             </div>
-            <Input
-              name="spheric"
-              onChange={(e) => handleChange(e, "left", "far")}
-              type="number"
-            />
-            <Input
-              name="cilindric"
-              onChange={(e) => handleChange(e, "left", "far")}
-              type="number"
-            />
-            <Input
-              name="axis"
-              onChange={(e) => handleChange(e, "left", "far")}
-              type="number"
-            />
-          </div>
-          <div className="flex ml-[4.8rem] md:ml-[9.8rem] gap-5 mr-2">
-            <Input
-              name="spheric"
-              onChange={(e) => handleChange(e, "right", "far")}
-              type="number"
-            />
-            <Input
-              name="cilindric"
-              onChange={(e) => handleChange(e, "right", "far")}
-              type="number"
-            />
-            <Input
-              name="axis"
-              onChange={(e) => handleChange(e, "right", "far")}
-              type="number"
-            />
-          </div>
-          <div className="flex  gap-5 mr-2">
-            <div className="relative top-16 ml-1 md:ml-10">
-              <span className="text-careBlue">PARA PERTO</span>
+            <div className="flex gap-3 md:ml-[7.6rem] ml-[4.9rem] mr-2">
+              <Input
+                name="spheric"
+                onChange={(e) => handleChange(e, "right", "far")}
+                type="number"
+              />
+              <Input
+                name="cilindric"
+                onChange={(e) => handleChange(e, "right", "far")}
+                type="number"
+              />
+              <Input
+                name="axis"
+                onChange={(e) => handleChange(e, "right", "far")}
+                type="number"
+              />
             </div>
-            <Input
-              name="spheric"
-              onChange={(e) => handleChange(e, "left", "near")}
-              type="number"
-            />
-            <Input
-              name="cilindric"
-              onChange={(e) => handleChange(e, "left", "near")}
-              type="number"
-            />
-            <Input
-              name="axis"
-              onChange={(e) => handleChange(e, "left", "near")}
-              type="number"
-            />
           </div>
-          <div className="flex ml-[4.8rem] md:ml-[9.7rem] gap-5 mr-2">
-            <Input
-              name="spheric"
-              onChange={(e) => handleChange(e, "right", "near")}
-              type="number"
-            />
-            <Input
-              name="cilindric"
-              onChange={(e) => handleChange(e, "right", "near")}
-              type="number"
-            />
-            <Input
-              name="axis"
-              onChange={(e) => handleChange(e, "right", "near")}
-              type="number"
-            />
+          {/*  */}
+
+          <div className="flex flex-col gap-2 mt-8">
+            <div className="flex gap-3 justify-start ml-3 mr-2">
+              <div className="relative md:top-[4.5rem] top-16 ">
+                <span className="text-careBlue ">PARA PERTO</span>
+              </div>
+              <div className="flex gap-3 justify-center">
+                <Input
+                  name="spheric"
+                  onChange={(e) => handleChange(e, "left", "near")}
+                  type="number"
+                />
+                <Input
+                  name="cilindric"
+                  onChange={(e) => handleChange(e, "left", "near")}
+                  type="number"
+                />
+                <Input
+                  name="axis"
+                  onChange={(e) => handleChange(e, "left", "near")}
+                  type="number"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 md:ml-[7.4rem] ml-[4.6rem] mr-2 ">
+              <Input
+                name="spheric"
+                onChange={(e) => handleChange(e, "right", "near")}
+                type="number"
+              />
+              <Input
+                name="cilindric"
+                onChange={(e) => handleChange(e, "right", "near")}
+                type="number"
+              />
+              <Input
+                name="axis"
+                onChange={(e) => handleChange(e, "right", "near")}
+                type="number"
+              />
+            </div>
           </div>
         </div>
       )}
@@ -813,6 +815,11 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
             </div>
             <div className="mt-0 md:mt-5">
               <Button
+                onClick={() => {
+                  router.push(
+                    "https://www.acuvue.com.br/guia-de-compra/onde-comprar-lentes-de-contato"
+                  );
+                }}
                 label={selectedOption === 3 ? "Onde Encontrar" : "Ver mais"}
                 customClass="w-full bg-careLightBlue border border-careLightBlue text-white rounded-full md:w-40 h-12 mt-10 ml-5"
               />
@@ -829,7 +836,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
         ) : (
           <div
             className={`mt-0 md:mt-5 ${
-              currentQuestion === 4 ? "md:mr-5" : null
+              currentQuestion === 4 ? "md:mr-5 mb-5" : null
             } `}
           >
             <Button

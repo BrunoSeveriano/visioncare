@@ -3,16 +3,12 @@ import ContentCard from "../card/ContentCard";
 import Image from "next/image";
 import Button from "../button/Button";
 import { useRouter } from "next/router";
+import useOpen from "@/hooks/useOpen";
 import OpenGuide from "./OpenGuide";
 
 const UsersGuide = () => {
   const route = useRouter();
-
-  const [openGuide, setOpenGuide] = React.useState(false);
-
-  const handleOpenGuide = () => {
-    setOpenGuide(true);
-  };
+  const openGuides = useOpen();
 
   return (
     <div className="fade-in">
@@ -28,7 +24,7 @@ const UsersGuide = () => {
           hideButton
         />
       </div>
-      {openGuide ? (
+      {openGuides.isOpen ? (
         <OpenGuide />
       ) : (
         <>
@@ -190,7 +186,7 @@ const UsersGuide = () => {
                 </span>
               </div>
               <Button
-                onClick={handleOpenGuide}
+                onClick={openGuides.onOpen}
                 customClass="mt-7 bg-careLightBlue border-careLightBlue py-2 w-full"
                 label="CLIQUE AQUI E ABRA O GUIA"
               />

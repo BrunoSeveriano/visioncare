@@ -39,7 +39,7 @@ const CardAdmin = () => {
           hasIcon
         />
         <ContentCard
-          onButtonClick={() => route.push("/")}
+          onButtonClick={() => route.push("/dashboard/order-purchase")}
           svgIcon="/svg/p-requests.svg"
           title="Pedidos de compra"
           subtitle="Canal exclusivo para cadastros de parceiros J&J.​"

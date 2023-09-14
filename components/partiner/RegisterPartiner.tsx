@@ -32,6 +32,11 @@ const RegisterPartiner = () => {
 
     listPartiner(filters)
       .then((partiners) => {
+        partiners.sort((a: any, b: any) => {
+          const dateA = new Date(a.createdOn);
+          const dateB = new Date(b.createdOn);
+          return dateB.getTime() - dateA.getTime();
+        });
         setPartinerList(partiners);
       })
       .catch((error) => {

@@ -21,6 +21,7 @@ import {
 import { toast } from "react-toastify";
 import useDataStorage from "@/hooks/useDataStorage";
 import "animate.css";
+import { useRouter } from "next/router";
 
 const Reimbursement = () => {
   const [productOptions, setProductOptions] = useState([]);
@@ -37,10 +38,8 @@ const Reimbursement = () => {
   const [reimbursementList, setReimbursementList] = useState([]);
   const [refreshTable, setRefreshTable] = useState(false);
   const useData = useDataStorage();
-  const options = Array.from({ length: 100 }, (_, index) => ({
-    value: (index + 1).toString(),
-    id: (index + 1).toString(),
-  }));
+  const router = useRouter();
+  // const options = [{ value: "4", id: "4" }];
   const [isLoading, setIsLoading] = useState(false);
   const [hideTable, setHideTable] = useState(false);
 
@@ -152,6 +151,7 @@ const Reimbursement = () => {
     setRefreshTable(false);
     addRepayment(dataSelected as any)
       .then((response) => {
+        router.push("/dashboard/home");
         toast.success("Reembolso realizado com sucesso");
         setRefreshTable(true);
       })
@@ -181,6 +181,11 @@ const Reimbursement = () => {
       ]);
     }
   };
+
+  const quantityOptions = Array.from({ length: 30 }, (_, i) => ({
+    value: (i + 1).toString(),
+    id: (i + 1).toString(),
+  }));
 
   return (
     <div>
@@ -293,7 +298,7 @@ const Reimbursement = () => {
                   <div className="md:w-40 w-80 text-careDarkBlue font-bold">
                     <span>Quantidade</span>
                     <CustomSelect
-                      options={options}
+                      options={quantityOptions}
                       value={optionsQuatity}
                       onChange={(e) => {
                         setOptionsQuatity(e.target.value);

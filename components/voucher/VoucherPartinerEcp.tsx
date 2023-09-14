@@ -12,6 +12,7 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 import Button from "../button/Button";
 import useTalkModal from "@/hooks/useTalkModal";
 import useOpen from "@/hooks/useOpen";
+import { toast } from "react-toastify";
 
 const VoucherPartinerEcp = () => {
   const [searchCpf, setSearchCpf] = useState("");
@@ -30,6 +31,12 @@ const VoucherPartinerEcp = () => {
         return;
       }
       const clientData = await getListRescueVoucherPatients({ cpf: searchCpf });
+
+      if (!clientData || !clientData.cpf) {
+        toast.error("CPF não encontrado");
+        return;
+      }
+
       setSearchModalData(clientData);
       setShowSearchModal(true);
       setShowCustomTable(false);
@@ -41,14 +48,6 @@ const VoucherPartinerEcp = () => {
 
   const handleCpfChange = (e: any) => {
     setSearchCpf(e.target.value);
-  };
-
-  const handleClearButtonClick = () => {
-    setSearchCpf("");
-    setShowCustomTable(true);
-    setShowSearchModal(false);
-    openProduct.onClose();
-    showHistoryPacient.onClose();
   };
 
   const maskedCpf = () => {
@@ -63,7 +62,6 @@ const VoucherPartinerEcp = () => {
           startIcon
           iconClass="scale-x-[-1]"
           iconStart={BsSearch}
-          onEnter={handleSearchClient}
         />
       </InputMask>
     );
@@ -88,8 +86,8 @@ const VoucherPartinerEcp = () => {
             <div className="col-span-2">{maskedCpf()}</div>
             <div className="flex md:ml-5 md:mt-1 mt-3">
               <Button
-                onClick={handleClearButtonClick}
-                label="Limpar"
+                onClick={handleSearchClient}
+                label="Verificar"
                 customClass="bg-careDarkBlue border-careDarkBlue h-12 md:w-40 w-full text-sm mr-2 "
               />
             </div>

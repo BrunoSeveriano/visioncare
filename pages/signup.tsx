@@ -312,6 +312,12 @@ export default function Signup() {
 
   const handleAcceptTerm = () => {
     handleCloseModal();
+    setIsSecondCheckboxChecked(true);
+  };
+
+  const handleRescueTerm = () => {
+    handleCloseModal();
+    setIsSecondCheckboxChecked(false);
   };
 
   const validatePassword = () => {
@@ -554,7 +560,10 @@ export default function Signup() {
               </div>
             </div>
             <div className="flex justify-between mt-4">
-              <button className="bg-careBlue hover:opacity-70 text-white font-bold py-2 px-4 rounded w-48 ">
+              <button
+                onClick={handleRescueTerm}
+                className="bg-careBlue hover:opacity-70 text-white font-bold py-2 px-4 rounded w-48 "
+              >
                 Recusar
               </button>
               <button

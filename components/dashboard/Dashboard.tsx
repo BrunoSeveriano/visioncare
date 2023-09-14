@@ -25,6 +25,8 @@ import DataPatient from "../myData/DataPatient";
 import DataPartiner from "../myData/DataPartiner";
 import DataAdmin from "../myData/DataAdmin";
 import useOnboardModalPartiner from "@/hooks/useOnboardModalPartiner";
+import path from "path";
+import { tr } from "date-fns/locale";
 
 interface DashboardProps {
   children?: React.ReactNode;
@@ -116,6 +118,10 @@ const Dashboard = ({ children }: DashboardProps) => {
       active: router.pathname.includes(option.route),
     };
   });
+
+  const closeMenuLeftMobile = () => {
+    setMenuLeftMobile(false);
+  };
 
   const handleNameChange = (text: string) => {
     setNavbarSpanText(text);
@@ -482,6 +488,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                       image
                       path={option.path}
                       onNameChange={handleNameChange}
+                      closeMenu={closeMenuLeftMobile}
                     />
                   ));
                 } else if (isEcpUser) {
@@ -501,6 +508,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                       image
                       path={option.path}
                       onNameChange={handleNameChange}
+                      closeMenu={closeMenuLeftMobile}
                     />
                   ));
                 } else if (isPdvUser) {
@@ -520,9 +528,10 @@ const Dashboard = ({ children }: DashboardProps) => {
                       image
                       path={option.path}
                       onNameChange={handleNameChange}
+                      closeMenu={closeMenuLeftMobile}
                     />
                   ));
-                } else {
+                } else if (isPatientUser) {
                   return menuOptions.map((option, i) => (
                     <MenuOptions
                       spanClassname={`${
@@ -539,6 +548,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                       image
                       path={option.path}
                       onNameChange={handleNameChange}
+                      closeMenu={closeMenuLeftMobile}
                     />
                   ));
                 }

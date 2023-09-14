@@ -86,6 +86,11 @@ const Voucher = () => {
 
     getListVoucher({ ...filters, voucherTypes: voucherTypeFilter }).then(
       (response) => {
+        response.sort((a: any, b: any) => {
+          const dateA = new Date(a.createdDate);
+          const dateB = new Date(b.createdDate);
+          return dateB.getTime() - dateA.getTime();
+        });
         setListVoucher(response);
       }
     );

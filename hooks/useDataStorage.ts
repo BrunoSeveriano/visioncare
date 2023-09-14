@@ -9,6 +9,8 @@ interface DataStore {
   DeadlineInDays: number;
   Note: string;
   VoucherUserHistory: any;
+  AxiesId: any;
+  setAxiesId: (AxiesId: any) => void;
   setVoucherUserHistory: (VoucherUserHistory: any) => void;
   setVoucherData: (voucherData: any) => void;
   surveyData: any;
@@ -30,6 +32,12 @@ interface DataStore {
 const useDataStorage = create(
   persist<DataStore>(
     (set) => ({
+      AxiesId: [
+        {
+          Items: [{}],
+        },
+      ],
+      setAxiesId: (AxiesId) => set({ AxiesId }),
       idSchedulePurchase: "",
       setIdSchedulePurchase: (idSchedulePurchase) =>
         set({ idSchedulePurchase }),

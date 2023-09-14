@@ -1,6 +1,7 @@
 import React from "react";
 import ContentCard from "../card/ContentCard";
 import { useRouter } from "next/router";
+import ContentCardPacient from "../card/ContentCardPacient";
 
 const CardPacient = () => {
   const route = useRouter();
@@ -11,57 +12,53 @@ const CardPacient = () => {
           onButtonClick={() => route.push("/dashboard/user-guide")}
           svgIcon="/svg/v-card.svg"
           title="Guia do usuário"
-          subtitle="Conheça mais sobre o uso de lentes de contato."
+          subtitle="Veja dicas sobre o uso, cuidados, descarte e troca das lentes de contato."
           buttonText="Saiba mais"
           textColor="text-white"
           bgColor="bg-[url('/user.png')] bg-cover bg-no-repeat bg-careDarkBlue bg-right"
         />
       </div>
       <div className="grid md:grid-cols-1 gap-y-3 lg:grid-cols-2 gap-x-4 mb-3">
-        <ContentCard
-          onButtonClick={() => route.push("/dashboard/patient-voucher")}
+        <ContentCardPacient
+          cardLink="/dashboard/patient-voucher"
           svgIcon="/svg/v-card.svg"
           title="Meus Vouchers​"
-          subtitle="Fale com um Especialista"
+          subtitle="Resgate seu voucher e obtenha descontos!"
           buttonText="Clique aqui"
           textColor="text-white"
-          bgColor="bg-careDarkBlue "
+          bgColor="bg-careLightBlue "
           hasIcon
         />
-        <ContentCard
-          onButtonClick={() => route.push("/dashboard/scheduling")}
+        <ContentCardPacient
+          cardLink="/dashboard/scheduling"
           svgIcon="/svg/calendar.svg"
           title="Agende sua adaptação"
-          subtitle="Encontre a clínica adaptadora mais próxima de você e agende sua adaptação."
+          subtitle="Encontre a clínica oftalmológica mais próxima de você e agende sua adaptação."
           buttonText="Agendar"
           textColor="text-white"
-          bgColor="bg-careDarkBlue"
+          bgColor="bg-careLightBlue"
           hasIcon
         />
       </div>
       <div className="grid md:grid-cols-1 gap-y-3 lg:grid-cols-2 gap-x-4 mb-5 md:mb-5">
-        <ContentCard
-          onButtonClick={() => route.push("/dashboard/talk-to-specialist")}
+        <ContentCardPacient
+          cardLink="/dashboard/talk-to-specialist"
           svgIcon="/svg/questions.svg"
           title="Fale com um Especialista​"
-          subtitle="Tire suas dúvidas com um contatólogo."
+          subtitle="Tire suas dúvidas com um Especialista ACUVUE®"
           buttonText="Falar com especialista"
           textColor="text-white"
-          bgColor="bg-careDarkBlue"
+          bgColor="bg-careLightBlue"
           hasIcon
         />
-        <ContentCard
-          onButtonClick={() =>
-            route.push(
-              "https://www.acuvue.com.br/guia-de-compra/onde-comprar-lentes-de-contato"
-            )
-          }
+        <ContentCardPacient
+          cardLink="https://www.acuvue.com.br/guia-de-compra/onde-comprar-lentes-de-contato"
           svgIcon="/svg/map.svg"
           title="Onde encontrar?"
-          subtitle="Encontre um ponto de venda mais próximo e aproveite seu desconto.​"
+          subtitle="Encontre os pontos de venda e clínicas oftalmológicas parceiros mais próximos.​"
           buttonText="Encontre aqui"
           textColor="text-white"
-          bgColor="bg-careDarkBlue"
+          bgColor="bg-careLightBlue"
           hasIcon
         />
       </div>

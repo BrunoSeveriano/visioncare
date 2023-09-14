@@ -1,9 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
-import { GrClose } from "react-icons/gr";
+import Button from "../button/Button";
+import useOpen from "@/hooks/useOpen";
 
 const OpenGuide = () => {
+  const openGuides = useOpen();
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid md:grid-cols-2 gap-3 md:mt-10 mb-5">
@@ -386,6 +389,13 @@ const OpenGuide = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="flex justify-start items-center">
+        <Button
+          onClick={openGuides.onClose}
+          customClass="bg-careLightBlue w-40 h-14 mb-5"
+          label="Voltar"
+        />
       </div>
     </div>
   );

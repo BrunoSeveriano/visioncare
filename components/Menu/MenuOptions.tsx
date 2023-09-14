@@ -13,6 +13,7 @@ interface MenuOptionsProps {
   spanClassname?: string;
   iconClassname?: string;
   logout?: boolean;
+  closeMenu?: () => void;
   onClick?: () => void;
   onNameChange?: (text: string) => void;
 }
@@ -27,6 +28,7 @@ const MenuOptions = ({
   onNameChange,
   image,
   path,
+  closeMenu,
 }: MenuOptionsProps) => {
   const router = useRouter();
   const auth = useLogin();
@@ -34,6 +36,18 @@ const MenuOptions = ({
   const handleClick = () => {
     if (onNameChange) {
       onNameChange(text);
+    }
+  };
+
+  const isExternalLink = (link: string) => {
+    return link.startsWith("http://") || link.startsWith("https://");
+  };
+
+  const handleLinkClick = () => {
+    if (isExternalLink(route)) {
+      window.open(route, "_blank");
+    } else {
+      router.push(route);
     }
   };
 
@@ -48,7 +62,8 @@ const MenuOptions = ({
         onClick={() => {
           handleClick();
           logout && auth.onLogout();
-          router.push(route);
+          closeMenu && closeMenu();
+          handleLinkClick();
         }}
         className="xl:text-lg lg:text-sm"
       >
