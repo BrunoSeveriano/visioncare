@@ -27,3 +27,12 @@ export const listReimbursementData = async () => {
   });
   return response.data;
 };
+
+export const downloadallOrderPurchase = async () => {
+  const response = await api.get(`/purchase/downloadall`, {
+    params: {
+      programCode: "073",
+    },
+  });
+  return response.data;
+};

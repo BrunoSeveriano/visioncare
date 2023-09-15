@@ -208,7 +208,7 @@ const EditVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
             />
           </div>
 
-          <div className=" mb-3 md:mt-1">
+          <div className=" mb-14 md:mt-1">
             <Button
               onClick={handleUpdateVoucher}
               customClass=" w-full bg-careDarkBlue border-careDarkBlue p-4 py-3 px-10"

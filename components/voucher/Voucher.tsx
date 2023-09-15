@@ -279,7 +279,7 @@ const Voucher = () => {
             </div>
           </div>
           {showCustomTable && (
-            <div className="lg:w-full w-[21rem]">
+            <div className="lg:w-full w-[21rem] mb-10">
               <CustomTable
                 isLoading={isLoading}
                 rowId="number"

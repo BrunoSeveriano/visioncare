@@ -9,6 +9,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import { listPartinerAdmin } from "@/services/partiner";
 import useDataStorage from "@/hooks/useDataStorage";
+import ExportToTxtAll from "../button/ExportToTxtAll";
 
 const OrderPurchase = () => {
   const dataScheduling = useDataStorage();
@@ -179,11 +180,11 @@ const OrderPurchase = () => {
               columns={TableMockupOrderPurchase.columns}
             />
           </div>
-          <div className="md:flex md:justify-end lg:flex lg:justify-end flex justify-center mt-5 gap-2 fade-in">
+          <div className="md:flex md:justify-end lg:flex lg:justify-end flex justify-center mt-5 mb-10 gap-2 fade-in">
             <div>
-              <Button
-                customClass="w-full bg-careDarkBlue border-careBlue p-10 py-2"
+              <ExportToTxtAll
                 label="Baixar Todos"
+                className="w-full bg-careDarkBlue border-careDarkBlue p-10 py-2"
               />
             </div>
             <div className="p-1 rounded-lg bg-careGrey">

@@ -286,7 +286,9 @@ const Dashboard = ({ children }: DashboardProps) => {
             <div className="hidden md:flex ml-5 gap-5 mt-10 cursor-pointer">
               <div
                 onClick={() => {
-                  router.push("https://www.instagram.com/jnjbrasil/");
+                  router.push(
+                    "https://www.instagram.com/acuvuebrasil/?igshid=MzRlODBiNWFlZA%3D%3D"
+                  );
                 }}
               >
                 <Image
@@ -298,7 +300,9 @@ const Dashboard = ({ children }: DashboardProps) => {
               </div>
               <div
                 onClick={() => {
-                  router.push("https://www.facebook.com/jnj/?locale=pt_BR");
+                  router.push(
+                    "https://www.facebook.com/acuvuebrasil?mibextid=ZbWKwL"
+                  );
                 }}
               >
                 <Image src="/icon-facebook.png" width={15} height={20} alt="" />
@@ -308,7 +312,9 @@ const Dashboard = ({ children }: DashboardProps) => {
             <div className="hidden md:flex md:flex-col ml-6 gap-7 mt-10 cursor-pointer">
               <div
                 onClick={() => {
-                  router.push("https://www.instagram.com/jnjbrasil/");
+                  router.push(
+                    "https://www.instagram.com/acuvuebrasil/?igshid=MzRlODBiNWFlZA%3D%3D"
+                  );
                 }}
               >
                 <Image
@@ -320,7 +326,9 @@ const Dashboard = ({ children }: DashboardProps) => {
               </div>
               <div
                 onClick={() => {
-                  router.push("https://www.facebook.com/jnj/?locale=pt_BR");
+                  router.push(
+                    "https://www.facebook.com/acuvuebrasil?mibextid=ZbWKwL"
+                  );
                 }}
               >
                 <Image src="/icon-facebook.png" width={15} height={20} alt="" />

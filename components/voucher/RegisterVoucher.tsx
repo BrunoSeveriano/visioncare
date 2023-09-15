@@ -151,7 +151,7 @@ const RegisterVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
           </div>
         </div>
       </div>
-      <div className="grid grid-rows-1 md:flex md:justify-end mt-2 md:mt-10 mb-2 ">
+      <div className="grid grid-rows-1 md:flex md:justify-end mt-2 md:mt-10 mb-14 ">
         <Button
           onClick={registerVoucher.onClose}
           customClass=" border-none text-blue-500 underline p-4 py-2 mt-2 "
@@ -161,6 +161,13 @@ const RegisterVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
           onClick={handleVoucher}
           customClass=" bg-careDarkBlue border-careDarkBlue p-4 py-3 px-10"
           label="Adicionar"
+          disabled={
+            voucher.Name === "" ||
+            voucher.DiscountType === "" ||
+            voucher.DiscountValue === 0 ||
+            voucher.DeadlineInDays === 0 ||
+            voucher.Note === ""
+          }
         />
       </div>
     </div>

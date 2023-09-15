@@ -94,7 +94,7 @@ export const TableMockupOrderPurchase: TableData = {
             params={params}
             label="Baixar"
             fileName="arquivo.txt"
-            className="w-full bg-careDarkBlue border-careBlue p-2 py-2"
+            className="w-full bg-careDarkBlue border-careDarkBlue p-2 py-2"
           />
         </div>
       ),

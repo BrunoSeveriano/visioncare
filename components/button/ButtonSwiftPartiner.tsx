@@ -57,15 +57,12 @@ const ButtonSwiftPartiner = ({ onClick, params }: ButtonProps) => {
           {params?.row?.isConfirmed ? (
             <div
               onClick={handleConfirmClick}
-              className="bg-careDarkBlue rounded-full text-white p-1 h-5 w-5 flex items-center justify-center"
+              className="cursor-pointer bg-careDarkBlue rounded-full text-white p-1 h-5 w-5 flex items-center justify-center"
             >
               <MdClose size={20} />
             </div>
           ) : (
-            <div
-              onClick={handleConfirmClick}
-              className="bg-careRedButton rounded-full text-white p-1 h-5 w-5 flex items-center justify-center"
-            >
+            <div className=" bg-careRedButton rounded-full text-white p-1 h-5 w-5 flex items-center justify-center">
               <MdClose size={20} />
             </div>
           )}
@@ -83,15 +80,12 @@ const ButtonSwiftPartiner = ({ onClick, params }: ButtonProps) => {
           {params?.row?.isConfirmed ? (
             <div
               onClick={handleConfirmClick}
-              className="bg-careDarkBlue rounded-full text-white p-1 h-5 w-5 flex items-center justify-center"
+              className="cursor-pointer bg-careDarkBlue rounded-full text-white p-1 h-5 w-5 flex items-center justify-center"
             >
               <MdClose size={20} />
             </div>
           ) : (
-            <div
-              onClick={handleConfirmClick}
-              className="bg-careRedButton rounded-full text-white p-1 h-5 w-5 flex items-center justify-center"
-            >
+            <div className=" bg-careRedButton rounded-full text-white p-1 h-5 w-5 flex items-center justify-center">
               <MdClose size={20} />
             </div>
           )}
