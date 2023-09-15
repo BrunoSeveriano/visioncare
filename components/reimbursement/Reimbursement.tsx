@@ -6,14 +6,6 @@ import { AiOutlineInfoCircle, AiOutlinePlus } from "react-icons/ai";
 import Button from "../button/Button";
 import { useEffect, useState, useCallback } from "react";
 import {
-  getAxle,
-  getCodeNumber,
-  getCylinder,
-  getDegree,
-  getListRescueVoucherPatients,
-} from "@/services/voucher";
-import CustomSelect from "../select/Select";
-import {
   addRepayment,
   listPurchase,
   listReimbursementData,
