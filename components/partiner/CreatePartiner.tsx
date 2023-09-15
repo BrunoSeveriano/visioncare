@@ -10,6 +10,7 @@ import useRegisterPartiner from "@/hooks/useRegisterPartiner";
 import { getAddressByCep } from "@/services/cep";
 import useDataStorage from "@/hooks/useDataStorage";
 import InputLoading from "../loading/InputLoading";
+import { BsQuestionLg } from "react-icons/bs";
 
 const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const partiner = useRegisterPartiner();
@@ -170,6 +171,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
           <div className="sm:grid grid-cols-1 md:grid md:grid-cols-3 gap-6 mt-5">
             <div>
               <span className="text-careLightBlue">Nome</span>
+
               <Input
                 maxLength={50}
                 name="mainContact"
@@ -180,7 +182,15 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               />
             </div>
             <div>
-              <span className="text-careLightBlue">Razão Social</span>
+              <div className="flex gap-2">
+                <span className="text-careLightBlue">Razão Social</span>
+                <span className="tooltip text-careDarkBlue">
+                  <span className="text-careRedButton">*</span>
+                  <span className="tooltiptext">
+                    O nome da empresa deve ser único
+                  </span>
+                </span>
+              </div>
               <Input
                 maxLength={50}
                 name="name"
@@ -191,7 +201,16 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               />
             </div>
             <div>
-              <span className="text-careLightBlue">CNPJ</span>
+              <div className="flex gap-2">
+                <span className="text-careLightBlue">CNPJ</span>
+                <span className="tooltip text-careDarkBlue">
+                  <span className="text-careRedButton">*</span>
+                  <span className="tooltiptext">
+                    O CNPJ deve ser único e válido
+                  </span>
+                </span>
+              </div>
+
               {maskedCNPJ()}
             </div>
           </div>
@@ -201,7 +220,16 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
         <div className="mt-2">
           <div className="sm:grid grid-caols-1 mb-8 md:mb-0 md:grid grid-cols-3 gap-6">
             <div>
-              <span className="text-careLightBlue">Forneça o Código SAP</span>
+              <div className="flex gap-2">
+                <span className="text-careLightBlue">Forneça o Código SAP</span>
+                <span className="tooltip text-careDarkBlue">
+                  <span className="text-careRedButton">*</span>
+                  <span className="tooltiptext">
+                    O código SAP deve ser único
+                  </span>
+                </span>
+              </div>
+
               <Input
                 maxLength={20}
                 name="sapCode"
@@ -212,7 +240,16 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               />
             </div>
             <div>
-              <span className="text-careLightBlue">Tipo</span>
+              <div className="flex gap-2">
+                <span className="text-careLightBlue">Tipo</span>
+                <span className="tooltip text-careDarkBlue">
+                  <span className="text-careRedButton">*</span>
+                  <span className="tooltiptext">
+                    Selecione o tipo de parceiro
+                  </span>
+                </span>
+              </div>
+
               <CustomSelect
                 value={registerPartiner.accountTypeStringMapFlag}
                 startIcon
@@ -235,6 +272,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
             </div>
             <div className="md:grid md:grid-cols-1">
               <span className="text-careLightBlue">CEP</span>
+
               {maskedCep()}
             </div>
             {isLoadingAddress ? (
@@ -245,6 +283,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               <>
                 <div className="md:grid md:grid-cols-1">
                   <span className="text-careLightBlue">Estado</span>
+
                   <Input
                     value={registerPartiner.addressState}
                     maxLength={160}
@@ -265,6 +304,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               <>
                 <div className="md:grid md:grid-cols-1">
                   <span className="text-careLightBlue">Cidade</span>
+
                   <Input
                     value={registerPartiner.addressCity}
                     maxLength={160}
@@ -285,6 +325,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               <>
                 <div className="md:grid md:grid-cols-1">
                   <span className="text-careLightBlue">Bairro</span>
+
                   <Input
                     value={registerPartiner.addressDistrict}
                     maxLength={160}
@@ -305,6 +346,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               <>
                 <div className="col-span-1 ">
                   <span className="text-careLightBlue">Endereço</span>
+
                   <Input
                     value={registerPartiner.addressName}
                     maxLength={160}
@@ -320,6 +362,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
 
             <div className="md:grid md:grid-cols-1">
               <span className="text-careLightBlue">Número</span>
+
               <Input
                 maxLength={160}
                 name="addressNumber"
@@ -347,7 +390,14 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
         <div className="mt-2">
           <div className="sm:grid grid-cols-1 md:grid md:grid-cols-3 gap-6">
             <div>
-              <span className="text-careLightBlue">Telefone de contato</span>
+              <div className="flex gap-2">
+                <span className="text-careLightBlue">Telefone de contato</span>
+                <span className="tooltip text-careDarkBlue">
+                  <span className="text-careRedButton">*</span>
+                  <span className="tooltiptext">Digite um telefone válido</span>
+                </span>
+              </div>
+
               {maskedPhone()}
             </div>
             <div>
@@ -357,7 +407,14 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               {maskedMobilePhone()}
             </div>
             <div>
-              <span className="text-careLightBlue">Registre um E-mail</span>
+              <div className="flex gap-2">
+                <span className="text-careLightBlue">Registre um E-mail</span>
+                <span className="tooltip text-careDarkBlue">
+                  <span className="text-careRedButton">*</span>
+                  <span className="tooltiptext">Digite um e-mail válido</span>
+                </span>
+              </div>
+
               <Input
                 maxLength={100}
                 name="emailAddress"
@@ -381,7 +438,15 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               />
             </div>
             <div>
-              <span className="text-careLightBlue">Registre uma senha</span>
+              <div className="flex gap-2">
+                <span className="text-careLightBlue">Registre uma senha</span>
+                <span className="tooltip text-careDarkBlue">
+                  <span className="text-careRedButton">*</span>
+                  <span className="tooltiptext">
+                    Campo obrigatório, deve conter no mínimo 8 dígitos
+                  </span>
+                </span>
+              </div>
               <Input
                 maxLength={20}
                 name="password"
@@ -401,6 +466,14 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
           label="Voltar"
         />
         <Button
+          disabled={
+            registerPartiner.name === "" ||
+            registerPartiner.cnpj === "" ||
+            registerPartiner.accountTypeStringMapFlag === "" ||
+            registerPartiner.sapCode === "" ||
+            registerPartiner.telephone1 === "" ||
+            registerPartiner.password === ""
+          }
           onClick={handleRegisterPartiner}
           customClass=" bg-careLightBlue border-careLightBlue p-4 py-3 px-10"
           label="Adicionar"

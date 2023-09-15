@@ -22,7 +22,7 @@ export const homeMenuAdmin = [
   {
     route: "dashboard-admin",
     path: "/i-dashboard-2.png",
-    text: "Dashborad",
+    text: "Dashboard",
     active: false,
   },
   {

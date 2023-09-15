@@ -747,7 +747,6 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
               />
             </div>
           </div>
-          {/*  */}
 
           <div className="flex flex-col gap-2 mt-8">
             <div className="flex gap-3 justify-start ml-3 mr-2">
