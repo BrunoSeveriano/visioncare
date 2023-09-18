@@ -13,7 +13,7 @@ const nextConfig = {
   },
   env: {
     API_URL:
-      "https://homologacao.suporteaopaciente.com.br/visioncareapiexterno",
+      "https://homologacao.suporteaopaciente.com.br/api-takeda-visioncare-merge/",
   },
 };
 

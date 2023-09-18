@@ -40,7 +40,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const handleRegisterPartiner = () => {
     addPartiner(registerPartiner)
       .then((res) => {
-        if (!res.isValidData) {
+        if (res === "CNPJ já cadastrado!" || res === "E-mail já cadastrado.") {
           toast.error(res);
           return;
         }
@@ -151,18 +151,6 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   return (
     <div className="w-full fill-careBlue fade-in">
       <div className="md:grid md:grid-cols-1">
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss={false}
-          draggable
-          pauseOnHover={false}
-          theme="light"
-        />
         <div>
           <span className="text-2xl text-careLightBlue">
             Adicionar um parceiro
@@ -424,9 +412,18 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               />
             </div>
             <div>
-              <span className="text-careLightBlue">
-                E-mail corporativo do parceiro
-              </span>
+              <div className="flex gap-2">
+                <span className="text-careLightBlue">
+                  {" "}
+                  E-mail corporativo do parceiro
+                </span>
+                <span className="tooltip text-careDarkBlue">
+                  <span className="text-careRedButton">*</span>
+                  <span className="tooltiptext">
+                    Digite um e-mail de parceiro válido
+                  </span>
+                </span>
+              </div>
               <Input
                 maxLength={100}
                 name="emailAddress2"
