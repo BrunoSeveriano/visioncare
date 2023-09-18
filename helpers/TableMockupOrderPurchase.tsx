@@ -25,8 +25,16 @@ export const TableMockupOrderPurchase: TableData = {
       sortable: false,
       flex: 1,
       renderCell: (params: any) => {
-        const formattedDate = format(new Date(params.value), "dd/MM/yyyy");
-        return <div>{formattedDate}</div>;
+        const date = new Date(params.value);
+        const formattedDate = format(date, "dd/MM/yyyy");
+        const formattedTime = format(date, "HH:mm");
+        return (
+          <div className="flex flex-col items-center">
+            {formattedDate}
+            <br />
+            <span className="text-sm text-careLightBlue">{formattedTime}</span>
+          </div>
+        );
       },
     },
     {
