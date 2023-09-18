@@ -31,7 +31,7 @@ export const TableScheduleManagement: TableData = {
           <div className="flex flex-col items-center">
             {formattedDate}
             <br />
-            <span className="text-sm">{formattedTime}</span>
+            <span className="text-sm text-careLightBlue">{formattedTime}</span>
           </div>
         );
       },

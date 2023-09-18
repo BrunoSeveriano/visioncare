@@ -27,7 +27,7 @@ export const TableAttendanceConfirmation: TableData = {
           <div className="flex flex-col items-center">
             {formattedDate}
             <br />
-            <span className="text-sm">{formattedTime}</span>
+            <span className="text-sm text-careLightBlue">{formattedTime}</span>
           </div>
         );
       },
@@ -35,6 +35,17 @@ export const TableAttendanceConfirmation: TableData = {
     {
       field: "patientName",
       headerName: "Paciente",
+      minWidth: 95,
+      headerAlign: "center",
+      align: "center",
+      headerClassName: "columnTitle",
+      sortable: false,
+      flex: 1,
+    },
+
+    {
+      field: "friendlyCode",
+      headerName: "Número",
       minWidth: 95,
       headerAlign: "center",
       align: "center",

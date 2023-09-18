@@ -10,7 +10,6 @@ import useRegisterPartiner from "@/hooks/useRegisterPartiner";
 import { getAddressByCep } from "@/services/cep";
 import useDataStorage from "@/hooks/useDataStorage";
 import InputLoading from "../loading/InputLoading";
-import { BsQuestionLg } from "react-icons/bs";
 
 const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const partiner = useRegisterPartiner();

@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "../button/Button";
 import Image from "next/image";
-import { useRouter } from "next/router";
 
 interface ContentCardProps {
   isCustomBg?: boolean;
@@ -17,10 +16,10 @@ interface ContentCardProps {
   svgIcon: string;
   hasIcon?: boolean;
   hideButton?: boolean;
-  cardLink?: string;
+  onButtonClick?: () => void;
 }
 
-const ContentCardPacient = ({
+const ContentCardAdmin = ({
   isCustomBg,
   bgColor,
   textColor,
@@ -34,22 +33,8 @@ const ContentCardPacient = ({
   hasIcon,
   svgIcon,
   hideButton,
-  cardLink,
+  onButtonClick,
 }: ContentCardProps) => {
-  const router = useRouter();
-
-  const isHttpLink = (link: string) => {
-    return link.startsWith("http://") || link.startsWith("https://");
-  };
-
-  const handleButtonClick = () => {
-    if (cardLink && isHttpLink(cardLink)) {
-      window.open(cardLink, "_blank");
-    } else if (cardLink) {
-      router.push(cardLink);
-    }
-  };
-
   return (
     <div
       className={`w-full rounded-xl lg:h-52 2xl:h-60 ${
@@ -81,7 +66,7 @@ const ContentCardPacient = ({
               } font-bold`}
               label={buttonText}
               customColor={textColor}
-              onClick={handleButtonClick}
+              onClick={onButtonClick}
             />
           )}
           {hasIcon && (
@@ -99,4 +84,4 @@ const ContentCardPacient = ({
   );
 };
 
-export default ContentCardPacient;
+export default ContentCardAdmin;

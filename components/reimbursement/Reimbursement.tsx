@@ -36,11 +36,6 @@ interface SearchModalProps {
 }
 
 const Reimbursement = ({ clientData, selectedStatus }: SearchModalProps) => {
-  const [selectedProduct, setSelectedProduct] = useState("");
-  const [selectedCylinder, setSelectedCylinder] = useState("");
-  const [selectedAxies, setSelectedAxies] = useState("");
-  const [selectedCodeNumber, setSelectedCodeNumber] = useState("");
-  const [optionsQuatity, setOptionsQuatity] = useState("");
   const [inputBlocks, setInputBlocks] = useState([1]);
   const [purchaseList, setPurchaseList] = useState([]);
   const [reimbursementList, setReimbursementList] = useState([]);
@@ -138,36 +133,34 @@ const Reimbursement = ({ clientData, selectedStatus }: SearchModalProps) => {
           />
         </div>
       </div>
+      <div className="flex flex-col md:flex md:flex-row gap-2 mt-10 mb-5 fade-in">
+        <div className="md:w-96 w-[21.5rem]">
+          <span className="text-3xl text-careLightBlue">Extrato total:</span>
+          <div className="mt-3">
+            <CustomTable
+              isLoading={isLoading}
+              rowId="productName"
+              rows={purchaseList}
+              columns={TableProductreimbursement.columns}
+            />
+          </div>
+        </div>
+        <div className="md:w-[63.55%] w-[21.5rem]">
+          <span className="text-3xl text-careLightBlue">
+            Confirmação de Reembolso
+          </span>
+          <div className="mt-3">
+            <CustomTable
+              isLoading={isLoading}
+              rowId="voucher"
+              rows={reimbursementList}
+              columns={TableDataProduct.columns}
+            />
+          </div>
+        </div>
+      </div>
       {hideTable ? (
         <>
-          <div className="flex flex-col md:flex md:flex-row gap-2 mt-10 mb-5 fade-in">
-            <div className="md:w-96 w-[21.5rem]">
-              <span className="text-3xl text-careLightBlue">
-                Extrato total:
-              </span>
-              <div className="mt-3">
-                <CustomTable
-                  isLoading={isLoading}
-                  rowId="productName"
-                  rows={purchaseList}
-                  columns={TableProductreimbursement.columns}
-                />
-              </div>
-            </div>
-            <div className="md:w-[63.55%] w-[21.5rem]">
-              <span className="text-3xl text-careLightBlue">
-                Confirmação de Reembolso
-              </span>
-              <div className="mt-3">
-                <CustomTable
-                  isLoading={isLoading}
-                  rowId="voucher"
-                  rows={reimbursementList}
-                  columns={TableDataProduct.columns}
-                />
-              </div>
-            </div>
-          </div>
           <div>
             {inputBlocks.map((item, index) => (
               <div key={index} className="md:flex md:flex-row flex flex-col">

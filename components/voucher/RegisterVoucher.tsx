@@ -105,10 +105,11 @@ const RegisterVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
                 Informe o valor do desconto
               </span>
               <Input
+                type="number"
                 name="DiscountValue"
                 value={voucher.DiscountValue !== 0 ? voucher.DiscountValue : ""}
                 onChange={handleChange}
-                placeholder="Porcentagem do Desconto (Apenas números)"
+                placeholder="Valor do Desconto"
               />
             </div>
           </div>
