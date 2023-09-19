@@ -15,6 +15,7 @@ import useDataStorage from "@/hooks/useDataStorage";
 import "animate.css";
 import { useRouter } from "next/router";
 import Selected from "../selectedProducted/Selected";
+import SelectedReimbursement from "../selectedProducted/SelectedReimbursement";
 
 interface ClientData {
   name: string;
@@ -164,7 +165,7 @@ const Reimbursement = ({ clientData, selectedStatus }: SearchModalProps) => {
           <div>
             {inputBlocks.map((item, index) => (
               <div key={index} className="md:flex md:flex-row flex flex-col">
-                <Selected clientData={clientData} />
+                <SelectedReimbursement clientData={clientData} />
                 {inputBlocks.length < 4 ? (
                   <div className="bg-careMenuGrey rounded-full p-4 h-5 w-5 relative md:top-11 md:left-3 cursor-pointer mt-3 md:mt-20">
                     <span
