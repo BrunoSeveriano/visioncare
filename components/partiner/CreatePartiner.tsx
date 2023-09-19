@@ -386,6 +386,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 <span className="text-careLightBlue">Número</span>
                 <span className="tooltip text-careDarkBlue">
                   <span className="text-careRedButton">*</span>
+                  <span className="tooltiptext">Digite um número válido </span>
                 </span>
               </div>
 
@@ -514,6 +515,18 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
             registerPartiner.accountTypeStringMapFlag === "" ||
             registerPartiner.sapCode === "" ||
             registerPartiner.telephone1 === "" ||
+            registerPartiner.password === "" ||
+            registerPartiner.addressPostalCode === "" ||
+            registerPartiner.addressName === "" ||
+            registerPartiner.addressNumber === "" ||
+            registerPartiner.addressDistrict === "" ||
+            registerPartiner.addressCity === "" ||
+            registerPartiner.addressState === "" ||
+            registerPartiner.addressCountry === "" ||
+            registerPartiner.mainContact === "" ||
+            registerPartiner.emailAddress === "" ||
+            registerPartiner.emailAddress2 === "" ||
+            registerPartiner.mobilePhone === "" ||
             registerPartiner.password === ""
           }
           onClick={handleRegisterPartiner}
