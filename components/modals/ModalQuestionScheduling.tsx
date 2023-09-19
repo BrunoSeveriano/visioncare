@@ -5,7 +5,11 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import Button from "../button/Button";
 import { useEffect, useState } from "react";
 import Input from "../input/Input";
-import { BsCalendar2Week, BsQuestionLg } from "react-icons/bs";
+import {
+  BsCalendar2Week,
+  BsQuestionCircle,
+  BsQuestionLg,
+} from "react-icons/bs";
 import { MdAlarm, MdOutlineLocationOn } from "react-icons/md";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -300,8 +304,8 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
           <span className="text-xl text-careLightBlue font-bold">
             Informe o seu tipo de refração:
           </span>
-          <span className="tooltip text-careDarkBlue">
-            <BsQuestionLg />
+          <span className="tooltip text-careDarkBlue cursor-pointer">
+            <BsQuestionCircle size={24} />
             <span className="tooltiptext">
               Saiba como preencher os campos, clicando aqui!
             </span>
@@ -842,6 +846,9 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
               label={currentQuestion === 4 ? "Enviar" : "Próximo"}
               customClass="relative bottom-6 w-full bg-careLightBlue border border-careLightBlue text-white rounded-full md:w-40 h-12 mt-16 md:ml-14 ml-6 mb-5"
               onClick={handleNextClick}
+              disabled={
+                currentQuestion === 3 && (!selectedDate || !timeSelected)
+              }
             />
           </div>
         )}

@@ -157,7 +157,15 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
           </span>
           <div className="sm:grid grid-cols-1 md:grid md:grid-cols-3 gap-6 mt-5">
             <div>
-              <span className="text-careLightBlue">Nome</span>
+              <div className="flex gap-2">
+                <span className="text-careLightBlue">Nome</span>
+                <span className="tooltip text-careDarkBlue">
+                  <span className="text-careRedButton">*</span>
+                  <span className="tooltiptext">
+                    O nome do responsável deve ser único
+                  </span>
+                </span>
+              </div>
 
               <Input
                 maxLength={50}
@@ -258,7 +266,13 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               />
             </div>
             <div className="md:grid md:grid-cols-1">
-              <span className="text-careLightBlue">CEP</span>
+              <div className="flex gap-2">
+                <span className="text-careLightBlue">CEP</span>
+                <span className="tooltip text-careDarkBlue">
+                  <span className="text-careRedButton">*</span>
+                  <span className="tooltiptext">Digite um CEP válido</span>
+                </span>
+              </div>
 
               {maskedCep()}
             </div>
@@ -269,7 +283,12 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
             ) : (
               <>
                 <div className="md:grid md:grid-cols-1">
-                  <span className="text-careLightBlue">Estado</span>
+                  <div className="flex gap-2">
+                    <span className="text-careLightBlue">Estado</span>
+                    <span className="tooltip text-careDarkBlue">
+                      <span className="text-careRedButton">*</span>
+                    </span>
+                  </div>
 
                   <Input
                     value={registerPartiner.addressState}
@@ -290,7 +309,12 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
             ) : (
               <>
                 <div className="md:grid md:grid-cols-1">
-                  <span className="text-careLightBlue">Cidade</span>
+                  <div className="flex gap-2">
+                    <span className="text-careLightBlue">Cidade</span>
+                    <span className="tooltip text-careDarkBlue">
+                      <span className="text-careRedButton">*</span>
+                    </span>
+                  </div>
 
                   <Input
                     value={registerPartiner.addressCity}
@@ -311,7 +335,12 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
             ) : (
               <>
                 <div className="md:grid md:grid-cols-1">
-                  <span className="text-careLightBlue">Bairro</span>
+                  <div className="flex gap-2">
+                    <span className="text-careLightBlue">Bairro</span>
+                    <span className="tooltip text-careDarkBlue">
+                      <span className="text-careRedButton">*</span>
+                    </span>
+                  </div>
 
                   <Input
                     value={registerPartiner.addressDistrict}
@@ -332,7 +361,12 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
             ) : (
               <>
                 <div className="col-span-1 ">
-                  <span className="text-careLightBlue">Endereço</span>
+                  <div className="flex gap-2">
+                    <span className="text-careLightBlue">Endereço</span>
+                    <span className="tooltip text-careDarkBlue">
+                      <span className="text-careRedButton">*</span>
+                    </span>
+                  </div>
 
                   <Input
                     value={registerPartiner.addressName}
@@ -348,7 +382,12 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
             )}
 
             <div className="md:grid md:grid-cols-1">
-              <span className="text-careLightBlue">Número</span>
+              <div className="flex gap-2">
+                <span className="text-careLightBlue">Número</span>
+                <span className="tooltip text-careDarkBlue">
+                  <span className="text-careRedButton">*</span>
+                </span>
+              </div>
 
               <Input
                 maxLength={160}
@@ -388,9 +427,16 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
               {maskedPhone()}
             </div>
             <div>
-              <span className="text-careLightBlue">
-                Telefone celular para contato
-              </span>
+              <div className="flex gap-2">
+                <span className="text-careLightBlue">
+                  Telefone celular para contato
+                </span>
+                <span className="tooltip text-careDarkBlue">
+                  <span className="text-careRedButton">*</span>
+                  <span className="tooltiptext">Digite um celular válido</span>
+                </span>
+              </div>
+
               {maskedMobilePhone()}
             </div>
             <div>

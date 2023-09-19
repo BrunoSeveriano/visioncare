@@ -471,7 +471,7 @@ const Dashboard = ({ children }: DashboardProps) => {
                   {isPatientUser && <DataPatient />}
                 </>
               )}
-              {isPdvUser && <CalendarEcp />}
+              {isEcpUser && <CalendarEcp />}
             </div>
           )}
         </div>

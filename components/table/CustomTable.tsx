@@ -64,6 +64,9 @@ const CustomTable = ({
         disableColumnFilter
         onRowClick={handleRowClick}
         loading={isLoading}
+        localeText={{
+          noRowsLabel: "Não há dados para exibir",
+        }}
         sx={{
           "& .MuiDataGrid-row": {
             backgroundColor: "#F4F5F7",
