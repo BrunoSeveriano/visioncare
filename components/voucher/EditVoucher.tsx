@@ -4,14 +4,16 @@ import Input from "@/components/input/Input";
 import Button from "../button/Button";
 import useEditVoucher from "@/hooks/useEditVoucher";
 import { deleteVoucher, updateVoucher } from "@/services/voucher";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import useDataStorage from "@/hooks/useDataStorage";
 import CustomSelect from "../select/Select";
+import { set } from "date-fns";
 
 const EditVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
   const [isEditing, setIsEditing] = useState(true);
   const dataStorage = useDataStorage();
   const editVoucher = useEditVoucher();
+  const [loading, setLoading] = useState(false);
 
   const [voucher, setVoucher] = useState({
     Id: dataStorage.id,
@@ -42,7 +44,7 @@ const EditVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
       if (response.isValidData) {
         toast.success("Voucher excluído com sucesso!");
         editVoucher.onClose();
-        refreshTable();
+        dataStorage.setRefresh(!dataStorage.refresh);
         setVoucherCancel({
           id: "",
           Name: "",
@@ -54,8 +56,8 @@ const EditVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
         });
       } else {
         toast.warning(response.additionalMessage || "Voucher não encontrado");
+        dataStorage.setRefresh(!dataStorage.refresh);
         editVoucher.onClose();
-        refreshTable();
       }
     } catch (err) {
       toast.error("Erro ao cancelar voucher.");
@@ -63,6 +65,7 @@ const EditVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
   };
 
   const handleUpdateVoucher = async () => {
+    setLoading(true);
     updateVoucher(voucher)
       .then((res) => {
         toast.success("Voucher editado com sucesso!");
@@ -70,6 +73,7 @@ const EditVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
         editVoucher.onClose();
       })
       .catch((err) => {
+        setLoading(false);
         toast.error("Erro ao editar voucher.");
       });
   };
@@ -81,19 +85,6 @@ const EditVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
 
   return (
     <div className="w-full h-full fade-in">
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
-
       <div className="md:grid md:grid-cols-1 rounded-lg">
         <div className="bg-careGrey  rounded-md p-2 flex items-center">
           <div className="border-careDarkBlue border-r-[2px] text-careDarkBlue">
@@ -210,10 +201,11 @@ const EditVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
 
           <div className=" mb-14 md:mt-1">
             <Button
+              isLoading={loading}
               onClick={handleUpdateVoucher}
               customClass=" w-full bg-careDarkBlue border-careDarkBlue p-4 py-3 px-10"
               label="Salvar"
-              disabled={isEditing}
+              disabled={loading || isEditing}
             />
           </div>
         </div>

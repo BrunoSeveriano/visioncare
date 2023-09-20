@@ -4,8 +4,7 @@ import Input from "@/components/input/Input";
 import Button from "../button/Button";
 import CustomSelect from "../select/Select";
 import useRegisterVoucher from "@/hooks/useRegisterVoucher";
-import { ToastContainer, toast } from "react-toastify";
-import RegisterVoucherModal from "../modals/RegisterVoucherModal";
+import { toast } from "react-toastify";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useDataStorage from "@/hooks/useDataStorage";
 import { addVoucher } from "@/services/voucher";
@@ -14,6 +13,7 @@ const RegisterVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
   const dataStorage = useDataStorage();
   const registerVoucher = useRegisterVoucher();
   const register = useRegisterModal();
+  const [loading, setLoading] = useState(false);
 
   const [voucher, setVoucher] = useState({
     Name: "",
@@ -24,6 +24,7 @@ const RegisterVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
   });
 
   const handleVoucher = async () => {
+    setLoading(true);
     addVoucher({
       Name: voucher.Name,
       DiscountType: voucher.DiscountType,
@@ -40,6 +41,7 @@ const RegisterVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
       })
 
       .catch(() => {
+        setLoading(false);
         toast.error("Erro ao cadastrar voucher!");
       });
   };
@@ -52,18 +54,6 @@ const RegisterVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
   return (
     <div className="w-full fade-in">
       <div className=" md:grid md:grid-cols-1 rounded-lg">
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss={false}
-          draggable
-          pauseOnHover={false}
-          theme="light"
-        />
         <div className=" bg-careGrey  rounded-md p-2 flex items-center">
           <div className="border-careDarkBlue border-r-[2px] text-careDarkBlue">
             <AiOutlineInfoCircle className="mr-3" size="2rem" />
@@ -159,10 +149,12 @@ const RegisterVoucher = ({ refreshTable }: { refreshTable: () => void }) => {
           label="Voltar"
         />
         <Button
+          isLoading={loading}
           onClick={handleVoucher}
           customClass=" bg-careDarkBlue border-careDarkBlue p-4 py-3 px-10"
           label="Adicionar"
           disabled={
+            loading ||
             voucher.Name === "" ||
             voucher.DiscountType === "" ||
             voucher.DiscountValue === 0 ||
