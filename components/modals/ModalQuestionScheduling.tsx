@@ -818,11 +818,12 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
             </div>
             <div className="mt-0 md:mt-5">
               <Button
-                onClick={() => {
-                  router.push(
-                    "https://www.acuvue.com.br/guia-de-compra/onde-comprar-lentes-de-contato"
-                  );
-                }}
+                onClick={() =>
+                  window.open(
+                    "https://www.acuvue.com.br/guia-de-compra/onde-comprar-lentes-de-contato",
+                    "_blank"
+                  )
+                }
                 label={selectedOption === 3 ? "Onde Encontrar" : "Ver mais"}
                 customClass="w-full bg-careLightBlue border border-careLightBlue text-white rounded-full md:w-40 h-12 mt-10 ml-5"
               />

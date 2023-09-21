@@ -284,12 +284,9 @@ const Dashboard = ({ children }: DashboardProps) => {
 
           {sideBarOpen ? (
             <div className="hidden md:flex ml-5 gap-5 mt-10 cursor-pointer">
-              <div
-                onClick={() => {
-                  router.push(
-                    "https://www.instagram.com/acuvuebrasil/?igshid=MzRlODBiNWFlZA%3D%3D"
-                  );
-                }}
+              <a
+                href="https://www.instagram.com/acuvuebrasil/?igshid=MzRlODBiNWFlZA%3D%3D"
+                target="_blank"
               >
                 <Image
                   src="/icon-instagram.png"
@@ -297,25 +294,19 @@ const Dashboard = ({ children }: DashboardProps) => {
                   height={20}
                   alt=""
                 />
-              </div>
-              <div
-                onClick={() => {
-                  router.push(
-                    "https://www.facebook.com/acuvuebrasil?mibextid=ZbWKwL"
-                  );
-                }}
+              </a>
+              <a
+                href="https://www.facebook.com/acuvuebrasil?mibextid=ZbWKwL"
+                target="_blank"
               >
                 <Image src="/icon-facebook.png" width={15} height={20} alt="" />
-              </div>
+              </a>
             </div>
           ) : (
             <div className="hidden md:flex md:flex-col ml-6 gap-7 mt-10 cursor-pointer">
-              <div
-                onClick={() => {
-                  router.push(
-                    "https://www.instagram.com/acuvuebrasil/?igshid=MzRlODBiNWFlZA%3D%3D"
-                  );
-                }}
+              <a
+                href="https://www.instagram.com/acuvuebrasil/?igshid=MzRlODBiNWFlZA%3D%3D"
+                target="_blank"
               >
                 <Image
                   src="/icon-instagram.png"
@@ -323,16 +314,13 @@ const Dashboard = ({ children }: DashboardProps) => {
                   height={20}
                   alt=""
                 />
-              </div>
-              <div
-                onClick={() => {
-                  router.push(
-                    "https://www.facebook.com/acuvuebrasil?mibextid=ZbWKwL"
-                  );
-                }}
+              </a>
+              <a
+                href="https://www.facebook.com/acuvuebrasil?mibextid=ZbWKwL"
+                target="_blank"
               >
                 <Image src="/icon-facebook.png" width={15} height={20} alt="" />
-              </div>
+              </a>
             </div>
           )}
         </div>

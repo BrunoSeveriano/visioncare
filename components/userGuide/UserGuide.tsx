@@ -204,8 +204,11 @@ const UsersGuide = () => {
                   customClass="mt-5 bg-careDarkBlue border-careDarkBlue py-2 w-full"
                   label="FALAR COM ESPECIALISTA"
                 />
+
                 <Button
-                  onClick={() => route.push("https://www.acuvue.com.br/")}
+                  onClick={() =>
+                    window.open("https://www.acuvue.com.br/", "_blank")
+                  }
                   customClass="mt-2 bg-careDarkBlue border-careDarkBlue py-2 w-full"
                   label="ACESSE NOSSO SITE"
                 />

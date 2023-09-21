@@ -53,10 +53,27 @@ const MenuOptions = ({
 
   return (
     <div
+      onClick={() => {
+        handleClick();
+        logout && auth.onLogout();
+        closeMenu && closeMenu();
+        handleLinkClick();
+      }}
       className={`cursor-pointer flex w-full gap-3 items-center px-4       
       ${spanClassname} hover:opacity-50 transition-all`}
     >
-      {Icon && <Icon className={iconClassname} size="1.5em" />}
+      {Icon && (
+        <Icon
+          onClick={() => {
+            handleClick();
+            logout && auth.onLogout();
+            closeMenu && closeMenu();
+            handleLinkClick();
+          }}
+          className={iconClassname}
+          size="1.5em"
+        />
+      )}
       {image && <Image alt="icon" width={26} height={26} src={path || ""} />}
       <span
         onClick={() => {
