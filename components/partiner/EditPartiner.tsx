@@ -75,7 +75,6 @@ const EditPartiner = ({ refreshTable }: { refreshTable: () => void }) => {
     setIsLoadingAddress(true);
     getAddressByCep(updatedPartiner.addressPostalCode)
       .then((res) => {
-        console.log(res);
         setUpdatedPartiner({
           ...updatedPartiner,
           addressName: res.street,

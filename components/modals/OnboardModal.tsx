@@ -28,9 +28,7 @@ const OnboardModal = () => {
     dataStorage.setSurveyData(survey);
   }, [survey]);
 
-  useEffect(() => {
-    console.log(questionNumber);
-  }, [questionNumber]);
+  useEffect(() => {}, [questionNumber]);
 
   const handleFinalMessage = () => {
     setFinalMessage(true);

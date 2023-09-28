@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import Dashboard from "@/components/dashboard/Dashboard";
 import OnboardModalPartiner from "@/components/modals/OnboardModalPartiner";
 import useOnboardModalPartiner from "@/hooks/useOnboardModalPartiner";
-import NewPassword from "./new-password";
 import { ToastContainer, toast } from "react-toastify";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -49,15 +48,18 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     if (router.pathname === "/_error") {
       router.push("/login");
+      console.log("aqui 1");
     }
     if (!loginData.isLogged && !avaiableRoutes.includes(router.pathname)) {
       router.push("/");
+      console.log("aqui 2");
     }
     if (
       loginData.isLogged &&
       avaiableRoutes.includes(router.pathname) &&
       router.pathname !== "/new-password"
     ) {
+      console.log("aqui 3");
       router.push("/dashboard/home");
     }
   }, [loginData.isLogged, router]);

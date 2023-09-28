@@ -10,10 +10,6 @@ const OnboardModalPartiner = () => {
   const auth = useLogin();
   const router = useRouter();
 
-  const getEmailPartiner = () => {
-    return auth.userData.emailAddress;
-  };
-
   if (!auth.isLogged) return null;
   return (
     <div>
@@ -50,7 +46,6 @@ const OnboardModalPartiner = () => {
             customClass="bg-careBlue border-careBlue py-2 xl:py-5 w-80"
             label="AVANÇAR"
             onClick={() => {
-              getEmailPartiner();
               onboardModalPartiner.onClose();
               router.push("/new-password");
             }}

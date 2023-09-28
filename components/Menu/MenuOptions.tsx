@@ -56,6 +56,7 @@ const MenuOptions = ({
       onClick={() => {
         handleClick();
         logout && auth.onLogout();
+
         closeMenu && closeMenu();
         handleLinkClick();
       }}

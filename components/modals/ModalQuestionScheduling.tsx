@@ -5,24 +5,22 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import Button from "../button/Button";
 import { useEffect, useState } from "react";
 import Input from "../input/Input";
-import {
-  BsCalendar2Week,
-  BsQuestionCircle,
-  BsQuestionLg,
-} from "react-icons/bs";
+import { BsCalendar2Week, BsQuestionCircle } from "react-icons/bs";
 import { MdAlarm, MdOutlineLocationOn } from "react-icons/md";
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
-import useDataStorage from "@/hooks/useDataStorage";
+
 import { responseSurvey } from "@/services/questions";
 import { getLocation } from "@/services/location";
 import { getCalendar } from "@/services/calendar";
 import { schedulevisittoclinic } from "@/services/diagnostic";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { getAddressByCep } from "@/services/cep";
+import useLogin from "@/hooks/useLogin";
 
 dayjs.extend(localizedFormat);
 dayjs.locale("pt-br");
@@ -36,7 +34,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
   currentQuestion,
   setCurrentQuestion,
 }) => {
-  const dataStorage = useDataStorage();
+  const dataStorage = useLogin();
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +47,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
   const [calendarData, setCalendarData] = useState([]);
   const [calendarHour, setCalendarHour] = useState(0);
   const [postData, setPostData] = useState<any>({
-    name: dataStorage.VoucherUserHistory.name,
+    name: dataStorage.userDataPatient[0].namePatient,
     scheduleDateStart: "",
     eyePrescription: {
       refraction: {
@@ -134,7 +132,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
       setPostData({
         ...postData,
         scheduleDateStart: dayjs(selectedDate).format(
-          `YYYY-MM-DDT${calendarHour}:mm:ss.SSS`
+          `YYYY-MM-DDT${calendarHour === 9 ? "09" : calendarHour}:mm:ss.SSS`
         ),
       });
     }
@@ -182,24 +180,43 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
     selectedOption === 3 || (currentQuestion === 1 && selectedOption === 1);
 
   const handlePostalCodeChange = async (e: any) => {
+    setIsLoading(true);
     const newPostalCode = e.target.value;
     setPostalCode(newPostalCode);
 
     if (newPostalCode.length >= 8) {
-      setIsLoading(true);
-      try {
-        const filters = {
-          postalCode: newPostalCode,
-        };
-        const data = await getLocation(filters);
-        setIsLoading(true);
-        setLocationData(data);
-      } catch (error) {
-        console.error("Erro ao buscar dados de localização:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      getAddressByCep(newPostalCode)
+        .then((response) => {
+          const { state } = response;
+          if (state !== "SP") {
+            setLocationData([]);
+            return toast.error(
+              "No momento, estamos atendendo apenas no estado de SP"
+            );
+          }
+          getClinics(newPostalCode);
+        })
+        .catch((error) => {
+          console.error("Erro ao buscar dados de localização:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
+  };
+
+  const getClinics = async (newPostalCode: string) => {
+    const filters = {
+      postalCode: newPostalCode,
+    };
+
+    getLocation(filters)
+      .then((response) => {
+        setLocationData(response);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar dados de localização:", error);
+      });
   };
 
   const handleSpanClick = (locationId: any) => {
@@ -209,16 +226,21 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
 
   useEffect(() => {
     async function fetchCalendarData() {
-      try {
-        const filters = {
-          accountId: postData.accountId,
-          month: dayjs().format("MM"),
-        };
-        const data = await getCalendar(filters);
-        setCalendarData(data);
-      } catch (error) {
-        console.error("Erro ao obter dados do calendário:", error);
-      }
+      if (postData.accountId === "") return;
+      const filters = {
+        accountId: postData.accountId,
+        month: dayjs().format("MM"),
+      };
+      getCalendar(filters)
+        .then((response) => {
+          setCalendarData(response);
+        })
+        .catch((error) => {
+          toast.error("Erro ao buscar dados de calendário");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
 
     fetchCalendarData();

@@ -50,9 +50,7 @@ const DataPartiner = () => {
       .then((res) => {
         setUserDataPartiner(res[0]);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const handleChangePartiner = (e: any) => {

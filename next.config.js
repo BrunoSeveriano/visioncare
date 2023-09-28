@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
-  // output: "export",
+  output: 'standalone',
   images: {
     domains: [
       "images.unsplash.com",
@@ -9,11 +9,10 @@ const nextConfig = {
       "painelsite.viveo.com.br",
     ],
 
-    // unoptimized: true,
+    unoptimized: true,
   },
   env: {
-    API_URL:
-      "https://homologacao.suporteaopaciente.com.br/api-takeda-visioncare-merge/",
+    API_URL: "https://takeda-api.viveo.com.br/",
   },
 };
 

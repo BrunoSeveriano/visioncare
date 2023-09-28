@@ -47,7 +47,18 @@ const useLogin = create(
       setName: (name) => set({ name: name }),
       setRole: (role) => set({ role: role }),
       onLogin: () => set({ isLogged: true }),
-      onLogout: () => set({ isLogged: false, token: "", name: "", email: "" }),
+      onLogout: () =>
+        set({
+          isLogged: false,
+          token: "",
+          name: "",
+          email: "",
+          role: "",
+          loginNewPassword: [],
+          userDataPatient: [],
+          userDataAdmin: [],
+          userData: [],
+        }),
 
       setToken: (token) => set({ token: token }),
     }),

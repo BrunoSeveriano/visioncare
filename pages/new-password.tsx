@@ -3,12 +3,9 @@ import Input from "@/components/input/Input";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { BsChatSquareDots } from "react-icons/bs";
-import { MdOutlineLock } from "react-icons/md";
 import Card from "@/components/card/Card";
 import { toast } from "react-toastify";
 import useLogin from "@/hooks/useLogin";
-import useOnboardModalPartiner from "@/hooks/useOnboardModalPartiner";
 import { newPassword, resetPassword } from "@/services/login";
 
 const NewPassword = () => {
@@ -16,22 +13,39 @@ const NewPassword = () => {
   const [loading, setLoading] = useState(false);
   const auth = useLogin();
 
-  const [userPassword, setUserPassword] = useState({
-    email: auth.loginNewPassword && auth.userData.emailAddress,
-    password: "",
-    Token: "",
-    ProgramCode: "073",
-    Name: "#ForgotPasswordToken",
+  const [userPassword, setUserPassword] = useState(() => {
+    if (auth.role === "Partner ECP VisionCare") {
+      return {
+        email: auth.name,
+        password: "",
+        Token: "",
+        ProgramCode: "073",
+        Name: "#REGISTERACCOUNTTOKEN",
+      };
+    }
+    if (auth.role === "Partner POS VisionCare") {
+      return {
+        email: auth.name,
+        password: "",
+        Token: "",
+        ProgramCode: "073",
+        Name: "#REGISTERACCOUNTTOKEN",
+      };
+    }
+    return {
+      email: auth.loginNewPassword,
+      password: "",
+      Token: "",
+      ProgramCode: "073",
+      Name: "#ForgotPasswordToken",
+    };
   });
 
   const handlePassword = async () => {
-    newPassword(userPassword)
+    newPassword(userPassword as any)
       .then((res) => {
-        if (!res.isValidData) {
-          toast.error("Token é inválido.");
-          return;
-        }
         toast.success("Senha alterada com sucesso!");
+        auth.onLogout();
         router.push("/");
       })
       .catch((err) => {
@@ -144,7 +158,11 @@ const NewPassword = () => {
             label="ENVIAR"
             onClick={handlePassword}
             isLoading={loading}
-            disabled={loading}
+            disabled={
+              loading ||
+              userPassword.password === "" ||
+              userPassword.Token === ""
+            }
           />
           <Button
             customClass="bg-careBlue border-careBlue py-2 xl:py-5"

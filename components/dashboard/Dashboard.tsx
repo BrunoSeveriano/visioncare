@@ -25,8 +25,6 @@ import DataPatient from "../myData/DataPatient";
 import DataPartiner from "../myData/DataPartiner";
 import DataAdmin from "../myData/DataAdmin";
 import useOnboardModalPartiner from "@/hooks/useOnboardModalPartiner";
-import path from "path";
-import { tr } from "date-fns/locale";
 
 interface DashboardProps {
   children?: React.ReactNode;
@@ -63,17 +61,17 @@ const Dashboard = ({ children }: DashboardProps) => {
 
     const userRoleEcp = auth.role === "Partner ECP VisionCare";
     if (userRoleEcp) {
-      // if (auth.firstLogin === true) {
-      //   onboardModalPartiner.onOpen();
-      // }
+      if (auth.firstLogin === true) {
+        onboardModalPartiner.onOpen();
+      }
       return setIsEcpUser(true);
     }
 
     const userRolePdv = auth.role === "Partner POS VisionCare";
     if (userRolePdv) {
-      // if (auth.firstLogin === true) {
-      //   onboardModalPartiner.onOpen();
-      // }
+      if (auth.firstLogin === true) {
+        onboardModalPartiner.onOpen();
+      }
       return setIsPdvUser(true);
     }
 
@@ -377,7 +375,7 @@ const Dashboard = ({ children }: DashboardProps) => {
               <span className="text-careLightBlue text-3xl">
                 Olá, {isEcpUser && auth.userData.name}
                 {isPdvUser && auth.userData.name}
-                {isPatientUser && auth.userDataPatient[0].namePatient}
+                {isPatientUser && auth.userDataPatient[0]?.namePatient}
                 {isAdminUser && auth.userDataAdmin.userName}
               </span>
               <div className="hidden md:flex">

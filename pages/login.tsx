@@ -3,10 +3,9 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Input from "@/components/input/Input";
-import { MdOutlineEmail, MdOutlineLock } from "react-icons/md";
 import Card from "@/components/card/Card";
 import { getAdmData, getClientData, userLogin } from "@/services/login";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import useLogin from "@/hooks/useLogin";
 import api from "@/services/api";
 import { listPartiner } from "@/services/partiner";
@@ -36,9 +35,7 @@ const Login = () => {
       .then((res) => {
         auth.setUserData(res[0]);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const handleGetAdmData = async () => {
@@ -46,9 +43,7 @@ const Login = () => {
       .then((res) => {
         auth.setDataAdmin(res);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const handleGetUserData = () => {
@@ -56,13 +51,12 @@ const Login = () => {
       .then((res) => {
         auth.setDataPatient(res.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const handleLogin = async () => {
     setLoading(true);
+
     userLogin(userData)
       .then((res) => {
         auth.setName(res.name);

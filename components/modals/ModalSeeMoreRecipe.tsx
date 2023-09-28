@@ -14,7 +14,6 @@ const ModalSeeMoreRecipe = () => {
   const [dataPacient, setDataPatient] = useState<any>([]);
 
   useEffect(() => {
-    console.log(dataStorage.idSchedule);
     getPatientData(dataStorage.idSchedule)
       .then((response) => {
         setDataPatient(response);

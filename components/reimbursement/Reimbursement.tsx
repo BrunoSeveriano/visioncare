@@ -56,9 +56,7 @@ const Reimbursement = ({ clientData, selectedStatus }: SearchModalProps) => {
       .then((response) => {
         setPurchaseList(response.value);
       })
-      .catch((error) => {
-        console.log(error);
-      })
+      .catch((error) => {})
       .finally(() => {
         setIsLoading(false);
       });
@@ -70,9 +68,7 @@ const Reimbursement = ({ clientData, selectedStatus }: SearchModalProps) => {
       .then((response) => {
         setReimbursementList(response.value);
       })
-      .catch((error) => {
-        console.log(error);
-      })
+      .catch((error) => {})
       .finally(() => {
         setIsLoading(false);
       });
@@ -97,9 +93,7 @@ const Reimbursement = ({ clientData, selectedStatus }: SearchModalProps) => {
         setRefreshTable(true);
         useData.setAxiesId([]);
       })
-      .catch((error) => {
-        console.log(error);
-      })
+      .catch((error) => {})
       .finally(() => {
         setIsLoading(false);
       });

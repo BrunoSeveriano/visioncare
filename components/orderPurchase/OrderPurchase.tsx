@@ -72,9 +72,7 @@ const OrderPurchase = () => {
 
         setClientTable(filteredData);
       })
-      .catch((err) => {
-        console.log(err);
-      })
+      .catch((err) => {})
       .finally(() => {
         setIsLoading(false);
       });

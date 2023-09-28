@@ -4,7 +4,6 @@ import CustomTable from "../table/CustomTable";
 import { TableScheduleManagement } from "@/helpers/TableScheduleManagement";
 import { TableAttendanceConfirmation } from "@/helpers/TableAttendanceConfirmation";
 import {
-  confirmVisitClinic,
   listConfirmedVisitiClinic,
   listVisitiClinic,
 } from "@/services/diagnostic";
@@ -27,9 +26,7 @@ const SchedulingPartiner = () => {
         dataScheduling.setIdSchedule(response);
         setListVisitiClinic(response);
       })
-      .catch((error) => {
-        console.log(error);
-      })
+      .catch((error) => {})
       .finally(() => {
         setIsLoading(false);
       });
@@ -45,9 +42,7 @@ const SchedulingPartiner = () => {
       .then((response) => {
         setListConfirmed(response);
       })
-      .catch((error) => {
-        console.log(error);
-      })
+      .catch((error) => {})
       .finally(() => {
         setIsLoading(false);
       });

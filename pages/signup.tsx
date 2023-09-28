@@ -167,7 +167,7 @@ export default function Signup() {
     }
 
     const birthdateFormatted = `${birthdateYear}-${birthdateMonth}-${birthdateDay}`;
-    console.log(birthdateFormatted);
+
     setRegisterAccount((prevState) => ({
       ...prevState,
       birthdate: birthdateFormatted,

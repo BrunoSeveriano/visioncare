@@ -65,7 +65,7 @@ const CalendarEcp = () => {
       .then((res) => {
         setData(res);
       })
-      .catch((err) => console.log(err));
+      .catch();
   };
 
   useEffect(() => {
@@ -111,7 +111,7 @@ const CalendarEcp = () => {
         toast.success("Horário cadastrado com sucesso!");
         clearInputs();
       })
-      .catch((err) => console.log(err))
+      .catch()
       .finally(() => setIsLoading(false));
   };
 
@@ -127,7 +127,7 @@ const CalendarEcp = () => {
         toast.success("Horário deletado com sucesso!");
         clearInputs();
       })
-      .catch((err) => console.log(err));
+      .catch();
   };
 
   const handleChanges = (event: any) => {

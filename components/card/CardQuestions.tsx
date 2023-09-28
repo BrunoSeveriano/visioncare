@@ -64,7 +64,6 @@ const CardQuestions = ({
       setAnswer(currentOptions.questionResponse);
     }
     setQuestionNumber((prevQuestionNumber) => prevQuestionNumber + 1);
-    console.log(dataStorage.surveyData);
 
     if (totalQuestions === questionNumber) {
       // handleSubmit();

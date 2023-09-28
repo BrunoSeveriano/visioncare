@@ -43,7 +43,6 @@ const Selected = ({ clientData }: SearchModalProps) => {
 
   useEffect(() => {
     dataStorage.setAxiesId(axiesObject);
-    console.log(axiesObject);
   }, [axiesObject]);
 
   useEffect(() => {
@@ -56,7 +55,6 @@ const Selected = ({ clientData }: SearchModalProps) => {
         },
       ]);
     }
-    console.log(axiesObject);
   }, [optionsQuatity, selectedAxies]);
 
   useEffect(() => {

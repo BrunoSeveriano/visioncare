@@ -48,9 +48,7 @@ const ExportToTxtAll = ({
           toast.error("Não foi encontrado nenhum produto");
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (
