@@ -28,15 +28,10 @@ const UsersGuide = () => {
         <OpenGuide />
       ) : (
         <>
-          <div className="flex flex-col md:flex md:flex-row gap-3 md:border-b-2 md:pb-16 pb-10 md:border-careLightBlue">
+          <div className="flex flex-col md:grid md:grid-cols-2 gap-2 ">
             <div className="flex flex-col">
-              <video
-                className="rounded-xl mb-3"
-                width="340"
-                height="340"
-                controls
-              >
-                <source src="/teste-video-dois.mp4" type="video/mp4" />
+              <video className="rounded-xl mb-3" controls>
+                <source src="" type="video/mp4" />
               </video>
               <span className="text-2xl text-careLightBlue">
                 Colocando e retirando
@@ -49,13 +44,8 @@ const UsersGuide = () => {
               </span>
             </div>
             <div className="flex flex-col">
-              <video
-                className="rounded-xl mb-3"
-                width="340"
-                height="340"
-                controls
-              >
-                <source src="/teste-video-dois.mp4" type="video/mp4" />
+              <video className="rounded-xl mb-3" controls>
+                <source src="" type="video/mp4" />
               </video>
               <span className="text-2xl text-careLightBlue">
                 Troca e descarte correto
@@ -67,52 +57,31 @@ const UsersGuide = () => {
                 assista o video e entenda como
               </span>
             </div>
-            <div className="flex flex-col">
-              <div className="grid grid-cols-3 md:grid-cols-3 gap-4">
-                <div className="flex flex-col gap-2  md:w-32">
-                  <video
-                    className="rounded-xl mb-3"
-                    width="100%"
-                    height="300"
-                    controls
-                  >
-                    <source src="/video-teste.mp4" type="video/mp4" />
-                  </video>
-                </div>
-                <div className="flex flex-col gap-2   md:w-32">
-                  <video
-                    className="rounded-xl mb-3"
-                    width="100%"
-                    height="300"
-                    controls
-                  >
-                    <source src="/video-teste.mp4" type="video/mp4" />
-                  </video>
-                </div>
-                <div className="flex flex-col gap-2 md:w-32">
-                  <video
-                    className="rounded-xl mb-3"
-                    width="100%"
-                    height="300"
-                    controls
-                  >
-                    <source src="/video-teste.mp4" type="video/mp4" />
-                  </video>
-                </div>
+          </div>
+          <div className="flex flex-col mt-10 md:border-b-2 md:pb-16 pb-10 md:border-careLightBlue">
+            <div className="md:grid grid-cols-3  gap-4">
+              <div className="flex flex-col gap-2">
+                <video className="rounded-xl mb-3" controls>
+                  <source src="" type="video/mp4" />
+                </video>
               </div>
-              <span className="text-2xl text-careLightBlue">
-                Quem conhece, não abre
-              </span>
-              <span className="text-2xl text-careLightBlue">
-                mão de suas lentes!
-              </span>
-              <span className="text-sm text-careDarkBlue">
-                Rafa, Vini e Paty contas suas
-              </span>
-              <span className="text-sm text-careDarkBlue">
-                experiências de adaptação
-              </span>
+              <div className="flex flex-col gap-2 ">
+                <video className="rounded-xl mb-3" controls>
+                  <source src="" type="video/mp4" />
+                </video>
+              </div>
+              <div className="flex flex-col gap-2 ">
+                <video className="rounded-xl mb-3" controls>
+                  <source src="" type="video/mp4" />
+                </video>
+              </div>
             </div>
+            <span className="text-2xl text-careLightBlue">
+              Quem conhece, não abre mão de suas lentes!
+            </span>
+            <span className="text-sm text-careDarkBlue">
+              Rafa, Vini e Paty contas suas experiências de adaptação
+            </span>
           </div>
           <div className="md:flex md:flex-row gap-3 flex flex-col md:mt-10 mb-10">
             <div className="bg-careGrey p-10 rounded-xl flex flex-col items-start">

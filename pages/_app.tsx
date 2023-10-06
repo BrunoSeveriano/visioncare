@@ -48,18 +48,15 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     if (router.pathname === "/_error") {
       router.push("/login");
-      console.log("aqui 1");
     }
     if (!loginData.isLogged && !avaiableRoutes.includes(router.pathname)) {
       router.push("/");
-      console.log("aqui 2");
     }
     if (
       loginData.isLogged &&
       avaiableRoutes.includes(router.pathname) &&
       router.pathname !== "/new-password"
     ) {
-      console.log("aqui 3");
       router.push("/dashboard/home");
     }
   }, [loginData.isLogged, router]);
