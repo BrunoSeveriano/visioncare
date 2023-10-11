@@ -25,9 +25,10 @@ interface Voucher {
 
 interface SearchModalProps {
   clientData: ClientData | null;
+  totalQuantity: number;
 }
 
-const Selected = ({ clientData }: SearchModalProps) => {
+const Selected = ({ clientData, totalQuantity }: SearchModalProps) => {
   const [productOptions, setProductOptions] = useState([]);
   const [degreeOptions, setDegreeOptions] = useState([]);
   const [cylinderOptions, setCylinderOptions] = useState([]);
@@ -38,8 +39,10 @@ const Selected = ({ clientData }: SearchModalProps) => {
   const [selectedCodeNumber, setSelectedCodeNumber] = useState("");
   const [optionsQuatity, setOptionsQuatity] = useState("");
   const [axiesObject, setAxiesObject] = useState<any[]>([]);
-  const options = [{ value: "4", id: "4" }];
   const dataStorage = useDataStorage();
+
+  const quantityValue =
+    totalQuantity >= 4 ? 1 : 4 / Math.pow(2, totalQuantity - 1);
 
   useEffect(() => {
     dataStorage.setAxiesId(axiesObject);
@@ -172,7 +175,12 @@ const Selected = ({ clientData }: SearchModalProps) => {
           <div className="md:w-40 w-80 text-careDarkBlue font-bold">
             <span>Quantidade</span>
             <CustomSelect
-              options={options}
+              options={[
+                {
+                  value: quantityValue.toString(),
+                  id: quantityValue.toString(),
+                },
+              ]}
               value={optionsQuatity}
               onChange={(e) => {
                 setOptionsQuatity(e.target.value);

@@ -2,23 +2,13 @@
 import React, { useEffect, useState } from "react";
 import Button from "../button/Button";
 import CustomTable from "../table/CustomTable";
-import {
-  getAxle,
-  getCodeNumber,
-  getCylinder,
-  getDegree,
-  getListRescueVoucherPatients,
-  useVoucher,
-} from "@/services/voucher";
+import { getListRescueVoucherPatients } from "@/services/voucher";
 import useTalkModal from "@/hooks/useTalkModal";
 import { TableMockupValidateVoucher } from "@/helpers/TableMockupValidateVoucher";
-import CustomSelect from "../select/Select";
 import { AiOutlineInfoCircle, AiOutlinePlus } from "react-icons/ai";
-import { alpha, styled } from "@mui/material/styles";
-import { green } from "@mui/material/colors";
 import Switch from "@mui/material/Switch";
 import { addPurchase } from "@/services/purchase";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import useDataStorage from "@/hooks/useDataStorage";
 import useOpen from "@/hooks/useOpen";
 import Selected from "../selectedProducted/Selected";
@@ -150,7 +140,10 @@ const SearchModalEcp = ({ clientData, selectedStatus }: SearchModalProps) => {
         <>
           {inputBlocks.map((item, index) => (
             <div key={index} className="md:flex md:flex-row flex flex-col">
-              <Selected clientData={clientData} />
+              <Selected
+                clientData={clientData}
+                totalQuantity={inputBlocks.length}
+              />
               {inputBlocks.length < 4 ? (
                 <div className="bg-careMenuGrey rounded-full p-4 h-5 w-5 relative md:top-11 md:left-3 cursor-pointer mt-3 md:mt-20">
                   <span
