@@ -109,7 +109,7 @@ export const TableMockupOrderPurchase: TableData = {
     },
     {
       field: "isConfirmed",
-      headerName: "Confirmar",
+      headerName: <div className="flex items-center">Confirmar</div>,
       headerAlign: "center",
       minWidth: 95,
       align: "center",

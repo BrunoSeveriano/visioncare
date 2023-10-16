@@ -341,10 +341,10 @@ const Dashboard = ({ children }: DashboardProps) => {
       </div>
       <div className="w-full border-r-[1px]  h-full ">
         <div className="h-28 top-0 w-full bg-careLightBlue flex justify-between md:hidden">
-          <div className="mx-8 mt-12">
+          <div className="mx-7 mt-10">
             <Image
-              src="/acuvue-letter.png"
-              width={160}
+              src="/LogoMyAcuvue.png"
+              width={260}
               height={500}
               alt="acuvue"
             />
