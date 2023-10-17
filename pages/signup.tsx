@@ -251,6 +251,7 @@ export default function Signup() {
         name="mobilephone"
         onChange={handleChange}
         disabled={loading}
+        className="h-12 md:h-16 xl:h-14 2xl:h-16"
       >
         <Input
           placeholder="Telefone"
@@ -271,6 +272,7 @@ export default function Signup() {
         maskPlaceholder={null}
         onChange={handleChange}
         disabled={loading}
+        className="h-12 md:h-16 xl:h-14 2xl:h-16"
       >
         <Input
           disabled={loading}
@@ -292,6 +294,7 @@ export default function Signup() {
         onChange={handleChange}
         onBlur={formatDate}
         disabled={loading}
+        className="h-12 md:h-16 xl:h-14 2xl:h-16"
       >
         <Input
           placeholder="Data de nascimento"
@@ -402,15 +405,15 @@ export default function Signup() {
       </div>
       <CardExpanded>
         <div className="xl:flex xl:flex-col text-careLightBlue">
-          <span className="md:text-5xl mr-1 text-2xl">
+          <span className="md:text-5xl xl:text-3xl 2xl:text-5xl mr-1 text-2xl">
             Falta pouco para acessar seu Programa
           </span>
-          <span className="md:text-5xl text-2xl">
+          <span className="md:text-5xl xl:text-3xl 2xl:text-5xl mr-1 text-2xl">
             de Benefícios <strong>My</strong>ACUVUE®
           </span>
         </div>
-        <div className="my-6">
-          <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+        <div className="my-3">
+          <span className="text-careBlue text-sm opacity-70 xl:text-base 2xl:text-xl">
             Preencha os campos abaixo:
           </span>
         </div>
@@ -425,6 +428,7 @@ export default function Signup() {
             disabled={loading}
             maxLength={50}
             value={inputValue}
+            className="h-12 md:h-16 xl:h-14 2xl:h-16"
           />
           <div className="md:grid md:grid-cols-2 gap-8 my-2">
             <div className="md:col-col-2">
@@ -440,6 +444,7 @@ export default function Signup() {
                   handleEmailChange(e);
                   handleChange(e);
                 }}
+                className="h-12 md:h-16 xl:h-14 2xl:h-16"
               />
               {showValidationMessage && (
                 <div className="mt-2">
@@ -465,6 +470,7 @@ export default function Signup() {
               onChange={handleChange}
               disabled={loading}
               onBlur={validatePassword}
+              className="h-12 md:h-16 xl:h-14 2xl:h-16"
             />
             <Input
               name="confirmedPassword"
@@ -477,13 +483,14 @@ export default function Signup() {
               onChange={handleChange}
               disabled={loading}
               onBlur={validatePassword}
+              className="h-12 md:h-16 xl:h-14 2xl:h-16"
             />
             {passwordError && (
               <span className="text-red-500 text-sm ">{passwordError}</span>
             )}
           </div>
         </div>
-        <div className="md:grid md:grid-cols-1 xl:grid-cols-2 gap-8 xl:mt-5 2xl:mt-20">
+        <div className="md:grid md:grid-cols-1 xl:grid-cols-2 gap-8 xl:mt-5 2xl:mt-14">
           <div className="md:flex md:flex-col text-careBlue">
             <div>
               <Checkbox

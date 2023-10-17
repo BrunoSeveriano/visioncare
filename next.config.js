@@ -12,7 +12,8 @@ const nextConfig = {
     unoptimized: true,
   },
   env: {
-    API_URL: "https://takeda-api.viveo.com.br/",
+    API_URL:
+      "http://homologacao.suporteaopaciente.com.br/api-takeda-visioncare-merge/",
   },
 };
 

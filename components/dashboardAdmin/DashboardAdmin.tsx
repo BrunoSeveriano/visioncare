@@ -230,6 +230,11 @@ const DashboardAdmin = () => {
 
   const getAllPatients = useCallback(() => {
     getListAllPatients().then((response) => {
+      response.sort((a: any, b: any) => {
+        const dateA = new Date(a.createdOn);
+        const dateB = new Date(b.createdOn);
+        return dateB.getTime() - dateA.getTime();
+      });
       setPatientList(response);
     });
   }, []);

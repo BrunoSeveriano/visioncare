@@ -102,22 +102,22 @@ const NewPassword = () => {
         />
       </div>
       <Card>
-        <div className="flex flex-col justify-start text-careLightBlue text-5xl mb-5">
+        <div className="flex flex-col justify-start text-careLightBlue text-4xl 2xl:text-5xl xl:text-3xl mb-5">
           <span>Crie uma nova senha</span>
         </div>
-        <div className="my-5 z-40 flex flex-col ">
-          <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+        <div className="xl:my-1 2xl:my-5 z-40 flex flex-col ">
+          <span className="text-careBlue text-base opacity-70 xl:text-sm 2xl:text-xl">
             Insira o código que enviamos para o seu
           </span>
-          <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+          <span className="text-careBlue text-base opacity-70 xl:text-sm 2xl:text-xl">
             e-mail e redefina a sua senha:
           </span>
         </div>
-        <div className="w-full flex flex-col gap-2 xl:gap-2 justify-end md:my-7 md:mb-0">
+        <div className="w-full flex flex-col gap-2 xl:gap-2 justify-end md:my-2 md:mb-0">
           <Input
             name="Token"
             onChange={handleChange}
-            className="fill-careDarkBlue h-12 md:h-16"
+            className="fill-careDarkBlue h-12 md:h-16 xl:h-14 2xl:h-16"
             startIcon
             imageSrc="/icon-sap.png"
             fullWidth
@@ -127,7 +127,7 @@ const NewPassword = () => {
           />
 
           <Input
-            className="fill-careDarkBlue h-12 md:h-16"
+            className="fill-careDarkBlue h-12 md:h-16 xl:h-14 2xl:h-16"
             startIcon
             imageSrc="/house-lock.png"
             fullWidth
@@ -140,7 +140,7 @@ const NewPassword = () => {
           />
 
           <Input
-            className="fill-careDarkBlue h-12 md:h-16"
+            className="fill-careDarkBlue h-12 md:h-16 xl:h-14 2xl:h-16"
             startIcon
             imageSrc="/house-lock.png"
             fullWidth
@@ -154,7 +154,7 @@ const NewPassword = () => {
         </div>
         <div className="w-full flex flex-col mt-8 gap-2 xl:gap-4 justify-end">
           <Button
-            customClass="bg-careLightBlue border-careLightBlue py-2 xl:py-5"
+            customClass="bg-careLightBlue border-careLightBlue py-2 xl:py-3 2xl:py-5"
             label="ENVIAR"
             onClick={handlePassword}
             isLoading={loading}
@@ -165,7 +165,7 @@ const NewPassword = () => {
             }
           />
           <Button
-            customClass="bg-careBlue border-careBlue py-2 xl:py-5"
+            customClass="bg-careBlue border-careBlue py-2 xl:py-3 2xl:py-5"
             label="VOLTAR"
             onClick={() => router.push("/")}
           />

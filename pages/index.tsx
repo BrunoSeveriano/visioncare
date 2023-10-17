@@ -61,32 +61,32 @@ export default function Home() {
             quality={100}
             width={200}
             height={220}
-            style={{ maxWidth: "120px" }}
             src="/logo.png"
             alt="acuvue-login"
+            className="w-[120px] xl:w-[120px] 2xl:w-[200px]"
           />
         </div>
-        <div className="mt-5 flex flex-col items-center">
-          <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+        <div className="mt-5 xl:mt-0 2xl:mt-5 flex flex-col items-center">
+          <span className="text-careBlue text-sm opacity-70 xl:text-sm 2xl:text-xl">
             Sua experiência personalizada com
           </span>
-          <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+          <span className="text-careBlue text-sm opacity-70 xl:text-sm 2xl:text-xl">
             as lentes de contato ACUVUE
           </span>
         </div>
         <div className="flex justify-center xl:mb-10 mb-7 mt-12 lg:mt-6 z-40">
-          <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+          <span className="text-careBlue text-sm opacity-70 xl:text-sm 2xl:text-xl">
             Acesse sua conta ou cadastre-se!
           </span>
         </div>
         <div className="w-full flex flex-col gap-2 xl:gap-4 justify-end">
           <Button
-            customClass="bg-careLightBlue border-careLightBlue py-2 xl:py-5"
+            customClass="bg-careLightBlue border-careLightBlue py-2 xl:py-3 2xl:py-5"
             label="Login"
             onClick={handleLogin}
           />
           <Button
-            customClass="bg-careBlue border-careBlue py-2 xl:py-5"
+            customClass="bg-careBlue border-careBlue py-2 xl:py-3 2xl:py-5"
             label="Criar nova conta"
             onClick={handCreateAccount}
             isLoading={loading}

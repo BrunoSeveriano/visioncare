@@ -29,7 +29,7 @@ const Button = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`relative disabled:bg-gray-500 disabled:border-gray-500 disabled:opacity-70  border-2 z-0 text-md disabled:cursor-not-allowed rounded-lg  transition ${
+      className={`relative disabled:bg-gray-500 disabled:border-gray-500 disabled:opacity-70  border-2 z-0 text-sm xl:text-sm 2xl:text-lg disabled:cursor-not-allowed rounded-lg  transition ${
         disableHover ? "" : "hover:opacity-80"
       }
       ${customClass}

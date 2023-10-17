@@ -47,7 +47,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
   const [calendarData, setCalendarData] = useState([]);
   const [calendarHour, setCalendarHour] = useState(0);
   const [postData, setPostData] = useState<any>({
-    name: dataStorage.userDataPatient[0].namePatient,
+    name: dataStorage?.userDataPatient[0]?.namePatient,
     scheduleDateStart: "",
     eyePrescription: {
       refraction: {
@@ -870,7 +870,40 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
               customClass="relative bottom-6 w-full bg-careLightBlue border border-careLightBlue text-white rounded-full md:w-40 h-12 mt-16 md:ml-14 ml-6 mb-5"
               onClick={handleNextClick}
               disabled={
-                currentQuestion === 3 && (!selectedDate || !timeSelected)
+                (currentQuestion === 0 || currentQuestion === 1) &&
+                selectedOption === null
+                  ? true
+                  : (currentQuestion === 2 && postalCode.length < 8) ||
+                    isLocationClicked === false
+                  ? true
+                  : currentQuestion === 3 &&
+                    (selectedDate === null || timeSelected === "")
+                  ? true
+                  : currentQuestion === 4 &&
+                    (postData.eyePrescription.refraction.spheric.left.far ===
+                      0 ||
+                      postData.eyePrescription.refraction.spheric.left.near ===
+                        0 ||
+                      postData.eyePrescription.refraction.spheric.right.far ===
+                        0 ||
+                      postData.eyePrescription.refraction.spheric.right.near ===
+                        0 ||
+                      postData.eyePrescription.refraction.cilindric.left.far ===
+                        0 ||
+                      postData.eyePrescription.refraction.cilindric.left
+                        .near === 0 ||
+                      postData.eyePrescription.refraction.cilindric.right
+                        .far === 0 ||
+                      postData.eyePrescription.refraction.cilindric.right
+                        .near === 0 ||
+                      postData.eyePrescription.refraction.axis.left.far === 0 ||
+                      postData.eyePrescription.refraction.axis.left.near ===
+                        0 ||
+                      postData.eyePrescription.refraction.axis.right.far ===
+                        0 ||
+                      postData.eyePrescription.refraction.axis.right.near === 0)
+                  ? true
+                  : false
               }
             />
           </div>

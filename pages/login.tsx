@@ -131,20 +131,21 @@ const Login = () => {
         <div className="flex justify-center items-center">
           <Image
             quality={100}
-            width={489}
-            height={306}
+            width={400}
+            height={300}
             src="/LoginProgramaMyACUVUE.png"
             alt="acuvue-login"
+            className="w-[300px] xl:w-[300px] 2xl:w-[500px]"
           />
         </div>
         <div className="my-5 z-30 ">
-          <span className="flex justify-center text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+          <span className="flex justify-center text-careBlue text-sm opacity-70 xl:text-base 2xl:text-xl">
             Acesse com seu e-mail e senha abaixo:
           </span>
         </div>
-        <div className="w-full flex flex-col gap-2 xl:gap-2 justify-end md:my-7 md:mb-0">
+        <div className="w-full flex flex-col gap-2 xl:gap-2 justify-end md:my-4 md:mb-0">
           <Input
-            className="fill-careBlue h-12 md:h-16"
+            className="fill-careBlue h-12 md:h-16 xl:h-14 2xl:h-16"
             startIcon
             imageSrc="/communication-mail.png"
             fullWidth
@@ -157,7 +158,7 @@ const Login = () => {
             disabled={loading}
           />
           <Input
-            className="fill-careBlue h-12 md:h-16"
+            className="fill-careBlue h-12 md:h-16 xl:h-14 2xl:h-16"
             startIcon
             endIcon
             imageSrc="/house-lock.png"
@@ -177,14 +178,14 @@ const Login = () => {
         </div>
         <div className="w-full flex flex-col mt-8 gap-2 xl:gap-4 justify-end">
           <Button
-            customClass="bg-careLightBlue border-careLightBlue py-2 xl:py-5"
+            customClass="bg-careLightBlue border-careLightBlue py-2 xl:py-3 2xl:py-5"
             label="ACESSAR"
             onClick={handleLogin}
             isLoading={loading}
             disabled={loading || !(emailValid && passwordValid)}
           />
           <Button
-            customClass="bg-careBlue border-careBlue py-2 xl:py-5"
+            customClass="bg-careBlue border-careBlue py-2 xl:py-3 2xl:py-5"
             label="VOLTAR"
             onClick={() => router.push("/")}
           />

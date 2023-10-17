@@ -99,21 +99,21 @@ const Confirmation = () => {
         />
       </div>
       <Card>
-        <div className="flex flex-col justify-start text-careLightBlue text-4xl mb-5">
+        <div className="flex flex-col justify-start text-careLightBlue text-4xl xl:text-4xl 2xl:text-5xl mb-5">
           <span>Esqueceu sua senha?</span>
         </div>
-        <div className="my-5 z-40 flex flex-col ">
-          <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+        <div className="my-3 xl:my-3 2xl:my-5 z-40 flex flex-col ">
+          <span className="text-careBlue text-sm opacity-70 xl:text-base 2xl:text-xl">
             Por favor, insira o endereço de e-mail
           </span>
-          <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+          <span className="text-careBlue text-sm opacity-70 xl:text-base 2xl:text-xl">
             associado à sua conta abaixo:
           </span>
         </div>
         <div className="w-full flex flex-col gap-2 xl:gap-2 justify-end md:my-7 md:mb-0">
           <Input
             name="userEmail"
-            className="fill-careBlue h-12 md:h-16"
+            className="fill-careBlue h-12 md:h-14"
             startIcon
             imageSrc="/communication-mail.png"
             fullWidth
@@ -126,14 +126,14 @@ const Confirmation = () => {
         </div>
         <div className="w-full flex flex-col mt-8 gap-2 xl:gap-4 justify-end">
           <Button
-            customClass="bg-careLightBlue border-careLightBlue py-2 xl:py-5"
+            customClass="bg-careLightBlue border-careLightBlue py-2 xl:py-3 2xl:py-5"
             label="Enviar"
             onClick={resetUserPassword}
             isLoading={loading}
             disabled={loading}
           />
           <Button
-            customClass="bg-careBlue border-careBlue py-2 xl:py-5"
+            customClass="bg-careBlue border-careBlue py-2 xl:py-3 2xl:py-5"
             label="VOLTAR"
             onClick={() => router.back()}
           />

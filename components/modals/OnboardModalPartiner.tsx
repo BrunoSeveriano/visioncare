@@ -24,7 +24,7 @@ const OnboardModalPartiner = () => {
           <span>Cadastro no MyAcuvue®</span>
         </div>
         <div className="flex flex-col justify-start text-careBlue font-bold text-lg mb-5 lg:text-xl lg:pl-10 mt-10 ">
-          <span>Olá, {auth.userData.name}!</span>
+          <span>Olá, {auth?.userData?.name}!</span>
         </div>
         <div className="flex flex-col justify-start text-careBlue text-lg mb-5 lg:text-xl lg:pl-10">
           <span>

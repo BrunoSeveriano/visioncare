@@ -88,15 +88,15 @@ const Confirmation = () => {
       <div className="h-full flex flex-col justify-end md:justify-center md:items-end w-screen">
         <div className="z-50 p-8 2xl:p-10 mb-9 lg:mb-3 bg-white rounded-3xl max-h-[80%] mx-auto w-11/12 md:w-6/12 lg:w-4/12 2xl:w-[30%] 2xl:mr-28 xl:mr-24 md:mx-auto">
           <div className="flex w-full h-full flex-col">
-            <div className="flex flex-col justify-start text-careLightBlue text-4xl mb-5">
+            <div className="flex flex-col justify-start text-careLightBlue text-4xl xl:text-3xl 2xl:text-5xl mb-5">
               <span>Confirmacão</span>
               <span>de cadastro</span>
             </div>
             <div className="my-5 z-40 flex flex-col ">
-              <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+              <span className="text-careBlue text-sm opacity-70 xl:text-base 2xl:text-xl">
                 Enviamos um código por SMS para você.
               </span>
-              <span className="text-careBlue text-sm opacity-70 xl:text-lg 2xl:text-xl">
+              <span className="text-careBlue text-sm opacity-70 xl:text-base 2xl:text-xl">
                 Insira abaixo e confirme seu cadastro!
               </span>
             </div>
@@ -113,14 +113,14 @@ const Confirmation = () => {
                 autoComplete="off"
               />
             </div>
-            <div className="w-full flex flex-col mt-8 gap-2 xl:gap-4 justify-end">
+            <div className="w-full flex flex-col mt-6 gap-2 xl:gap-3 justify-end">
               <Button
-                customClass="bg-careLightBlue border-careLightBlue py-2 xl:py-5"
+                customClass="bg-careLightBlue border-careLightBlue py-2 xl:py-3 2xl:py-5"
                 label="CONFIRMAR"
                 onClick={handleSmsToken}
               />
               <Button
-                customClass="bg-careBlue border-careBlue py-2 xl:py-5"
+                customClass="bg-careBlue border-careBlue py-2 xl:py-3 2xl:py-5"
                 label="VOLTAR"
                 onClick={() => router.push("/")}
               />

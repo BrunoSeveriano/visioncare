@@ -1,6 +1,8 @@
 import ButtonSwiftPartiner from "@/components/button/ButtonSwiftPartiner";
 import ExportToTxt from "@/components/button/ExportToTxt";
 import { format } from "date-fns";
+import { AiOutlineClose } from "react-icons/ai";
+import { BsQuestionLg } from "react-icons/bs";
 
 export interface Rows {
   id: string;
@@ -109,7 +111,16 @@ export const TableMockupOrderPurchase: TableData = {
     },
     {
       field: "isConfirmed",
-      headerName: <div className="flex items-center">Confirmar</div>,
+      headerName: (
+        <div className="flex gap-2  items-center">
+          <span>Confirmar</span>
+          <div className="bg-careDarkBlue  rounded-full h-2 w-2 flex items-center">
+            <span style={{ transform: "scale(0.8)" }}>
+              <BsQuestionLg className="text-careLightBlue" />
+            </span>
+          </div>
+        </div>
+      ),
       headerAlign: "center",
       minWidth: 95,
       align: "center",
@@ -117,7 +128,7 @@ export const TableMockupOrderPurchase: TableData = {
       sortable: false,
       flex: 1,
       renderCell: (params: any) => (
-        <div className={`w-full`}>
+        <div className={`flex justify-center w-full`}>
           <ButtonSwiftPartiner params={params} />
         </div>
       ),

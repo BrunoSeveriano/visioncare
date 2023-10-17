@@ -144,7 +144,7 @@ const SearchModalEcp = ({ clientData, selectedStatus }: SearchModalProps) => {
                 clientData={clientData}
                 totalQuantity={inputBlocks.length}
               />
-              {inputBlocks.length < 4 ? (
+              {inputBlocks.length < 2 ? (
                 <div className="bg-careMenuGrey rounded-full p-4 h-5 w-5 relative md:top-11 md:left-3 cursor-pointer mt-3 md:mt-20">
                   <span
                     onClick={() =>
