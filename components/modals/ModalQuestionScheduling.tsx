@@ -870,11 +870,11 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
               customClass="relative bottom-6 w-full bg-careLightBlue border border-careLightBlue text-white rounded-full md:w-40 h-12 mt-16 md:ml-14 ml-6 mb-5"
               onClick={handleNextClick}
               disabled={
-                (currentQuestion === 0 || currentQuestion === 1) &&
-                selectedOption === null
+                currentQuestion === 0 && selectedOption === null
                   ? true
-                  : (currentQuestion === 2 && postalCode.length < 8) ||
-                    isLocationClicked === false
+                  : currentQuestion === 1 && selectedOption === null
+                  ? true
+                  : currentQuestion === 2 && postalCode.length < 8
                   ? true
                   : currentQuestion === 3 &&
                     (selectedDate === null || timeSelected === "")
