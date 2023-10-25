@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
-import useOnboardModal from "@/hooks/useOnboardModal";
 import useLogin from "@/hooks/useLogin";
 import Input from "@/components/input/Input";
 import InputMask from "react-input-mask";
 import Switch from "@mui/material/Switch";
 import { alpha, styled } from "@mui/material/styles";
 import Button from "@/components/button/Button";
-import {
-  editAdminData,
-  editClientData,
-  getAdmData,
-  getClientData,
-} from "@/services/login";
+import { editClientData, getClientData } from "@/services/login";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import useDataStorage from "@/hooks/useDataStorage";
-import Loading from "../loading/Loading";
 
 const DataPatient = () => {
   const auth = useLogin();
@@ -174,10 +167,10 @@ const DataPatient = () => {
   return (
     <div className="bg-careGrey rounded-2xl p-8 fill-careBlue fade-in">
       {isLoading ? (
-       <div className="spinner">
-       <div className="dot1"></div>
-       <div className="dot2"></div>
-     </div>
+        <div className="spinner">
+          <div className="dot1"></div>
+          <div className="dot2"></div>
+        </div>
       ) : (
         <>
           <div className="flex flex-col">

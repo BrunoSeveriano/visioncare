@@ -89,7 +89,7 @@ const Confirmation = () => {
         <div className="z-50 p-8 2xl:p-10 mb-9 lg:mb-3 bg-white rounded-3xl max-h-[80%] mx-auto w-11/12 md:w-6/12 lg:w-4/12 2xl:w-[30%] 2xl:mr-28 xl:mr-24 md:mx-auto">
           <div className="flex w-full h-full flex-col">
             <div className="flex flex-col justify-start text-careLightBlue text-4xl xl:text-3xl 2xl:text-5xl mb-5">
-              <span>Confirmacão</span>
+              <span>Confirmação</span>
               <span>de cadastro</span>
             </div>
             <div className="my-5 z-40 flex flex-col ">

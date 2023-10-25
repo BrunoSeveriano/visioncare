@@ -25,19 +25,19 @@ const SchedulingPatient = () => {
         />
       </div>
       <div className="flex flex-col mt-10 mb-5 md:flex md:flex-row  w-full">
-        <div className="w-60 flex flex-row md:flex md:flex-col items-center gap-3">
+        <div className="flex flex-row md:flex md:flex-col items-center gap-3">
           <div className="flex flex-col md:flex md:flex-row items-center gap-5">
             <span
               className={`text-${
                 currentQuestion === 0 || currentQuestion === 1
                   ? "careBlue"
                   : "careLightBlue"
-              } md:block hidden`}
+              } md:text-sm xl:text-sm 2xl:text-lg md:block hidden`}
             >
               Agendamento
             </span>
             <div
-              className={`rounded-full px-4 py-4 my-2 border-2 border-${
+              className={`rounded-full px-4 py-4 xl:py-[9px] xl:px-[9px] 2xl:px-4 2xl:py-4  my-2 border-2 border-${
                 currentQuestion === 0 || currentQuestion === 1
                   ? "careBlue"
                   : "careLightBlue"
@@ -61,12 +61,12 @@ const SchedulingPatient = () => {
                   : "text-careBlue" && currentQuestion === 2
                   ? "text-careBlue"
                   : "text-careMenuGrey"
-              } md:block hidden`}
+              } md:text-sm xl:text-sm 2xl:text-lg md:block hidden`}
             >
               Local da visita
             </span>
             <div
-              className={`rounded-full px-4 py-4 my-2 border-2 border-${
+              className={`rounded-full px-4 py-4 xl:py-[9px] xl:px-[9px] 2xl:px-4 2xl:py-4 my-2 border-2 border-${
                 currentQuestion > 2
                   ? "careLightBlue"
                   : "careBlue" && currentQuestion === 2
@@ -94,12 +94,12 @@ const SchedulingPatient = () => {
                   : "text-careBlue" && currentQuestion === 3
                   ? "text-careBlue"
                   : "text-careMenuGrey"
-              } md:block hidden`}
+              } md:text-sm xl:text-sm 2xl:text-lg md:block hidden`}
             >
               Data/Horário
             </span>
             <div
-              className={`rounded-full px-4 py-4 my-2 border-2 border-${
+              className={`rounded-full px-4 py-4 xl:py-[9px] xl:px-[9px] 2xl:px-4 2xl:py-4 my-2 border-2 border-${
                 currentQuestion > 3
                   ? "careLightBlue"
                   : "careBlue" && currentQuestion === 3
@@ -127,12 +127,12 @@ const SchedulingPatient = () => {
                   : "text-careBlue" && currentQuestion === 4
                   ? "text-careBlue"
                   : "text-careMenuGrey"
-              } md:block hidden`}
+              } md:text-sm xl:text-sm 2xl:text-lg md:block hidden`}
             >
               Confirmação
             </span>
             <div
-              className={`rounded-full px-4 py-4 my-2 border-2 border-${
+              className={`rounded-full px-4 py-4 xl:py-[9px] xl:px-[9px] 2xl:px-4 2xl:py-4 my-2 border-2 border-${
                 currentQuestion > 4
                   ? "careLightBlue"
                   : "careBlue" && currentQuestion === 4
@@ -153,7 +153,7 @@ const SchedulingPatient = () => {
             </div>
           </div>
         </div>
-        <div className="bg-careMenuGrey md:ml-5 md:h-96 md:w-1 md:my-0 my-6 h-1 rounded-3xl flex flex-row md:flex md:flex-col items-center md:gap-y-7 gap-x-7 ">
+        <div className="bg-careMenuGrey md:ml-5 md:h-96 md:w-1 md:my-0 my-6 h-1 rounded-3xl flex flex-row md:flex md:flex-col items-center md:gap-y-7 xl:gap-y-3 2xl:gap-y-7 gap-x-7 ">
           <div
             className={`${
               currentQuestion === 0 || currentQuestion === 1

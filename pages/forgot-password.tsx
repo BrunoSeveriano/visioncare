@@ -33,9 +33,14 @@ const Confirmation = () => {
   const resetUserPassword = () => {
     setLoading(true);
     resetPassword(forgetPassword)
-      .then(() => {
+      .then((res) => {
+        if (res.isValidData === false) {
+          toast.error(res.value);
+          setLoading(false);
+          return;
+        }
         auth.setLoginNewPassword(forgetPassword.userEmail);
-        toast.success("Email enviado com sucesso!");
+        toast.success(res.value);
         router.push("/new-password");
       })
       .catch((err) => {

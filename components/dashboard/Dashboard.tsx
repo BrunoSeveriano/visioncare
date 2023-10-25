@@ -183,7 +183,7 @@ const Dashboard = ({ children }: DashboardProps) => {
               height={60}
               className={`object-contain ${
                 sideBarOpen ? "relative bottom-1 " : "relative bottom-4"
-              } `}
+              } xl:ml-8 2xl:ml-0 `}
               alt="acuvue"
             />
             <Image
@@ -192,7 +192,7 @@ const Dashboard = ({ children }: DashboardProps) => {
               height={500}
               className={`object-contain ${
                 sideBarOpen ? "block left-10" : "hidden"
-              } `}
+              } md:w-[120px] xl:w-[120px] 2xl:w-[160px] `}
               alt="acuvue"
             />
           </div>
@@ -281,7 +281,7 @@ const Dashboard = ({ children }: DashboardProps) => {
           </div>
 
           {sideBarOpen ? (
-            <div className="hidden md:flex ml-5 gap-5 mt-10 cursor-pointer">
+            <div className="hidden md:flex ml-5 gap-5 mt-10 md:mt-10 xl:mt-8 mb-0 md:mb-0 xl:mb-12 cursor-pointer">
               <a
                 href="https://www.instagram.com/acuvuebrasil/?igshid=MzRlODBiNWFlZA%3D%3D"
                 target="_blank"
@@ -301,7 +301,7 @@ const Dashboard = ({ children }: DashboardProps) => {
               </a>
             </div>
           ) : (
-            <div className="hidden md:flex md:flex-col ml-6 gap-7 mt-10 cursor-pointer">
+            <div className="hidden md:flex md:flex-col ml-6 xl:ml-12 2xl:ml-6 gap-7 mt-10 mb-10 cursor-pointer">
               <a
                 href="https://www.instagram.com/acuvuebrasil/?igshid=MzRlODBiNWFlZA%3D%3D"
                 target="_blank"
@@ -330,7 +330,7 @@ const Dashboard = ({ children }: DashboardProps) => {
             <IoArrowBackCircleOutline
               size="1.5em"
               className={`text-careBlue ${
-                sideBarOpen ? "" : "transform rotate-180"
+                sideBarOpen ? "" : "transform rotate-180 xl:ml-6 2xl:ml-0"
               }`}
             />
             <span className="text-careMenuGrey text-lg">
@@ -582,15 +582,17 @@ const Dashboard = ({ children }: DashboardProps) => {
             </div>
           ) : (
             <div className="hidden md:block mt-5 md:w-1/3  md:right-0 bg-white fade-in">
-              <div className="py-[30px] px-5 border-b-2 border-gray-200 flex flex-col">
-                <span className="text-2xl text-careLightBlue">
+              <div className="py-[31.5px] xl:py-[31.5px] 2xl:py-[30px] px-5 border-b-2 border-gray-200 flex flex-col">
+                <span className="text-2xl xl:text-xl 2xl:text-2xl text-careLightBlue">
                   Histórico de utilização
                 </span>
               </div>
               <div className="mb-5 py-5 px-5 border-b-2 border-gray-200 flex flex-col">
-                <span className="text-lg- text-careBlue">DATA / LOCAL</span>
+                <span className="text-lg xl:text-xs 2xl:text-lg  text-careBlue">
+                  DATA / LOCAL
+                </span>
               </div>
-              <div className="w-[23rem]">
+              <div className="md:w-[7rem] lg:w-[7rem] xl:w-[7rem] 2xl:w-[23rem]">
                 <div className="md:ml-4 mb-5">
                   {dataStorage.VoucherUserHistory.utilizedHistory &&
                     dataStorage.VoucherUserHistory.utilizedHistory.length > 0 &&

@@ -54,9 +54,9 @@ const ContentCard = ({
       } `}
     >
       <div className={`${isCustomBg && "scale-x-[-1]"} flex flex-col h-full`}>
-        <div className="text-white md:w-full ml-3 2xl:ml-5 mt-5 md:mt-8 xl:mt-5 text-3xl flex flex-col">
+        <div className="text-white md:w-full ml-3 2xl:ml-5 mt-5 md:mt-8 xl:mt-4 text-3xl flex flex-col">
           <span>{title}</span>
-          <span className="text-sm mt-5 ml-1 opacity-95">{subtitle}</span>
+          <span className="text-sm mt-2 ml-1 opacity-95">{subtitle}</span>
           <span
             onClick={sendEmail}
             className="text-sm font-bold ml-1 opacity-95 cursor-pointer hover:text-careLightBlue"
@@ -65,7 +65,7 @@ const ContentCard = ({
           </span>
           <span
             onClick={calling}
-            className="absolute mt-36 md:mt-36 text-3xl font-bold ml-1 opacity-95 hover:text-careLightBlue cursor-pointer"
+            className="text-2xl md:text-3xl lg:text-3xl xl:text-xl xl:mt-0 2xl:mt-3 2xl:text-3xl font-bold ml-1 opacity-95 hover:text-careLightBlue cursor-pointer"
           >
             {textphone}
           </span>

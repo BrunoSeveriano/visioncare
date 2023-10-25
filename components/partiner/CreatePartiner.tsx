@@ -15,6 +15,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
   const partiner = useRegisterPartiner();
   const dataScheduling = useDataStorage();
   const [isLoadingAddress, setIsLoadingAddress] = useState(false);
+  const [email, setEmail] = useState("");
   const [registerPartiner, setRegisterPartiner] = useState({
     accountTypeStringMapFlag: "",
     name: "",
@@ -146,6 +147,55 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
         />
       </InputMask>
     );
+  };
+
+  const validateEmail = (e: any) => {
+    setEmail(e);
+    if (e === "") {
+      toast.error("Preencha com um e-mail válido!");
+      return;
+    }
+    if (e.indexOf("@") === -1 || e.indexOf(".") === -1) {
+      toast.error("E-mail inválido!");
+      return;
+    }
+  };
+
+  const validatePassword = () => {
+    const password = registerPartiner.password;
+
+    if (password.length < 8) {
+      toast.error("A senha deve conter no mínimo 8 dígitos!");
+      return;
+    }
+    if (password.length > 12) {
+      toast.error("A senha deve conter no máximo 20 dígitos!");
+      return;
+    }
+    if (password === "") {
+      toast.error("Preencha com uma senha válida!");
+      return;
+    }
+    if (password.indexOf(" ") !== -1) {
+      toast.error("A senha não pode conter espaços!");
+      return;
+    }
+    if (!/[A-Z]/.test(password)) {
+      toast.error("A senha deve conter pelo menos uma letra maiúscula!");
+      return;
+    }
+    if (!/[a-z]/.test(password)) {
+      toast.error("A senha deve conter pelo menos uma letra minúscula!");
+      return;
+    }
+    if (!/[0-9]/.test(password)) {
+      toast.error("A senha deve conter pelo menos um número!");
+      return;
+    }
+    if (!/[\W_]/.test(password)) {
+      toast.error("A senha deve conter pelo menos um caractere especial!");
+      return;
+    }
   };
 
   return (
@@ -456,6 +506,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 startIcon
                 imageSrc="/communication-mail.png"
                 placeholder="emailusuario@mail.com"
+                onBlur={() => validateEmail(registerPartiner.emailAddress)}
               />
             </div>
             <div>
@@ -478,6 +529,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 startIcon
                 imageSrc="/communication-mail.png"
                 placeholder="emailusuario@mail.com"
+                onBlur={() => validateEmail(registerPartiner.emailAddress2)}
               />
             </div>
             <div>
@@ -497,6 +549,7 @@ const CreatePartiner = ({ refreshTable }: { refreshTable: () => void }) => {
                 startIcon
                 imageSrc="/house-lock.png"
                 placeholder="No minimo 8 dígitos"
+                onBlur={() => validatePassword()}
               />
             </div>
           </div>

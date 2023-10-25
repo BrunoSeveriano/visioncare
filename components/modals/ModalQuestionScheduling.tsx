@@ -261,10 +261,10 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
   };
 
   return (
-    <div className="w-full rounded-2xl bg-careGrey md:ml-10">
+    <div className="w-full rounded-2xl bg-careGrey md:ml-5">
       {currentQuestion === 0 && (
         <div className="border-b-2 border-careLightGreen w-4/5 ml-5 md:ml-10 p-4">
-          <span className="text-careBlue text-lg">
+          <span className="text-careBlue text-base md:text-lg xl:text-sm 2xl:text-lg">
             Encontre a clínica oftalmológica mais próxima e agende já sua
             adaptação!
           </span>
@@ -273,7 +273,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
 
       {currentQuestion === 1 && (
         <div className="border-b-2 border-careLightGreen w-4/5 ml-5 md:ml-10 p-4">
-          <span className="text-careBlue text-lg">
+          <span className="text-careBlue text-base md:text-lg xl:text-sm 2xl:text-lg">
             Encontre a clínica oftalmológica mais próxima e agende já sua
             adaptação!
           </span>
@@ -282,7 +282,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
 
       {currentQuestion === 2 && (
         <div className="border-b-2 border-careLightGreen w-4/5 ml-5 md:ml-10 p-4">
-          <span className="text-careBlue text-lg">
+          <span className="text-careBlue text-base md:text-lg xl:text-sm 2xl:text-lg">
             Digite seu CEP para encontrar o centro clinico mais proximo ao seu
             endereco e selecione o local escolhido:
           </span>
@@ -291,7 +291,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
 
       {currentQuestion === 3 && (
         <div className="border-b-2 border-careLightGreen w-4/5 ml-5 md:ml-10 p-4">
-          <span className="text-careBlue text-lg">
+          <span className="text-careBlue text-base md:text-lg xl:text-sm 2xl:text-lg">
             Para quando deseja agendar sua adaptacao de lentes de contato?
             Escolha tambem o melhor horario:
           </span>
@@ -300,13 +300,15 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
 
       {currentQuestion === 4 && (
         <div className="border-b-2 border-careLightGreen w-4/5 ml-5 md:ml-10 p-4">
-          <span className="text-careBlue text-lg">Estamos quase lá!</span>
+          <span className="text-careBlue text-base md:text-lg xl:text-sm 2xl:text-lg">
+            Estamos quase lá!
+          </span>
         </div>
       )}
 
       {currentQuestion === 0 && (
         <div className="mt-8 ml-9 md:ml-14">
-          <span className="text-xl font-bold text-careLightBlue">
+          <span className="text-base md:text-base xl:text-sm 2xl:text-lg font-bold text-careLightBlue">
             1. Quando foi a última vez que você consultou um oftalmologista?
           </span>
         </div>
@@ -314,7 +316,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
 
       {currentQuestion === 1 && (
         <div className="mt-8 ml-9 md:ml-14">
-          <span className="text-xl font-bold text-careLightBlue">
+          <span className="text-base md:text-base xl:text-sm 2xl:text-lg font-bold text-careLightBlue">
             2. Você tem uma prescrição de óculos válida feita nos últimos 12
             meses?
           </span>
@@ -322,14 +324,31 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
       )}
 
       {currentQuestion === 4 && (
-        <div className="md:flex md:flex-row flex flex-col md:items-center gap-5 mt-6 ml-9 md:ml-14">
-          <span className="text-xl text-careLightBlue font-bold">
+        <div className="flex items-center gap-3 mt-6 ml-9 md:ml-14">
+          <span className="text-base md:text-base xl:text-base 2xl:text-lg font-bold text-careLightBlue">
             Informe o seu tipo de refração:
           </span>
           <span className="tooltip text-careDarkBlue cursor-pointer">
             <BsQuestionCircle size={24} />
             <span className="tooltiptext">
-              Saiba como preencher os campos, clicando aqui!
+              <span className="md:text-sm xl:text-xs 2xl:text-lg">
+                <span className="text-careDarkBlue mr-1"> Esférico:</span>É o
+                grau das lentes de contato para a correção de miopia e
+                hipermetropia. No caso da miopia, o grau é negativo. Se for
+                hipermetropia, o grau é positivo.
+              </span>
+              <span className="md:text-sm xl:text-xs 2xl:text-lg">
+                <span className="text-careDarkBlue mr-1 ml-1">Cilindro:</span> É
+                o grau das lentes de contato para a correção de astigmatismo.
+                Eixo: É o posicionamento das lentes de contato nos olhos para a
+                correção do astigmatismo. É definido pelo médico e o valor
+                consta na receita.
+              </span>
+              <span className="md:text-sm xl:text-xs 2xl:text-lg">
+                <span className="text-careDarkBlue mr-1 ml-1">Adição:</span>É o
+                grau informado pelo médico para as lentes de contato multifocais
+                ou bifocais que corrigem presbiopia (vista cansada).
+              </span>
             </span>
           </span>
         </div>
@@ -337,9 +356,9 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
 
       {currentQuestion === 0 && (
         <>
-          <div className="md:flex md:flex-row flex flex-col ml-5 md:ml-12 mt-4 text-careBlue">
+          <div className="md:flex md:flex-row flex flex-col ml-5 md:ml-12 xl:ml-12 2xl:ml-12  mt-4 text-careBlue">
             {options[currentQuestion].map((option, index) => (
-              <div key={index}>
+              <div key={index} className="flex items-center whitespace">
                 <Checkbox
                   sx={{
                     color: "#007cc4",
@@ -347,12 +366,18 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                       color: "#03014C",
                     },
                   }}
-                  icon={<RadioButtonUncheckedIcon />}
-                  checkedIcon={<RadioButtonCheckedIcon />}
+                  icon={
+                    <RadioButtonUncheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                  }
+                  checkedIcon={
+                    <RadioButtonCheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                  }
                   checked={selectedOption === index}
                   onClick={() => handleOptionClick(index)}
                 />
-                <span>{option}</span>
+                <span className="text-base md:text-xs xl:text-xs 2xl:text-lg">
+                  {option}
+                </span>
               </div>
             ))}
           </div>
@@ -371,12 +396,18 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                       color: "#03014C",
                     },
                   }}
-                  icon={<RadioButtonUncheckedIcon />}
-                  checkedIcon={<RadioButtonCheckedIcon />}
+                  icon={
+                    <RadioButtonUncheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                  }
+                  checkedIcon={
+                    <RadioButtonCheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                  }
                   checked={selectedOption === index}
                   onClick={() => handleOptionClick(index)}
                 />
-                <span>{option}</span>
+                <span className="text-base md:text-xs xl:text-sm 2xl:text-lg">
+                  {option}
+                </span>
               </div>
             ))}
           </div>
@@ -389,7 +420,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
             <Input
               value={postalCode}
               onChange={handlePostalCodeChange}
-              className="md:w-96 w-72"
+              className="md:w-96 w-72 2xl:w-96 xl:w-72 xl:py-[1px]"
               startIcon
               imageSrc="/search-icon.png"
             />
@@ -432,12 +463,13 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
       )}
 
       {currentQuestion === 3 && (
-        <div className="mt-3 ml-2 md:ml-16 flex flex-col md:flex md:flex-row">
-          <div className="w-80 bg-white md:rounded-l-lg  md:rounded-t-none rounded-t-lg">
+        <div className="mt-3 ml-5 md:ml-5 xl:ml-8 2xl:ml-14 flex flex-col md:flex md:flex-row">
+          <div className="bg-white md:rounded-l-lg  md:rounded-t-none rounded-t-lg">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateCalendar
                 shouldDisableDate={shouldDisableDate}
                 onChange={setSelectedDate}
+                className="w-80 xl:w-[18.8rem]"
               />
             </LocalizationProvider>
           </div>
@@ -453,8 +485,12 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                     color: "#03014C",
                   },
                 }}
-                icon={<RadioButtonUncheckedIcon />}
-                checkedIcon={<RadioButtonCheckedIcon />}
+                icon={
+                  <RadioButtonUncheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
+                checkedIcon={
+                  <RadioButtonCheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
                 checked={timeSelected === "09 horas da manhã"}
                 onClick={() => {
                   handleTimeSelected("09 horas da manhã");
@@ -477,8 +513,12 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                     color: "#03014C",
                   },
                 }}
-                icon={<RadioButtonUncheckedIcon />}
-                checkedIcon={<RadioButtonCheckedIcon />}
+                icon={
+                  <RadioButtonUncheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
+                checkedIcon={
+                  <RadioButtonCheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
                 checked={timeSelected === "10 horas da manhã"}
                 onClick={() => {
                   handleTimeSelected("10 horas da manhã");
@@ -501,8 +541,12 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                     color: "#03014C",
                   },
                 }}
-                icon={<RadioButtonUncheckedIcon />}
-                checkedIcon={<RadioButtonCheckedIcon />}
+                icon={
+                  <RadioButtonUncheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
+                checkedIcon={
+                  <RadioButtonCheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
                 checked={timeSelected === "11 horas da manhã"}
                 onClick={() => {
                   handleTimeSelected("11 horas da manhã");
@@ -525,8 +569,12 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                     color: "#03014C",
                   },
                 }}
-                icon={<RadioButtonUncheckedIcon />}
-                checkedIcon={<RadioButtonCheckedIcon />}
+                icon={
+                  <RadioButtonUncheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
+                checkedIcon={
+                  <RadioButtonCheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
                 checked={timeSelected === "12 horas da tarde"}
                 onClick={() => {
                   handleTimeSelected("12 horas da tarde");
@@ -551,8 +599,12 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                     color: "#03014C",
                   },
                 }}
-                icon={<RadioButtonUncheckedIcon />}
-                checkedIcon={<RadioButtonCheckedIcon />}
+                icon={
+                  <RadioButtonUncheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
+                checkedIcon={
+                  <RadioButtonCheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
                 checked={timeSelected === "13 horas da tarde"}
                 onClick={() => {
                   handleTimeSelected("13 horas da tarde");
@@ -575,8 +627,12 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                     color: "#03014C",
                   },
                 }}
-                icon={<RadioButtonUncheckedIcon />}
-                checkedIcon={<RadioButtonCheckedIcon />}
+                icon={
+                  <RadioButtonUncheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
+                checkedIcon={
+                  <RadioButtonCheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
                 checked={timeSelected === "14 horas da tarde"}
                 onClick={() => {
                   handleTimeSelected("14 horas da tarde");
@@ -599,8 +655,12 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                     color: "#03014C",
                   },
                 }}
-                icon={<RadioButtonUncheckedIcon />}
-                checkedIcon={<RadioButtonCheckedIcon />}
+                icon={
+                  <RadioButtonUncheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
+                checkedIcon={
+                  <RadioButtonCheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
                 checked={timeSelected === "15 horas da tarde"}
                 onClick={() => {
                   handleTimeSelected("15 horas da tarde");
@@ -623,8 +683,12 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                     color: "#03014C",
                   },
                 }}
-                icon={<RadioButtonUncheckedIcon />}
-                checkedIcon={<RadioButtonCheckedIcon />}
+                icon={
+                  <RadioButtonUncheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
+                checkedIcon={
+                  <RadioButtonCheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
                 checked={timeSelected === "16 horas da tarde"}
                 onClick={() => {
                   handleTimeSelected("16 horas da tarde");
@@ -649,8 +713,12 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                     color: "#03014C",
                   },
                 }}
-                icon={<RadioButtonUncheckedIcon />}
-                checkedIcon={<RadioButtonCheckedIcon />}
+                icon={
+                  <RadioButtonUncheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
+                checkedIcon={
+                  <RadioButtonCheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
                 checked={timeSelected === "17 horas da tarde"}
                 onClick={() => {
                   handleTimeSelected("17 horas da tarde");
@@ -673,8 +741,12 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                     color: "#03014C",
                   },
                 }}
-                icon={<RadioButtonUncheckedIcon />}
-                checkedIcon={<RadioButtonCheckedIcon />}
+                icon={
+                  <RadioButtonUncheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
+                checkedIcon={
+                  <RadioButtonCheckedIcon className="text-lg xl:text-xl 2xl:text-2xl" />
+                }
                 checked={timeSelected === "18 horas da noite"}
                 onClick={() => {
                   handleTimeSelected("18 horas da noite");
@@ -692,14 +764,16 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
               </span>
             </div>
           </div>
-          <div className="mt-4 ml-5 flex flex-col ">
-            <span className="text-lg text-careLightBlue">Seu agendamento</span>
+          <div className="mt-4 ml-2 flex flex-col ">
+            <span className="text-sm whitespace-nowrap text-careLightBlue">
+              Seu agendamento
+            </span>
             <div className="flex items-center gap-2">
               <span className="text-careBlue my-2">
-                <BsCalendar2Week size={24} />
+                <BsCalendar2Week size={18} />
               </span>
               {selectedDate && (
-                <span className="text-careBlue text-base">
+                <span className="text-careBlue text-xs whitespace-nowrap">
                   {calendarData &&
                     selectedDate.format("DD [de] MMMM [de] YYYY")}
                 </span>
@@ -707,10 +781,12 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
             </div>
             <div className="flex items-center gap-2">
               <span className="text-careBlue my-2">
-                <MdAlarm size={24} />
+                <MdAlarm size={18} />
               </span>
               {timeSelected && (
-                <span className="text-careBlue text-base">{timeSelected}</span>
+                <span className="text-careBlue text-xs whitespace-nowrap">
+                  {timeSelected}
+                </span>
               )}
             </div>
           </div>
@@ -722,7 +798,9 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
           <div className="flex flex-col gap-2 ">
             <div className="flex gap-3 justify-start ml-3 mr-2">
               <div className="relative md:top-24 top-16">
-                <span className="text-careBlue">PARA LONGE</span>
+                <span className="text-careBlue text-base md:text-base xl:text-lg">
+                  PARA LONGE
+                </span>
               </div>
               <div className="flex flex-col mt-1 ">
                 <span className=" text-sm md:ml-16 ml-3 text-careBlue font-bold">
@@ -777,7 +855,9 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
           <div className="flex flex-col gap-2 mt-8">
             <div className="flex gap-3 justify-start ml-3 mr-2">
               <div className="relative md:top-[4.5rem] top-16 ">
-                <span className="text-careBlue ">PARA PERTO</span>
+                <span className="text-careBlue text-base md:text-base xl:text-lg ">
+                  PARA PERTO
+                </span>
               </div>
               <div className="flex gap-3 justify-center">
                 <Input
@@ -824,13 +904,13 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
           <>
             <div className="ml-5 mt-5 md:ml-14 md:mt-14">
               {selectedOption === 3 ? (
-                <span className="text-careBlue">
+                <span className="text-careBlue text-base md:text-base xl:text-xs 2xl:text-base">
                   Por favor, consulte um oftamologista antes de prosseguir com o
                   agendamento. Clique em Onde Encontrar para enontrar clínicas
                   próximas de seu endereço.
                 </span>
               ) : (
-                <span className="text-careBlue">
+                <span className="text-careBlue text-base md:text-base xl:text-xs 2xl:text-base">
                   Este programa é somente para pacientes que consultaram um
                   oftalmologista nos últimos 12 meses e possuem receita válida.
                   Por favor, consulte seu oftamologista antes de prosseguir com
@@ -847,13 +927,13 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
                   )
                 }
                 label={selectedOption === 3 ? "Onde Encontrar" : "Ver mais"}
-                customClass="w-full bg-careLightBlue border border-careLightBlue text-white rounded-full md:w-40 h-12 mt-10 ml-5"
+                customClass="w-full bg-careLightBlue border border-careLightBlue text-white rounded-full md:w-40 h-12 xl:h-9 2xl:h-14 mt-10 ml-5"
               />
             </div>
             <div className="mt-0 md:mt-5">
               <Button
                 label="Próximo"
-                customClass="w-full bg-careBlue border border-careBlue text-white rounded-full md:w-40 h-12 mt-5 md:mt-10 ml-5 opacity-50 cursor-not-allowed mb-5"
+                customClass="w-full bg-careBlue border border-careBlue text-white rounded-full md:w-40 h-12 xl:h-9 2xl:h-14 mt-5 md:mt-10 ml-5 opacity-50 cursor-not-allowed mb-5"
                 onClick={handleNextClick}
                 disabled
               />
@@ -867,7 +947,7 @@ const ModalQuestionScheduling: React.FC<ModalQuestionSchedulingProps> = ({
           >
             <Button
               label={currentQuestion === 4 ? "Enviar" : "Próximo"}
-              customClass="relative bottom-6 w-full bg-careLightBlue border border-careLightBlue text-white rounded-full md:w-40 h-12 mt-16 md:ml-14 ml-6 mb-5"
+              customClass="relative bottom-6 w-full bg-careLightBlue border border-careLightBlue text-white rounded-full md:w-40 h-12 xl:h-9 2xl:h-14 mt-16 md:ml-14 ml-6 mb-5"
               onClick={handleNextClick}
               disabled={
                 currentQuestion === 0 && selectedOption === null

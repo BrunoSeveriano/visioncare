@@ -130,117 +130,116 @@ const DataAdmin = () => {
   return (
     <div className="bg-careGrey rounded-2xl p-8 fill-careBlue fade-in">
       {isLoading ? (
-       <div className="spinner">
-       <div className="dot1"></div>
-       <div className="dot2"></div>
-     </div>
-      ) :(
+        <div className="spinner">
+          <div className="dot1"></div>
+          <div className="dot2"></div>
+        </div>
+      ) : (
         <>
-         <div className="flex flex-col">
-        <span className="text-neutral-400">Nome</span>
-        <Input
-          onChange={handleChange}
-          name="userName"
-          value={userDataAdm.userName}
-          placeholder="Seu nome"
-          fullWidth
-          startIcon
-          imageSrc="/user-user.png"
-          disabled={!isEditing}
-        />
-      </div>
-      <div className="my-5 md:grid md:grid-cols-2 gap-8 md:my-5">
-        <div className="flex flex-col">
-          <span className="text-neutral-400">Email</span>
-          <Input
-            onChange={handleChange}
-            name="userEmail"
-            value={userDataAdm.userEmail}
-            placeholder="Email"
-            required
-            startIcon
-            imageSrc="/communication-mail.png"
-            disabled={!isEditing}
-          />
-        </div>
-        <div className="my-5 md:my-0">
-          <span className="text-neutral-400">Data de nascimento</span>
-          <Input
-            name="userBirthdate"
-            value={userDataAdm.userBirthdate}
-            disabled={!isEditing}
-            onBlur={onBlur}
-            onFocus={onFocus}
-            placeholder="Data de nascimento"
-            startIcon
-            imageSrc="/calendar-data.png"
-            onChange={handleChange}
-            type={hasValue || focus ? "date" : "text"}
-          />
-        </div>
-      </div>
-      <div className="md:grid md:grid-cols-2 gap-8 md:my-5">
-        <div>
-          <span className="text-neutral-400">Telefone</span>
-          {maskedPhoneNumber()}
-        </div>
-        <div className="my-5 md:my-0">
-          <span className="text-neutral-400">CPF</span>
-          {maskedCpf()}
-        </div>
-      </div>
-      <div className="md:grid md:grid-cols-2 gap-8 my-5 fill-careBlue">
-        <div>
-          <span className="text-neutral-400">Senha</span>
-          <Input
-            name="userPassword"
-            value={userDataAdm.userPassword}
-            disabled={!isEditing}
-            placeholder="Senha"
-            startIcon
-            className=""
-            imageSrc="/house-lock.png"
-            endIcon
-            type="password"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="my-5 md:my-0">
-          <span className="text-neutral-400">Confirmar senha</span>
-          <Input
-            name="confirmedPassword"
-            disabled={!isEditing}
-            placeholder="Confirmar senha"
-            startIcon
-            imageSrc="/house-lock.png"
-            endIcon
-            type="password"
-            onChange={handleChange}
-          />
-        </div>
-      </div>
-      <div className="flex w-full items-center">
-        <GreenSwitch {...label} defaultChecked />
-        <span className="ml-2 text-neutral-400">
-          Aceito receber comunicações e contatos nos canais informados.
-        </span>
-      </div>
-      <div className="flex justify-start mt-20">
-        <Button
-          customClass="bg-careDarkBlue border-careDarkBlue py-2 w-40"
-          label="Editar"
-          onClick={handleEditClick}
-        />
-        <Button
-          customClass="bg-careLightBlue border-careLightBlue py-2 w-40 ml-2"
-          label="Salvar"
-          disabled={!isEditing}
-          onClick={editDataAdmin}
-        />
-      </div>
+          <div className="flex flex-col">
+            <span className="text-neutral-400">Nome</span>
+            <Input
+              onChange={handleChange}
+              name="userName"
+              value={userDataAdm.userName}
+              placeholder="Seu nome"
+              fullWidth
+              startIcon
+              imageSrc="/user-user.png"
+              disabled={!isEditing}
+            />
+          </div>
+          <div className="my-5 md:grid md:grid-cols-2 gap-8 md:my-5">
+            <div className="flex flex-col">
+              <span className="text-neutral-400">Email</span>
+              <Input
+                onChange={handleChange}
+                name="userEmail"
+                value={userDataAdm.userEmail}
+                placeholder="Email"
+                required
+                startIcon
+                imageSrc="/communication-mail.png"
+                disabled={!isEditing}
+              />
+            </div>
+            <div className="my-5 md:my-0">
+              <span className="text-neutral-400">Data de nascimento</span>
+              <Input
+                name="userBirthdate"
+                value={userDataAdm.userBirthdate}
+                disabled={!isEditing}
+                onBlur={onBlur}
+                onFocus={onFocus}
+                placeholder="Data de nascimento"
+                startIcon
+                imageSrc="/calendar-data.png"
+                onChange={handleChange}
+                type={hasValue || focus ? "date" : "text"}
+              />
+            </div>
+          </div>
+          <div className="md:grid md:grid-cols-2 gap-8 md:my-5">
+            <div>
+              <span className="text-neutral-400">Telefone</span>
+              {maskedPhoneNumber()}
+            </div>
+            <div className="my-5 md:my-0">
+              <span className="text-neutral-400">CPF</span>
+              {maskedCpf()}
+            </div>
+          </div>
+          <div className="md:grid md:grid-cols-2 gap-8 my-5 fill-careBlue">
+            <div>
+              <span className="text-neutral-400">Senha</span>
+              <Input
+                name="userPassword"
+                value={userDataAdm.userPassword}
+                disabled={!isEditing}
+                placeholder="Senha"
+                startIcon
+                className=""
+                imageSrc="/house-lock.png"
+                endIcon
+                type="password"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="my-5 md:my-0">
+              <span className="text-neutral-400">Confirmar senha</span>
+              <Input
+                name="confirmedPassword"
+                disabled={!isEditing}
+                placeholder="Confirmar senha"
+                startIcon
+                imageSrc="/house-lock.png"
+                endIcon
+                type="password"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="flex w-full items-center">
+            <GreenSwitch {...label} defaultChecked />
+            <span className="ml-2 text-neutral-400">
+              Aceito receber comunicações e contatos nos canais informados.
+            </span>
+          </div>
+          <div className="flex justify-start mt-20">
+            <Button
+              customClass="bg-careDarkBlue border-careDarkBlue py-2 w-40"
+              label="Editar"
+              onClick={handleEditClick}
+            />
+            <Button
+              customClass="bg-careLightBlue border-careLightBlue py-2 w-40 ml-2"
+              label="Salvar"
+              disabled={!isEditing}
+              onClick={editDataAdmin}
+            />
+          </div>
         </>
-      )
-      }
+      )}
     </div>
   );
 };

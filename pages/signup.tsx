@@ -1,18 +1,10 @@
 import Input from "@/components/input/Input";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import {
-  MdCalendarMonth,
-  MdOutlineLock,
-  MdOutlineMail,
-  MdOutlinePerson,
-} from "react-icons/md";
-import { AiOutlinePhone } from "react-icons/ai";
 import Checkbox from "@mui/material/Checkbox";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import Button from "@/components/button/Button";
-import { FaRegAddressCard } from "react-icons/fa";
 import CardExpanded from "@/components/card/CardExpanded";
 import { useEffect, useState } from "react";
 import InputMask from "react-input-mask";
@@ -21,7 +13,6 @@ import { registerUser } from "@/services/login";
 import { registerAdm } from "@/services/login";
 import dayjs from "dayjs";
 import Modal from "@/components/modals/Modal";
-import { Value } from "sass";
 
 export default function Signup() {
   const router = useRouter();

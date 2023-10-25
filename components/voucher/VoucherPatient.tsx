@@ -78,17 +78,13 @@ const VoucherPatient: React.FC<SearchModalProps> = ({
       </div>
 
       {clientData && (
-        <div>
-          <div className="w-[22rem] md:w-full mt-7 grid-cols-1 fade-in">
-            <div>
-              <CustomTable
-                isLoading={isLoading}
-                rowId="number"
-                rows={clientVouchers}
-                columns={TableUserPacient.columns}
-              />
-            </div>
-          </div>
+        <div className="w-[22rem] md:w-full lg:w-full xl:w-full 2xl:w-full  mt-7 grid-cols-1 fade-in">
+          <CustomTable
+            isLoading={isLoading}
+            rowId="number"
+            rows={clientVouchers}
+            columns={TableUserPacient.columns}
+          />
         </div>
       )}
       <div className="block md:hidden mt-5 md:w-1/3  md:right-0 bg-white">
